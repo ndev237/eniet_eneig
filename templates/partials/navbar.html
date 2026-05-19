@@ -1,0 +1,51 @@
+{% load i18n static %}
+
+<header class="bg-primary-darker sticky top-0 z-50 shadow-lg shadow-black/20">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-8">
+
+        {# Logo + nom de l'établissement #}
+        <a href="{% url 'core:home' %}" class="flex items-center gap-4 group flex-shrink-0">
+            <div class="relative">
+                {# Halo or subtil au hover - effet premium #}
+                <div class="absolute inset-0 bg-accent/20 rounded-full blur-xl scale-0 group-hover:scale-150 transition-transform duration-500"></div>
+                <img src="{% static 'images/logo_light.png' %}" alt="ENIET/ENIEG"
+                     class="relative h-16 w-auto md:h-20 transition-transform duration-300 group-hover:scale-105">
+            </div>
+            <div class="hidden sm:block border-l border-cream/15 pl-4">
+                <div class="font-serif text-cream text-xl md:text-2xl leading-tight font-semibold tracking-tight">
+                    ENIET <span class="text-accent">/</span> ENIEG
+                </div>
+                <div class="text-cream/60 text-[10px] md:text-xs uppercase tracking-[0.2em] mt-0.5">
+                    {% trans "Excellence Professionnelle" %}
+                </div>
+            </div>
+        </a>
+
+        {# Navigation desktop #}
+        <nav class="hidden lg:flex items-center gap-7">
+            <a href="{% url 'core:home' %}" class="text-cream text-sm font-medium relative pb-1 border-b-2 border-accent">
+                {% trans "Accueil" %}
+            </a>
+            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "L'École" %}</a>
+            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Formations" %}</a>
+            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Admission" %}</a>
+            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Actualités" %}</a>
+            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Contact" %}</a>
+        </nav>
+
+        {# CTA principal - mise en avant du concours #}
+        <a href="#" class="hidden lg:inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-5 py-2.5 text-sm transition-all hover:gap-3 group">
+            {% trans "Concours 2025-2026" %}
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+        </a>
+
+        {# Bouton burger mobile #}
+        <button class="lg:hidden text-cream p-2" aria-label="Menu">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+    </div>
+</header>

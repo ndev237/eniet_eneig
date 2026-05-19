@@ -1,0 +1,41 @@
+{% load static i18n tailwind_tags %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {# Titre dynamique : chaque page surcharge le block #}
+    <title>{% block title %}ENIET / ENIEG — Excellence Professionnelle{% endblock %}</title>
+
+    {# Meta description pour le SEO #}
+    <meta name="description" content="{% block meta_description %}{% trans "École Normale d'Instituteurs de l'Enseignement Général et Technique, Douala, Cameroun." %}{% endblock %}">
+
+    {# Préchargement des polices Google Fonts #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    {# CSS compilé par django-tailwind #}
+    {% tailwind_css %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {# Top bar avec coordonnées et sélecteur de langue #}
+    {% include "partials/topbar.html" %}
+
+    {# Header avec navigation principale #}
+    {% include "partials/navbar.html" %}
+
+    {# Contenu principal de chaque page #}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {# Footer #}
+    {% include "partials/footer.html" %}
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

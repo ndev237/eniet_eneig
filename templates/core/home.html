@@ -1,0 +1,17 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Accueil" %} — ENIET / ENIEG{% endblock %}
+
+{% block content %}
+<section class="min-h-[60vh] flex items-center justify-center bg-cream">
+    <div class="text-center">
+        <h1 class="font-serif text-5xl md:text-6xl text-primary-darker font-semibold mb-6">
+            {% trans "Bienvenue à l'ENIET / ENIEG" %}
+        </h1>
+        <p class="text-ink/70 text-lg max-w-2xl mx-auto">
+            {% trans "École Normale Privé d'Instituteurs de l'Excellence Professionnelle" %}
+        </p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,99 @@
+/* ============================================================
+   ENIET/ENIEG — Feuille de style principale
+   Tailwind CSS v4 - Configuration via @theme directive
+   ============================================================ */
+
+/* Import du framework Tailwind */
+@import "tailwindcss";
+
+/* Import de daisyUI (optionnel, utile pour le dashboard plus tard) */
+@plugin "daisyui";
+
+/* Chemins où Tailwind scanne les classes utilisées 
+   IMPORTANT : sans @source, Tailwind ne génère pas les classes des templates externes */
+@source "../../../templates/**/*.html";
+@source "../../../apps/**/*.html";
+@source "../../../apps/**/*.py";
+
+/* ============================================================
+   CHARTE GRAPHIQUE - Variables CSS personnalisées
+   ============================================================
+   En Tailwind v4, on définit les couleurs/fonts dans @theme
+   Ces variables génèrent automatiquement les classes utilitaires
+   Ex: --color-primary → bg-primary, text-primary, border-primary
+   ============================================================ */
+@theme {
+  /* Palette principale - vert palmier */
+  --color-primary: #0B5D2C;
+  --color-primary-dark: #074A22;
+  --color-primary-darker: #053818;
+  --color-primary-light: #E8F3EC;
+
+  /* Accent - or institutionnel */
+  --color-accent: #D4A017;
+  --color-accent-light: #F5E6B8;
+  --color-accent-dark: #A67D0E;
+
+  /* Neutres */
+  --color-cream: #FAF8F3;
+  --color-ink: #1A1A1A;
+
+  /* Typographie */
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+}
+
+/* ============================================================
+   STYLES DE BASE
+   ============================================================ */
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Optical sizing automatique pour Fraunces (police variable) */
+  .font-serif, h1, h2, h3, .font-display {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ============================================================
+   COMPOSANTS RÉUTILISABLES (CSS personnalisé)
+   ============================================================
+   On peut créer ici des classes composées avec @apply
+   Exemple ci-dessous - on peut ajouter d'autres au besoin
+   ============================================================ */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 
+           bg-accent hover:bg-accent-light 
+           text-primary-darker font-semibold 
+           px-7 py-4 rounded-sm transition;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 
+           border border-cream/30 hover:border-accent hover:text-accent 
+           text-cream font-semibold 
+           px-7 py-4 rounded-sm transition;
+  }
+
+  .underline-deco {
+    position: relative;
+    display: inline-block;
+  }
+  .underline-deco::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--color-accent);
+  }
+}
