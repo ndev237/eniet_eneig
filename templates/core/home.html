@@ -1,17 +1,578 @@
 {% extends "base_public.html" %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans "Accueil" %} — ENIET / ENIEG{% endblock %}
+{% block title %}{% trans "Accueil" %} — ENIET / ENIEG | {% trans "Excellence Professionnelle" %}{% endblock %}
+
+{% block meta_description %}{% trans "École Normale d'Instituteurs de l'Enseignement Général et Technique à Douala. Formations CAPIEMP et CAPIET. Concours d'entrée 2025-2026 ouvert." %}{% endblock %}
 
 {% block content %}
-<section class="min-h-[60vh] flex items-center justify-center bg-cream">
-    <div class="text-center">
-        <h1 class="font-serif text-5xl md:text-6xl text-primary-darker font-semibold mb-6">
-            {% trans "Bienvenue à l'ENIET / ENIEG" %}
-        </h1>
-        <p class="text-ink/70 text-lg max-w-2xl mx-auto">
-            {% trans "École Normale Privé d'Instituteurs de l'Excellence Professionnelle" %}
-        </p>
+
+<!-- ============================================================
+   SECTION 1 — HERO
+   Asymétrique : texte fort à gauche, visuel à droite
+   Fond sombre vert avec textures pour la profondeur
+   ============================================================ -->
+<section class="relative bg-primary-darker text-cream overflow-hidden">
+    <!-- Texture de fond - grille très subtile pour donner de la matière -->
+    <div class="absolute inset-0 opacity-30"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+
+    <!-- Halos colorés pour créer de la profondeur -->
+    <div class="absolute top-1/2 -right-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-72 h-72 bg-primary/40 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 py-20 lg:py-32 grid lg:grid-cols-12 gap-12 items-center">
+
+        <!-- Colonne texte (7/12 sur desktop) -->
+        <div class="lg:col-span-7">
+            <!-- Badge d'autorité officielle - rassure immédiatement -->
+            <div class="inline-flex items-center gap-2 bg-cream/10 border border-cream/20 rounded-full px-4 py-1.5 mb-8 text-xs uppercase tracking-wider backdrop-blur-sm">
+                <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+                {% trans "Agréé par le MINESEC — Arrêté n°26/15 & n°69/15" %}
+            </div>
+
+            <!-- Titre principal - typographie éditoriale forte -->
+            <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.05] mb-6">
+                {% trans "Former les" %}
+                <span class="italic text-accent">{% trans "éducateurs" %}</span>
+                <br>
+                {% trans "de demain" %}
+            </h1>
+
+            <p class="text-cream/80 text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
+                {% blocktrans %}L'ENIET et l'ENIEG forment depuis 2015 les instituteurs de l'enseignement général et technique au Cameroun, avec une exigence : l'excellence professionnelle.{% endblocktrans %}
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+                <!-- CTA primaire - bouton or, contraste fort -->
+                <a href="#filieres" class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-7 py-4 transition-all hover:gap-3 group">
+                    {% trans "Découvrir nos formations" %}
+                    <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+                <!-- CTA secondaire - bouton ghost -->
+                <a href="#admission" class="inline-flex items-center justify-center gap-2 border border-cream/30 hover:border-accent hover:text-accent text-cream font-semibold px-7 py-4 transition-all">
+                    {% trans "Procédure d'admission" %}
+                </a>
+            </div>
+        </div>
+
+        <!-- Colonne visuelle (5/12) - image + carte décorative or -->
+        <div class="lg:col-span-5">
+            <div class="relative">
+                {# Image principale - ratio 4/5 (portrait) #}
+                <div class="relative aspect-[4/5] overflow-hidden">
+                    <img src="https://picsum.photos/seed/eniet-hero/600/750"
+                         alt="{% trans 'Étudiants en formation à l\'ENIET' %}"
+                         class="w-full h-full object-cover">
+                    <!-- Overlay vert pour intégrer l'image à la palette -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary-darker via-primary-darker/20 to-transparent mix-blend-multiply"></div>
+                </div>
+
+                <!-- Carte flottante or avec stat clé - élément distinctif -->
+                <div class="absolute -bottom-6 -left-6 bg-accent text-primary-darker p-6 max-w-[280px] shadow-2xl">
+                    <div class="font-serif text-4xl font-semibold leading-none mb-2">
+                        10<sup class="text-xl">e</sup>
+                    </div>
+                    <div class="text-sm font-medium">
+                        {% trans "année de formation d'instituteurs d'élite" %}
+                    </div>
+                </div>
+
+                <!-- Petite carte en haut à droite - urgence positive -->
+                <div class="absolute -top-4 -right-4 bg-cream text-primary-darker px-4 py-3 shadow-xl text-sm font-semibold">
+                    {% trans "Concours ouvert" %}
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+<!-- ============================================================
+   SECTION 2 — STATISTIQUES
+   Bandeau crème de transition avec 4 chiffres clés
+   ============================================================ -->
+<section class="bg-cream border-y border-primary/10">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center lg:text-left">
+            <div class="font-serif text-5xl text-primary font-semibold mb-1">2015</div>
+            <div class="text-sm text-ink/60 uppercase tracking-wider">{% trans "Année de création" %}</div>
+        </div>
+        <div class="text-center lg:text-left">
+            <div class="font-serif text-5xl text-primary font-semibold mb-1">07</div>
+            <div class="text-sm text-ink/60 uppercase tracking-wider">{% trans "Filières techniques" %}</div>
+        </div>
+        <div class="text-center lg:text-left">
+            <div class="font-serif text-5xl text-primary font-semibold mb-1">02</div>
+            <div class="text-sm text-ink/60 uppercase tracking-wider">{% trans "Cursus : CAPIEMP & CAPIET" %}</div>
+        </div>
+        <div class="text-center lg:text-left">
+            <div class="font-serif text-5xl text-primary font-semibold mb-1">100%</div>
+            <div class="text-sm text-ink/60 uppercase tracking-wider">{% trans "Diplômes reconnus par l'État" %}</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 3 — DEUX ÉCOLES, UNE EXCELLENCE
+   Présentation parallèle ENIEG vs ENIET
+   ============================================================ -->
+<section class="py-24 relative">
+    <!-- Motif de fond subtil en points or -->
+    <div class="absolute inset-0 opacity-40 pointer-events-none"
+         style="background-image: radial-gradient(circle, rgba(212, 160, 23, 0.15) 1px, transparent 1px); background-size: 24px 24px;">
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+        <!-- En-tête de section style éditorial -->
+        <div class="max-w-2xl mb-16">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — 01 / {% trans "Notre structure" %}
+            </div>
+            <h2 class="font-serif text-4xl md:text-5xl text-primary-darker font-semibold leading-tight mb-4">
+                {% trans "Deux écoles," %}
+                <span class="italic text-primary">{% trans "une même" %}</span>
+                {% trans "excellence" %}
+            </h2>
+            <p class="text-ink/70 text-lg leading-relaxed">
+                {% blocktrans %}Notre complexe abrite deux institutions complémentaires qui forment les instituteurs de la prochaine génération, dans le respect des standards officiels camerounais.{% endblocktrans %}
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+
+            <!-- CARTE ENIEG -->
+            <article class="bg-white border border-primary/10 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20">
+                {# Header coloré avec dégradé subtil #}
+                <div class="bg-gradient-to-br from-primary to-primary-dark p-8 text-cream relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl"></div>
+                    <div class="relative">
+                        <div class="text-xs uppercase tracking-widest text-accent mb-3 font-semibold">
+                            {% trans "École Normale d'Instituteurs" %}
+                        </div>
+                        <h3 class="font-serif text-4xl font-semibold mb-2">ENIEG</h3>
+                        <div class="text-cream/80 text-sm">{% trans "Enseignement Général" %}</div>
+                    </div>
+                </div>
+
+                <div class="p-8">
+                    <h4 class="font-serif text-2xl text-primary-darker font-semibold mb-4 relative inline-block">
+                        CAPIEMP
+                        <span class="absolute -bottom-2 left-0 w-12 h-1 bg-accent"></span>
+                    </h4>
+                    <p class="text-ink/70 mb-6 leading-relaxed">
+                        {% blocktrans %}Certificat d'Aptitude Pédagogique d'Instituteurs de l'Enseignement Maternel et Primaire Général. Formation de 2 ans pour les futurs maîtres de l'école primaire.{% endblocktrans %}
+                    </p>
+
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span class="text-sm text-ink/80">{% trans "Recrutement sur concours (Bac requis)" %}</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span class="text-sm text-ink/80">{% trans "Durée : 2 ans en formation continue" %}</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span class="text-sm text-ink/80">{% trans "Scolarité 1ʳᵉ année : 225 000 FCFA" %}</span>
+                        </li>
+                    </ul>
+
+                    <a href="#" class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:gap-3 transition-all">
+                        {% trans "En savoir plus sur l'ENIEG" %}
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- CARTE ENIET -->
+            <article class="bg-white border border-primary/10 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20">
+                <div class="bg-gradient-to-br from-primary-darker to-ink p-8 text-cream relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-accent/15 rounded-full blur-2xl"></div>
+                    <div class="relative">
+                        <div class="text-xs uppercase tracking-widest text-accent mb-3 font-semibold">
+                            {% trans "École Normale d'Instituteurs" %}
+                        </div>
+                        <h3 class="font-serif text-4xl font-semibold mb-2">ENIET</h3>
+                        <div class="text-cream/80 text-sm">{% trans "Enseignement Technique" %}</div>
+                    </div>
+                </div>
+
+                <div class="p-8">
+                    <h4 class="font-serif text-2xl text-primary-darker font-semibold mb-4 relative inline-block">
+                        CAPIET
+                        <span class="absolute -bottom-2 left-0 w-12 h-1 bg-accent"></span>
+                    </h4>
+                    <p class="text-ink/70 mb-6 leading-relaxed">
+                        {% blocktrans %}Certificat d'Aptitude Pédagogique d'Instituteurs de l'Enseignement Technique. Sept filières spécialisées pour former des instituteurs experts dans leur domaine.{% endblocktrans %}
+                    </p>
+
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span class="text-sm text-ink/80">{% trans "Accessible aux titulaires de BT, PBT, BP ou Bac technique" %}</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span class="text-sm text-ink/80">{% trans "7 filières professionnelles au choix" %}</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span class="text-sm text-ink/80">{% trans "Scolarité 1ʳᵉ année : 300 000 FCFA" %}</span>
+                        </li>
+                    </ul>
+
+                    <a href="#" class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:gap-3 transition-all">
+                        {% trans "Explorer les filières ENIET" %}
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 4 — LES 7 FILIÈRES ENIET
+   Grille de 7 cartes + 1 CTA (total 8 pour équilibre visuel 4x2)
+   ============================================================ -->
+<section id="filieres" class="py-24 bg-cream relative">
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16">
+            <div class="max-w-2xl">
+                <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                    — 02 / {% trans "Filières ENIET" %}
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl text-primary-darker font-semibold leading-tight mb-4">
+                    {% trans "Sept voies vers" %}
+                    <span class="italic text-primary">{% trans "l'enseignement technique" %}</span>
+                </h2>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
+                {% trans "Toutes les filières" %}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Grille des 7 filières + 1 CTA -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Filière 1 : Électricité -->
+            <article class="bg-white p-6 border-l-4 border-accent group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                    <svg class="w-6 h-6 text-primary group-hover:text-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Électricité" %}</h3>
+                <p class="text-sm text-ink/60 leading-relaxed">
+                    {% trans "Formation aux installations électriques et à la pédagogie de la spécialité." %}
+                </p>
+            </article>
+
+            <!-- Filière 2 : Maçonnerie -->
+            <article class="bg-white p-6 border-l-4 border-accent group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                    <svg class="w-6 h-6 text-primary group-hover:text-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Maçonnerie & Béton Armé" %}</h3>
+                <p class="text-sm text-ink/60 leading-relaxed">
+                    {% trans "Construction, structures et techniques pédagogiques du bâtiment." %}
+                </p>
+            </article>
+
+            <!-- Filière 3 : Couture -->
+            <article class="bg-white p-6 border-l-4 border-accent group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                    <svg class="w-6 h-6 text-primary group-hover:text-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Couture (Flou)" %}</h3>
+                <p class="text-sm text-ink/60 leading-relaxed">
+                    {% trans "Techniques de couture, design textile et enseignement professionnel." %}
+                </p>
+            </article>
+
+            <!-- Filière 4 : Économie Sociale -->
+            <article class="bg-white p-6 border-l-4 border-accent group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                    <svg class="w-6 h-6 text-primary group-hover:text-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Économie Sociale & Familiale" %}</h3>
+                <p class="text-sm text-ink/60 leading-relaxed">
+                    {% trans "Sciences humaines appliquées à la vie domestique et sociale." %}
+                </p>
+            </article>
+
+            <!-- Filière 5 : Comptabilité -->
+            <article class="bg-white p-6 border-l-4 border-accent group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                    <svg class="w-6 h-6 text-primary group-hover:text-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Comptabilité & Gestion" %}</h3>
+                <p class="text-sm text-ink/60 leading-relaxed">
+                    {% trans "Méthodes comptables, gestion d'entreprise et pédagogie spécialisée." %}
+                </p>
+            </article>
+
+            <!-- Filière 6 : Bureautique -->
+            <article class="bg-white p-6 border-l-4 border-accent group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                    <svg class="w-6 h-6 text-primary group-hover:text-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Bureautique" %}</h3>
+                <p class="text-sm text-ink/60 leading-relaxed">
+                    {% trans "Outils numériques de bureau et formation pédagogique associée." %}
+                </p>
+            </article>
+
+            <!-- Filière 7 : Communication -->
+            <article class="bg-white p-6 border-l-4 border-accent group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                    <svg class="w-6 h-6 text-primary group-hover:text-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                </div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Communication Administrative" %}</h3>
+                <p class="text-sm text-ink/60 leading-relaxed">
+                    {% trans "Techniques de communication formelle et secrétariat moderne." %}
+                </p>
+            </article>
+
+            <!-- 8e case : CTA vers toutes les formations (équilibre grille 4×2) -->
+            <a href="#" class="bg-primary-darker text-cream p-6 flex flex-col justify-between relative overflow-hidden group hover:bg-primary transition-colors duration-300">
+                <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-accent/10 rounded-full blur-2xl group-hover:bg-accent/20 transition"></div>
+                <div class="relative">
+                    <div class="w-12 h-12 bg-accent/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold mb-2">{% trans "Voir toutes les formations" %}</h3>
+                    <p class="text-sm text-cream/70 leading-relaxed">
+                        {% trans "Découvrez les programmes détaillés, débouchés et conditions d'admission." %}
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 5 — ADMISSION / CONCOURS
+   Section haute conversion : tarifs détaillés et dossier requis
+   ============================================================ -->
+<section id="admission" class="py-24 bg-primary-darker text-cream relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+    <div class="absolute top-20 right-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Colonne gauche : info admission -->
+        <div>
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — 03 / {% trans "Admission" %}
+            </div>
+            <h2 class="font-serif text-4xl md:text-5xl font-semibold leading-tight mb-6">
+                {% trans "Concours d'entrée" %}
+                <span class="italic text-accent">2025 — 2026</span>
+            </h2>
+            <p class="text-cream/80 text-lg mb-8 leading-relaxed">
+                {% blocktrans %}Le recrutement se fait sur concours, ouvert aux titulaires du Baccalauréat (enseignement général ou technique selon l'école visée). Frais de concours : 12 000 FCFA non remboursables.{% endblocktrans %}
+            </p>
+
+            <h3 class="font-serif text-xl mb-4 relative inline-block">
+                {% trans "Composition du dossier" %}
+                <span class="absolute -bottom-2 left-0 w-12 h-0.5 bg-accent"></span>
+            </h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+                <li class="flex items-start gap-2 text-sm text-cream/80">
+                    <span class="text-accent">→</span> {% trans "Photocopie CNI" %}
+                </li>
+                <li class="flex items-start gap-2 text-sm text-cream/80">
+                    <span class="text-accent">→</span> {% trans "Baccalauréat certifié" %}
+                </li>
+                <li class="flex items-start gap-2 text-sm text-cream/80">
+                    <span class="text-accent">→</span> {% trans "Acte de naissance" %}
+                </li>
+                <li class="flex items-start gap-2 text-sm text-cream/80">
+                    <span class="text-accent">→</span> {% trans "4 photos 4×4" %}
+                </li>
+                <li class="flex items-start gap-2 text-sm text-cream/80">
+                    <span class="text-accent">→</span> {% trans "Fiche d'inscription" %}
+                </li>
+                <li class="flex items-start gap-2 text-sm text-cream/80">
+                    <span class="text-accent">→</span> {% trans "Demande manuscrite au Directeur" %}
+                </li>
+            </ul>
+
+            <a href="#" class="inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-7 py-4 transition-all hover:gap-3 group">
+                {% trans "Procédure complète" %}
+                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Colonne droite : tableau de scolarité avec effet glassmorphism #}
+        <div class="bg-cream/5 backdrop-blur border border-cream/20 p-8">
+            <h3 class="font-serif text-2xl mb-6">{% trans "Échéancier de scolarité" %}</h3>
+
+            <!-- Onglets ENIEG / ENIET - en prod : interactif avec Alpine.js -->
+            <div class="flex gap-2 mb-6 border-b border-cream/20">
+                <button class="px-4 py-2 text-sm font-semibold border-b-2 border-accent text-accent">
+                    {% trans "ENIEG (1ʳᵉ année)" %}
+                </button>
+                <button class="px-4 py-2 text-sm font-semibold text-cream/60 hover:text-cream transition-colors">
+                    {% trans "ENIET (1ʳᵉ année)" %}
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex justify-between items-center py-3 border-b border-cream/10">
+                    <div>
+                        <div class="font-semibold">{% trans "Inscription" %}</div>
+                        <div class="text-xs text-cream/60">{% trans "Non remboursable" %}</div>
+                    </div>
+                    <div class="font-serif text-xl text-accent">25 000 FCFA</div>
+                </div>
+                <div class="flex justify-between items-center py-3 border-b border-cream/10">
+                    <div>
+                        <div class="font-semibold">{% trans "1ʳᵉ tranche" %}</div>
+                        <div class="text-xs text-cream/60">{% trans "À l'inscription" %}</div>
+                    </div>
+                    <div class="font-serif text-xl">100 000 FCFA</div>
+                </div>
+                <div class="flex justify-between items-center py-3 border-b border-cream/10">
+                    <div>
+                        <div class="font-semibold">{% trans "2ᵉ tranche" %}</div>
+                        <div class="text-xs text-cream/60">{% trans "Le 10 décembre" %}</div>
+                    </div>
+                    <div class="font-serif text-xl">80 000 FCFA</div>
+                </div>
+                <div class="flex justify-between items-center py-3 border-b border-cream/10">
+                    <div>
+                        <div class="font-semibold">{% trans "3ᵉ tranche" %}</div>
+                        <div class="text-xs text-cream/60">{% trans "Le 9 janvier" %}</div>
+                    </div>
+                    <div class="font-serif text-xl">20 000 FCFA</div>
+                </div>
+                <div class="flex justify-between items-center pt-4 border-t-2 border-accent">
+                    <div class="font-serif text-lg font-semibold">{% trans "Total" %}</div>
+                    <div class="font-serif text-2xl text-accent font-bold">225 000 FCFA</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SECTION 6 — ACTUALITÉS (aperçu)
+   3 derniers articles, le premier en grand format
+   En prod : ces données viendront de la base via l'app `blog`
+   ============================================================ -->
+<!-- ================================================================ -->
+<!-- ACTUALITÉS - Articles dynamiques depuis la BDD                    -->
+<!-- ================================================================ -->
+{% if derniers_articles %}
+    <section class="py-24 bg-cream relative">
+        <div class="absolute inset-0 opacity-40 pointer-events-none"
+             style="background-image: radial-gradient(circle, rgba(212, 160, 23, 0.15) 1px, transparent 1px); background-size: 24px 24px;">
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-6">
+            <div class="flex items-end justify-between mb-12 gap-6">
+                <div>
+                    <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                        — {% trans "Vie de l'établissement" %}
+                    </div>
+                    <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight">
+                        {% trans "La vie de" %} <span class="italic text-primary">{% trans "notre établissement" %}</span>
+                    </h2>
+                </div>
+
+                <a href="{% url 'blog:list' %}" class="hidden sm:inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all group whitespace-nowrap">
+                    {% trans "Toutes les actualités" %}
+                    <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Grille des 3 derniers articles -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for article in derniers_articles %}
+                    {% include "blog/partials/article_card.html" with article=article %}
+                {% endfor %}
+            </div>
+
+            <!-- Lien mobile vers toutes les actualités -->
+            <div class="sm:hidden mt-8 text-center">
+                <a href="{% url 'blog:list' %}" class="inline-flex items-center gap-2 text-primary font-semibold">
+                    {% trans "Toutes les actualités" %}
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+<!-- ============================================================
+   SECTION 7 — CITATION + DEVISE NATIONALE
+   Moment de respiration émotionnelle, ancre l'identité camerounaise
+   ============================================================ -->
+<section class="py-20 bg-cream border-y border-primary/10 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-40 pointer-events-none"
+         style="background-image: radial-gradient(circle, rgba(212, 160, 23, 0.15) 1px, transparent 1px); background-size: 24px 24px;">
+    </div>
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+        <div class="text-accent text-5xl font-serif mb-4">"</div>
+        <blockquote class="font-serif text-3xl md:text-4xl text-primary-darker leading-tight italic mb-6">
+            {% trans "L'éducation est l'arme la plus puissante pour changer une nation. Nos instituteurs en sont les artisans." %}
+        </blockquote>
+        <div class="flex items-center justify-center gap-8 text-xs uppercase tracking-[0.3em] text-primary font-semibold">
+            <span>{% trans "Paix" %}</span>
+            <span class="w-12 h-px bg-accent"></span>
+            <span>{% trans "Travail" %}</span>
+            <span class="w-12 h-px bg-accent"></span>
+            <span>{% trans "Patrie" %}</span>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

@@ -1,0 +1,229 @@
+{% extends "base_public.html" %}
+{% load i18n humanize %}
+
+{% block title %}{{ ecole.sigle }} — {{ ecole.diplome_prepare }} | ENIET / ENIEG{% endblock %}
+
+{% block meta_description %}{{ ecole.description_courte|striptags|truncatewords:30 }}{% endblock %}
+
+{% block content %}
+
+<!-- ================================================================ -->
+<!-- HERO DE PAGE                                                      -->
+<!-- ================================================================ -->
+<section class="bg-primary-darker text-cream relative overflow-hidden py-20">
+    <div class="absolute inset-0 opacity-30 pointer-events-none"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+        <nav class="flex items-center gap-2 text-sm text-cream/60 mb-6">
+            <a href="{% url 'core:home' %}" class="hover:text-accent transition-colors">{% trans "Accueil" %}</a>
+            <span class="text-cream/30">/</span>
+            <a href="{% url 'ecoles:formations_list' %}" class="hover:text-accent transition-colors">{% trans "Formations" %}</a>
+            <span class="text-cream/30">/</span>
+            <span class="text-accent">{{ ecole.sigle }}</span>
+        </nav>
+
+        <div class="grid lg:grid-cols-3 gap-8 items-end">
+            <div class="lg:col-span-2">
+                <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                    — {{ ecole.get_type_ecole_display }}
+                </div>
+                <h1 class="font-serif text-5xl md:text-7xl font-medium leading-[1.05] mb-4">
+                    {{ ecole.sigle }}
+                </h1>
+                <div class="text-2xl text-accent font-semibold mb-4">
+                    {{ ecole.diplome_prepare }}
+                </div>
+                <p class="text-cream/80 text-lg max-w-2xl">
+                    {{ ecole.diplome_complet }}
+                </p>
+            </div>
+
+            <!-- Carte tarif rapide -->
+            <div class="bg-accent text-primary-darker p-6">
+                <div class="text-xs uppercase tracking-wider font-semibold mb-2">
+                    {% trans "Scolarité 1ʳᵉ année" %}
+                </div>
+                <div class="font-serif text-4xl font-bold mb-2">
+                    {{ ecole.total_premiere_annee|floatformat:0|intcomma }}
+                </div>
+                <div class="text-sm font-semibold">FCFA</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- PRÉSENTATION DÉTAILLÉE                                            -->
+<!-- ================================================================ -->
+<section class="py-20">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+            — 01 / {% trans "Présentation" %}
+        </div>
+        <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight mb-8">
+            {% trans "À propos de" %} <span class="italic text-primary">{{ ecole.sigle }}</span>
+        </h2>
+
+        <div class="space-y-4 text-ink/75 text-lg leading-relaxed">
+            <p>{{ ecole.description_courte }}</p>
+            {% if ecole.description_longue %}
+                <p>{{ ecole.description_longue }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Infos clés -->
+        <div class="grid sm:grid-cols-3 gap-6 mt-10">
+            <div class="bg-cream border-l-4 border-accent p-5">
+                <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-2">
+                    {% trans "Pré-requis" %}
+                </div>
+                <div class="text-ink/80 text-sm leading-relaxed">{{ ecole.pre_requis }}</div>
+            </div>
+            <div class="bg-cream border-l-4 border-accent p-5">
+                <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-2">
+                    {% trans "Durée" %}
+                </div>
+                <div class="text-ink/80 text-sm leading-relaxed">{{ ecole.duree_formation }}</div>
+            </div>
+            <div class="bg-cream border-l-4 border-accent p-5">
+                <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-2">
+                    {% trans "Concours" %}
+                </div>
+                <div class="text-ink/80 text-sm leading-relaxed">{{ ecole.frais_concours|floatformat:0|intcomma }} FCFA</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- FILIÈRES (uniquement si ENIET) - ne s'affiche que si filières     -->
+<!-- ================================================================ -->
+{% if filieres %}
+<section class="py-20 bg-cream relative">
+    <div class="absolute inset-0 opacity-40 pointer-events-none"
+         style="background-image: radial-gradient(circle, rgba(212, 160, 23, 0.15) 1px, transparent 1px); background-size: 24px 24px;">
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mb-12">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — 02 / {% trans "Filières" %}
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight">
+                {% trans "Choisissez votre" %} <span class="italic text-primary">{% trans "spécialité" %}</span>
+            </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for filiere in filieres %}
+                <a href="{{ filiere.get_absolute_url }}" 
+                   class="bg-white border-l-4 border-accent p-6 group hover:-translate-y-1 transition-all duration-300 hover:shadow-lg block">
+                    <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                        <!-- Icône SVG selon le champ 'icone' du modèle -->
+                        {% include "ecoles/partials/icone_filiere.html" with icone=filiere.icone %}
+                    </div>
+                    <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2 group-hover:text-primary transition-colors">
+                        {{ filiere.nom }}
+                    </h3>
+                    <p class="text-sm text-ink/60 leading-relaxed mb-4">
+                        {{ filiere.description_courte }}
+                    </p>
+                    <span class="inline-flex items-center gap-1 text-primary text-sm font-semibold group-hover:gap-2 transition-all">
+                        {% trans "En savoir plus" %}
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ================================================================ -->
+<!-- TARIFS - Échéancier détaillé                                      -->
+<!-- ================================================================ -->
+<section class="py-20 bg-primary-darker text-cream relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30 pointer-events-none"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — {% if filieres %}03{% else %}02{% endif %} / {% trans "Frais" %}
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium leading-tight">
+                {% trans "Investissez dans votre" %} <span class="italic text-accent">{% trans "avenir" %}</span>
+            </h2>
+        </div>
+
+        <div class="bg-cream/5 backdrop-blur border border-cream/20 p-8">
+            <h3 class="font-serif text-2xl mb-6">
+                {{ ecole.sigle }} — {% trans "Échéancier 1ʳᵉ année" %}
+            </h3>
+
+            <div class="space-y-3">
+                <div class="flex justify-between items-center pb-3 border-b border-cream/10">
+                    <div>
+                        <div class="font-semibold">{% trans "Inscription" %}</div>
+                        <div class="text-xs text-cream/60">{% trans "Non remboursable" %}</div>
+                    </div>
+                    <div class="font-serif text-lg text-accent">
+                        {{ ecole.frais_inscription_non_remboursable|intcomma }} FCFA
+                    </div>
+                </div>
+
+                {% if ecole.matiere_oeuvre > 0 %}
+                    <div class="flex justify-between items-center pb-3 border-b border-cream/10">
+                        <div>
+                            <div class="font-semibold">{% trans "Matière d'œuvre" %}</div>
+                            <div class="text-xs text-cream/60">{% trans "À l'inscription" %}</div>
+                        </div>
+                        <div class="font-serif text-lg text-accent">
+                            {{ ecole.matiere_oeuvre|intcomma }} FCFA
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% for tranche in tranches %}
+                    {% if tranche.annee == 1 %}
+                        <div class="flex justify-between items-center pb-3 border-b border-cream/10">
+                            <div>
+                                <div class="font-semibold">{{ tranche.libelle }}</div>
+                                <div class="text-xs text-cream/60">{{ tranche.echeance }}</div>
+                            </div>
+                            <div class="font-serif text-lg">
+                                {{ tranche.montant|intcomma }} FCFA
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="bg-accent text-primary-darker p-5 mt-6">
+                <div class="flex justify-between items-center">
+                    <div class="font-serif text-lg font-semibold">{% trans "Total 1ère année" %}</div>
+                    <div class="font-serif text-3xl font-bold">
+                        {{ ecole.total_premiere_annee|intcomma }} FCFA
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="{% url 'ecoles:admission' %}" class="inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-7 py-4 transition-all hover:gap-3 group">
+                {% trans "Voir la procédure d'admission" %}
+                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

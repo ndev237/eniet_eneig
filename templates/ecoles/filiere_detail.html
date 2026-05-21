@@ -1,0 +1,219 @@
+{% extends "base_public.html" %}
+{% load i18n humanize %}
+
+{% block title %}{{ filiere.nom }} — {{ filiere.ecole.sigle }} | ENIET / ENIEG{% endblock %}
+
+{% block meta_description %}{{ filiere.description_courte }}{% endblock %}
+
+{% block content %}
+
+<!-- ================================================================ -->
+<!-- HERO DE PAGE                                                      -->
+<!-- ================================================================ -->
+<section class="bg-primary-darker text-cream relative overflow-hidden py-20">
+    <div class="absolute inset-0 opacity-30 pointer-events-none"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+        <nav class="flex items-center gap-2 text-sm text-cream/60 mb-6">
+            <a href="{% url 'core:home' %}" class="hover:text-accent transition-colors">{% trans "Accueil" %}</a>
+            <span class="text-cream/30">/</span>
+            <a href="{% url 'ecoles:formations_list' %}" class="hover:text-accent transition-colors">{% trans "Formations" %}</a>
+            <span class="text-cream/30">/</span>
+            <a href="{% url 'ecoles:ecole_detail' ecole_slug=filiere.ecole.slug %}" class="hover:text-accent transition-colors">{{ filiere.ecole.sigle }}</a>
+            <span class="text-cream/30">/</span>
+            <span class="text-accent">{{ filiere.nom }}</span>
+        </nav>
+
+        <div class="grid lg:grid-cols-3 gap-12 items-start">
+            <div class="lg:col-span-2">
+                <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                    — {{ filiere.ecole.sigle }} / {{ filiere.ecole.diplome_prepare }}
+                </div>
+                <h1 class="font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-6">
+                    {{ filiere.nom }}
+                </h1>
+                <p class="text-cream/80 text-lg max-w-2xl leading-relaxed">
+                    {{ filiere.description_courte }}
+                </p>
+            </div>
+
+            <!-- Icône grand format -->
+            <div class="hidden lg:flex items-center justify-center">
+                <div class="w-32 h-32 bg-cream/5 border border-cream/20 flex items-center justify-center">
+                    <div class="w-20 h-20 bg-accent/20 flex items-center justify-center">
+                        <div class="scale-[2] text-accent">
+                            {% include "ecoles/partials/icone_filiere.html" with icone=filiere.icone %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- DESCRIPTION DÉTAILLÉE                                             -->
+<!-- ================================================================ -->
+{% if filiere.description_longue %}
+<section class="py-20">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+            — 01 / {% trans "Présentation" %}
+        </div>
+        <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight mb-8">
+            {% trans "À propos de cette" %} <span class="italic text-primary">{% trans "filière" %}</span>
+        </h2>
+
+        <div class="text-ink/75 text-lg leading-relaxed">
+            {{ filiere.description_longue|linebreaks }}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ================================================================ -->
+<!-- COMPÉTENCES + MATIÈRES en 2 colonnes                              -->
+<!-- ================================================================ -->
+<section class="py-20 bg-cream">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12">
+
+        <!-- Compétences acquises -->
+        {% if filiere.competences_acquises %}
+            <div>
+                <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                    — 02 / {% trans "Compétences" %}
+                </div>
+                <h2 class="font-serif text-3xl text-primary-darker font-semibold leading-tight mb-6">
+                    {% trans "Ce que vous saurez" %} <span class="italic text-primary">{% trans "faire" %}</span>
+                </h2>
+
+                <ul class="space-y-3">
+                    <!-- Le filtre |linebreaks transforme \n en <br> -->
+                    <!-- On préfère splitter sur les sauts de ligne pour avoir une vraie liste -->
+                    {% for competence in filiere.competences_acquises.splitlines %}
+                        {% if competence|length > 1 %}
+                            <li class="flex items-start gap-3 bg-white p-4">
+                                <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span class="text-ink/80">{{ competence }}</span>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- Matières principales -->
+        {% if filiere.matieres_principales %}
+            <div>
+                <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                    — 03 / {% trans "Programme" %}
+                </div>
+                <h2 class="font-serif text-3xl text-primary-darker font-semibold leading-tight mb-6">
+                    {% trans "Matières" %} <span class="italic text-primary">{% trans "enseignées" %}</span>
+                </h2>
+
+                <ul class="space-y-3">
+                    {% for matiere in filiere.matieres_principales.splitlines %}
+                        {% if matiere|length > 1 %}
+                            <li class="bg-white p-4 border-l-4 border-accent">
+                                <span class="text-ink/80 font-medium">{{ matiere }}</span>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- DÉBOUCHÉS PROFESSIONNELS                                          -->
+<!-- ================================================================ -->
+{% if filiere.debouches %}
+<section class="py-20 bg-primary-darker text-cream relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30 pointer-events-none"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-4xl mx-auto px-6">
+        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+            — 04 / {% trans "Débouchés" %}
+        </div>
+        <h2 class="font-serif text-3xl md:text-4xl font-medium leading-tight mb-8">
+            {% trans "Vos perspectives" %} <span class="italic text-accent">{% trans "d'avenir" %}</span>
+        </h2>
+
+        <div class="text-cream/80 text-lg leading-relaxed">
+            {{ filiere.debouches|linebreaks }}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ================================================================ -->
+<!-- AUTRES FILIÈRES SIMILAIRES                                        -->
+<!-- ================================================================ -->
+{% if autres_filieres %}
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mb-12">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — {% trans "Autres filières" %}
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight">
+                {% trans "Explorez d'autres" %} <span class="italic text-primary">{% trans "spécialités" %}</span>
+            </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-6">
+            {% for autre in autres_filieres %}
+                <a href="{{ autre.get_absolute_url }}" 
+                   class="bg-white border-l-4 border-accent p-6 group hover:-translate-y-1 transition-all duration-300 hover:shadow-lg block">
+                    <div class="w-12 h-12 bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+                        {% include "ecoles/partials/icone_filiere.html" with icone=autre.icone %}
+                    </div>
+                    <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2 group-hover:text-primary transition-colors">
+                        {{ autre.nom }}
+                    </h3>
+                    <p class="text-sm text-ink/60 leading-relaxed">
+                        {{ autre.description_courte|truncatewords:15 }}
+                    </p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ================================================================ -->
+<!-- CTA - Inscription au concours                                     -->
+<!-- ================================================================ -->
+<section class="py-20 bg-cream border-t border-primary/10">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight mb-4">
+            {% trans "Prêt à" %} <span class="italic text-primary">{% trans "vous lancer" %}</span> ?
+        </h2>
+        <p class="text-ink/70 text-lg mb-8 max-w-2xl mx-auto">
+            {% blocktrans %}Le concours d'entrée est ouvert. Préparez votre dossier et venez écrire votre parcours d'instituteur à nos côtés.{% endblocktrans %}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'ecoles:admission' %}" class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-cream font-semibold px-7 py-4 transition-all hover:gap-3 group">
+                {% trans "Procédure d'admission" %}
+                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+            <a href="{% url 'contacts:contact' %}" class="inline-flex items-center justify-center gap-2 border border-primary/30 hover:border-accent hover:text-accent text-primary-darker font-semibold px-7 py-4 transition-all">
+                {% trans "Poser une question" %}
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

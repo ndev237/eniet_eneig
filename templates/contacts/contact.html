@@ -1,0 +1,296 @@
+{% extends "base_public.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Contact" %} — ENIET / ENIEG{% endblock %}
+
+{% block meta_description %}{% trans "Contactez l'ENIET/ENIEG à Douala. Formulaire de contact, téléphones et adresse de l'établissement." %}{% endblock %}
+
+{% block content %}
+
+<!-- ================================================================ -->
+<!-- HERO DE PAGE - Bannière sombre avec titre et fil d'Ariane         -->
+<!-- ================================================================ -->
+<section class="bg-primary-darker text-cream relative overflow-hidden py-20">
+    <!-- Texture de fond en grille subtile -->
+    <div class="absolute inset-0 opacity-30 pointer-events-none"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+        <!-- Fil d'Ariane -->
+        <nav class="flex items-center gap-2 text-sm text-cream/60 mb-6">
+            <a href="{% url 'core:home' %}" class="hover:text-accent transition-colors">{% trans "Accueil" %}</a>
+            <span class="text-cream/30">/</span>
+            <span class="text-accent">{% trans "Contact" %}</span>
+        </nav>
+
+        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+            — {% trans "Nous écrire" %}
+        </div>
+        <h1 class="font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-4">
+            {% trans "Prenons" %}
+            <span class="italic text-accent">{% trans "contact" %}</span>
+        </h1>
+        <p class="text-cream/80 text-lg max-w-2xl">
+            {% blocktrans %}Une question sur nos formations, l'admission ou un projet de partenariat ? Notre équipe vous répond dans les meilleurs délais.{% endblocktrans %}
+        </p>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- SECTION PRINCIPALE - Coordonnées + Formulaire en 2 colonnes       -->
+<!-- ================================================================ -->
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-5 gap-12">
+
+        <!-- COLONNE GAUCHE : Coordonnées (2/5) -->
+        <div class="lg:col-span-2 space-y-8">
+
+            <div>
+                <h2 class="font-serif text-3xl text-primary-darker font-semibold mb-4">
+                    {% trans "Coordonnées" %}
+                </h2>
+                <p class="text-ink/70 leading-relaxed">
+                    {% blocktrans %}Nous sommes situés à 100 mètres avant la station Tradex de Yassa, venant de Ndokoti, au sein du complexe IUES / INSAM.{% endblocktrans %}
+                </p>
+            </div>
+
+            <!-- Carte adresse -->
+            <div class="bg-cream border-l-4 border-accent p-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-primary-darker mb-1">{% trans "Adresse" %}</div>
+                        <div class="text-ink/70 text-sm leading-relaxed">
+                            {% trans "Yassa, Entrée Planète Voyage" %}<br>
+                            {% trans "Douala, Cameroun" %}<br>
+                            <span class="text-ink/50">BP 4100 Douala</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte téléphones -->
+            <div class="bg-cream border-l-4 border-accent p-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-primary-darker mb-1">{% trans "Téléphones" %}</div>
+                        <div class="text-ink/70 text-sm space-y-1">
+                            <a href="tel:+237696162016" class="block hover:text-primary transition-colors">+237 696 16 20 16</a>
+                            <a href="tel:+237672467070" class="block hover:text-primary transition-colors">+237 672 46 70 70</a>
+                            <a href="tel:+237678469664" class="block hover:text-primary transition-colors">+237 678 46 96 64</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte email -->
+            <div class="bg-cream border-l-4 border-accent p-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-primary-darker mb-1">Email</div>
+                        <a href="mailto:efpsaf@yahoo.fr" class="text-ink/70 text-sm hover:text-primary transition-colors">
+                            efpsaf@yahoo.fr
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte horaires -->
+            <div class="bg-cream border-l-4 border-accent p-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-primary-darker mb-1">{% trans "Horaires d'ouverture" %}</div>
+                        <div class="text-ink/70 text-sm space-y-0.5">
+                            <div>{% trans "Lundi — Vendredi" %} : 07h30 — 17h00</div>
+                            <div>{% trans "Samedi" %} : 08h00 — 13h00</div>
+                            <div class="text-ink/50">{% trans "Dimanche" %} : {% trans "Fermé" %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLONNE DROITE : Formulaire (3/5) -->
+        <div class="lg:col-span-3">
+            <div class="bg-white border border-primary/10 p-8 lg:p-10 shadow-xl shadow-primary/5">
+
+                <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                    — {% trans "Formulaire" %}
+                </div>
+                <h2 class="font-serif text-3xl text-primary-darker font-semibold mb-3">
+                    {% trans "Écrivez-nous" %}
+                </h2>
+                <p class="text-ink/70 mb-8">
+                    {% trans "Remplissez ce formulaire et notre équipe vous répondra par email." %}
+                </p>
+
+                <!-- ================================================ -->
+                <!-- MESSAGES FLASH (succès / erreur)                  -->
+                <!-- ================================================ -->
+                {% if messages %}
+                    <div class="mb-6 space-y-3">
+                        {% for message in messages %}
+                            <div class="p-4 border-l-4 flex items-start gap-3 {% if message.tags == 'success' %}bg-green-50 border-green-600 text-green-800{% elif message.tags == 'error' %}bg-red-50 border-red-600 text-red-800{% else %}bg-blue-50 border-blue-600 text-blue-800{% endif %}">
+                                {% if message.tags == 'success' %}
+                                    <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                {% else %}
+                                    <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                    </svg>
+                                {% endif %}
+                                <span class="text-sm font-medium">{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- ================================================ -->
+                <!-- LE FORMULAIRE                                     -->
+                <!-- ================================================ -->
+                <!-- method="post" : envoie les données via POST -->
+                <!-- novalidate : on désactive la validation HTML5 native -->
+                <!--              pour laisser Django gérer (messages traduits) -->
+                <form method="post" novalidate class="space-y-5">
+                    {% csrf_token %}
+
+                    <!-- Champ NOM -->
+                    <div>
+                        <label for="{{ form.nom.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.nom.label }}
+                            <span class="text-accent">*</span>
+                        </label>
+                        {{ form.nom }}
+                        {% if form.nom.errors %}
+                            <p class="mt-1.5 text-sm text-red-600">
+                                {{ form.nom.errors|first }}
+                            </p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Ligne EMAIL + TÉLÉPHONE -->
+                    <div class="grid sm:grid-cols-2 gap-5">
+                        <div>
+                            <label for="{{ form.email.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                                {{ form.email.label }}
+                                <span class="text-accent">*</span>
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <p class="mt-1.5 text-sm text-red-600">{{ form.email.errors|first }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.telephone.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                                {{ form.telephone.label }}
+                                <span class="text-ink/40 text-xs font-normal">({% trans "optionnel" %})</span>
+                            </label>
+                            {{ form.telephone }}
+                            {% if form.telephone.errors %}
+                                <p class="mt-1.5 text-sm text-red-600">{{ form.telephone.errors|first }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Champ SUJET -->
+                    <div>
+                        <label for="{{ form.sujet.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.sujet.label }}
+                            <span class="text-accent">*</span>
+                        </label>
+                        {{ form.sujet }}
+                        {% if form.sujet.errors %}
+                            <p class="mt-1.5 text-sm text-red-600">{{ form.sujet.errors|first }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Champ MESSAGE -->
+                    <div>
+                        <label for="{{ form.message.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.message.label }}
+                            <span class="text-accent">*</span>
+                        </label>
+                        {{ form.message }}
+                        {% if form.message.errors %}
+                            <p class="mt-1.5 text-sm text-red-600">{{ form.message.errors|first }}</p>
+                        {% endif %}
+                        {% if form.message.help_text %}
+                            <p class="mt-1.5 text-xs text-ink/50">{{ form.message.help_text }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Note RGPD -->
+                    <div class="text-xs text-ink/50 bg-cream p-4 border border-primary/10">
+                        {% blocktrans %}En soumettant ce formulaire, vous acceptez que vos informations soient utilisées uniquement pour répondre à votre demande. Vos données ne seront jamais partagées avec des tiers.{% endblocktrans %}
+                    </div>
+
+                    <!-- Bouton de soumission -->
+                    <div class="pt-2">
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-cream font-semibold px-8 py-4 transition-all hover:gap-3 group">
+                            {% trans "Envoyer le message" %}
+                            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- CARTE GOOGLE MAPS - Localisation de l'établissement               -->
+<!-- ================================================================ -->
+<section class="bg-cream pb-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-10">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — {% trans "Localisation" %}
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold">
+                {% trans "Nous trouver à Yassa" %}
+            </h2>
+        </div>
+
+        <!-- Iframe Google Maps centrée sur Yassa, Douala -->
+        <!-- En production on pourra utiliser l'API Maps pour un meilleur contrôle -->
+        <div class="aspect-[16/9] w-full border border-primary/10 overflow-hidden">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.4!2d9.7547!3d4.0511!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMDMnMDQuMCJOIDnCsDQ1JzE3LjAiRQ!5e0!3m2!1sfr!2scm!4v1234567890"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

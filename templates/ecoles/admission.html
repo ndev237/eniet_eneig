@@ -1,0 +1,347 @@
+{% extends "base_public.html" %}
+{% load i18n humanize %}
+
+{% block title %}{% trans "Admission" %} — ENIET / ENIEG{% endblock %}
+
+{% block meta_description %}{% blocktrans %}Procédure d'admission au concours ENIEG/ENIET. Conditions, frais de scolarité, documents requis et calendrier des inscriptions.{% endblocktrans %}{% endblock %}
+
+{% block content %}
+
+<!-- ================================================================ -->
+<!-- HERO DE PAGE                                                      -->
+<!-- ================================================================ -->
+<section class="bg-primary-darker text-cream relative overflow-hidden py-20">
+    <div class="absolute inset-0 opacity-30 pointer-events-none"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+        <nav class="flex items-center gap-2 text-sm text-cream/60 mb-6">
+            <a href="{% url 'core:home' %}" class="hover:text-accent transition-colors">{% trans "Accueil" %}</a>
+            <span class="text-cream/30">/</span>
+            <span class="text-accent">{% trans "Admission" %}</span>
+        </nav>
+
+        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+            — {% trans "Concours" %} {{ site_settings.annee_scolaire }}
+        </div>
+        <h1 class="font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-4">
+            {% trans "Rejoignez" %}
+            <span class="italic text-accent">{% trans "notre école" %}</span>
+        </h1>
+        <p class="text-cream/80 text-lg max-w-2xl">
+            {% blocktrans %}Découvrez la procédure d'admission, les frais détaillés et les documents nécessaires pour préparer votre dossier de candidature.{% endblocktrans %}
+        </p>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- SECTION PROCÉDURE                                                 -->
+<!-- ================================================================ -->
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mb-12">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — 01 / {% trans "Procédure" %}
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight">
+                {% trans "Quatre étapes" %} <span class="italic text-primary">{% trans "pour candidater" %}</span>
+            </h2>
+        </div>
+
+        <!-- Stepper visuel - 4 étapes -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+
+            <!-- Étape 1 -->
+            <article class="relative bg-white border border-primary/10 p-6">
+                <div class="font-serif text-5xl text-accent/30 font-semibold mb-3">01</div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Préparation du dossier" %}</h3>
+                <p class="text-ink/70 text-sm leading-relaxed">
+                    {% trans "Rassemblez l'ensemble des pièces requises (CNI, diplôme, photos, etc.) selon la liste officielle." %}
+                </p>
+            </article>
+
+            <article class="relative bg-white border border-primary/10 p-6">
+                <div class="font-serif text-5xl text-accent/30 font-semibold mb-3">02</div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Inscription au concours" %}</h3>
+                <p class="text-ink/70 text-sm leading-relaxed">
+                    {% trans "Déposez votre dossier complet à l'établissement et acquittez les frais de concours (12 000 FCFA)." %}
+                </p>
+            </article>
+
+            <article class="relative bg-white border border-primary/10 p-6">
+                <div class="font-serif text-5xl text-accent/30 font-semibold mb-3">03</div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Épreuves du concours" %}</h3>
+                <p class="text-ink/70 text-sm leading-relaxed">
+                    {% trans "Présentez-vous aux épreuves écrites et orales du concours d'entrée à la date fixée." %}
+                </p>
+            </article>
+
+            <article class="relative bg-white border border-primary/10 p-6">
+                <div class="font-serif text-5xl text-accent/30 font-semibold mb-3">04</div>
+                <h3 class="font-serif text-xl text-primary-darker font-semibold mb-2">{% trans "Inscription définitive" %}</h3>
+                <p class="text-ink/70 text-sm leading-relaxed">
+                    {% trans "En cas d'admission, finalisez votre inscription et réglez la première tranche de scolarité." %}
+                </p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- SECTION FRAIS DE SCOLARITÉ AVEC ONGLETS                           -->
+<!-- ================================================================ -->
+<section class="py-20 bg-primary-darker text-cream relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30 pointer-events-none"
+         style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+        <div class="max-w-2xl mb-12">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — 02 / {% trans "Frais de scolarité" %}
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium leading-tight">
+                {% trans "Tarifs détaillés par" %} <span class="italic text-accent">{% trans "école" %}</span>
+            </h2>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ONGLETS via Alpine.js - interactivité légère sans framework  -->
+        <!-- ============================================================ -->
+        <!-- Alpine.js sera ajouté plus tard pour les onglets dynamiques. -->
+        <!-- Pour l'instant on affiche tout en colonnes côte à côte.      -->
+        <div class="grid lg:grid-cols-2 gap-8">
+
+            {% for ecole in ecoles %}
+                <div class="bg-cream/5 backdrop-blur border border-cream/20 p-8">
+
+                    <!-- Header de la carte école -->
+                    <div class="mb-6 pb-6 border-b border-cream/20">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-serif text-3xl font-semibold">{{ ecole.sigle }}</h3>
+                            <span class="text-xs uppercase tracking-wider text-accent font-semibold">
+                                {{ ecole.diplome_prepare }}
+                            </span>
+                        </div>
+                        <p class="text-cream/70 text-sm leading-relaxed">
+                            {{ ecole.description_courte }}
+                        </p>
+                    </div>
+
+                    <!-- Frais fixes (inscription + matière d'œuvre) -->
+                    <div class="mb-6">
+                        <div class="text-xs uppercase tracking-wider text-cream/60 font-semibold mb-3">
+                            {% trans "Frais fixes" %}
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center pb-3 border-b border-cream/10">
+                                <div>
+                                    <div class="font-semibold">{% trans "Inscription" %}</div>
+                                    <div class="text-xs text-cream/60">{% trans "Non remboursable" %}</div>
+                                </div>
+                                <div class="font-serif text-lg text-accent">
+                                    {{ ecole.frais_inscription_non_remboursable|floatformat:0|intcomma }} FCFA
+                                </div>
+                            </div>
+
+                            {% if ecole.matiere_oeuvre > 0 %}
+                                <div class="flex justify-between items-center pb-3 border-b border-cream/10">
+                                    <div>
+                                        <div class="font-semibold">{% trans "Matière d'œuvre" %}</div>
+                                        <div class="text-xs text-cream/60">{% trans "À l'inscription" %}</div>
+                                    </div>
+                                    <div class="font-serif text-lg text-accent">
+                                        {{ ecole.matiere_oeuvre|floatformat:0|intcomma }} FCFA
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Tranches de scolarité - 1ère année -->
+                    <div class="mb-6">
+                        <div class="text-xs uppercase tracking-wider text-cream/60 font-semibold mb-3">
+                            {% trans "Échéancier 1ʳᵉ année" %}
+                        </div>
+                        <div class="space-y-3">
+                            <!-- Boucle sur les tranches 1ère année -->
+                            <!-- regroup pourrait être utilisé ici mais on fait simple -->
+                            {% for tranche in ecole.tranches_triees %}
+                                {% if tranche.annee == 1 %}
+                                    <div class="flex justify-between items-center pb-3 border-b border-cream/10">
+                                        <div>
+                                            <div class="font-semibold">{{ tranche.libelle }}</div>
+                                            <div class="text-xs text-cream/60">{{ tranche.echeance }}</div>
+                                        </div>
+                                        <div class="font-serif text-lg">
+                                            {{ tranche.montant|floatformat:0|intcomma }} FCFA
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- TOTAL 1ère année - calculé par la propriété du modèle -->
+                    <div class="bg-accent text-primary-darker p-5">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <div class="font-serif text-lg font-semibold">{% trans "Total 1ère année" %}</div>
+                                <div class="text-xs">{% trans "Inscription + tranches" %}</div>
+                            </div>
+                            <div class="font-serif text-3xl font-bold">
+                                {{ ecole.total_premiere_annee|floatformat:0|intcomma }} FCFA
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Note sur la 2ème année -->
+                    <div class="mt-4 text-xs text-cream/60 italic">
+                        {% blocktrans %}Les frais de 2ème année sont disponibles auprès du secrétariat. Aucun dossier ne sera envoyé avant le solde de la scolarité pour les classes d'examen.{% endblocktrans %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Note frais de concours globale -->
+        <div class="mt-8 text-center text-cream/70 text-sm">
+            <strong class="text-accent">{% trans "Frais de concours :" %}</strong>
+            {% trans "12 000 FCFA non remboursables, à payer lors du dépôt du dossier." %}
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- SECTION DOCUMENTS REQUIS                                          -->
+<!-- ================================================================ -->
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12">
+
+        <!-- Colonne titre + intro -->
+        <div class="lg:col-span-4">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — 03 / {% trans "Dossier" %}
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight mb-6">
+                {% trans "Pièces à" %} <span class="italic text-primary">{% trans "fournir" %}</span>
+            </h2>
+            <p class="text-ink/70 leading-relaxed mb-6">
+                {% blocktrans %}Voici la liste complète des documents à fournir pour constituer votre dossier de candidature. Préparez-les soigneusement pour éviter tout retard.{% endblocktrans %}
+            </p>
+
+            <div class="bg-cream border-l-4 border-accent p-5 text-sm">
+                <strong class="text-primary-darker block mb-1">{% trans "Important" %}</strong>
+                <p class="text-ink/70">
+                    {% trans "Les frais de concours et d'inscription ne sont jamais remboursables, quelle que soit l'issue du concours." %}
+                </p>
+            </div>
+        </div>
+
+        <!-- Colonne liste des documents -->
+        <div class="lg:col-span-8">
+            <div class="bg-white border border-primary/10 divide-y divide-primary/10">
+                {% for document in documents %}
+                    <div class="flex items-start gap-4 p-5 hover:bg-cream/50 transition-colors">
+                        <!-- Numéro ou check -->
+                        <div class="w-10 h-10 flex-shrink-0 bg-primary/10 flex items-center justify-center font-serif text-primary font-semibold">
+                            {{ forloop.counter }}
+                        </div>
+
+                        <div class="flex-1">
+                            <div class="font-semibold text-primary-darker">
+                                {{ document.libelle }}
+                                {% if document.obligatoire %}
+                                    <span class="ml-2 text-xs text-accent font-semibold">*</span>
+                                {% endif %}
+                            </div>
+                            {% if document.description %}
+                                <div class="text-sm text-ink/60 mt-1">{{ document.description }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <p class="text-xs text-ink/50 mt-3">
+                <span class="text-accent">*</span> {% trans "Document obligatoire" %}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- SECTION FAQ - Questions fréquentes                                -->
+<!-- ================================================================ -->
+{% if faqs %}
+<section class="py-20 bg-cream relative">
+    <div class="absolute inset-0 opacity-40 pointer-events-none"
+         style="background-image: radial-gradient(circle, rgba(212, 160, 23, 0.15) 1px, transparent 1px); background-size: 24px 24px;">
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — 04 / {% trans "Questions fréquentes" %}
+            </div>
+            <h2 class="font-serif text-3xl md:text-4xl text-primary-darker font-semibold leading-tight">
+                {% trans "Tout ce que vous voulez" %} <span class="italic text-primary">{% trans "savoir" %}</span>
+            </h2>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- Liste des FAQ - utilisation de <details>/<summary> natif HTML -->
+        <!-- Évite Alpine.js/JS pour un accordion qui fonctionne sans JS  -->
+        <!-- C'est une vraie balise sémantique, accessible par défaut    -->
+        <!-- ============================================================ -->
+        <div class="space-y-3">
+            {% for faq in faqs %}
+                <details class="group bg-white border border-primary/10 overflow-hidden">
+                    <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer hover:bg-cream/50 transition-colors list-none">
+                        <h3 class="font-serif text-lg text-primary-darker font-semibold flex-1">
+                            {{ faq.question }}
+                        </h3>
+                        <!-- Icône qui tourne quand le détails est ouvert -->
+                        <svg class="w-5 h-5 text-primary flex-shrink-0 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <div class="px-5 pb-5 pt-2 text-ink/70 leading-relaxed border-t border-primary/10">
+                        {{ faq.reponse|linebreaks }}
+                    </div>
+                </details>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ================================================================ -->
+<!-- SECTION CTA - Contact si questions                                -->
+<!-- ================================================================ -->
+<section class="py-20 bg-primary-darker text-cream relative overflow-hidden">
+    <div class="absolute top-20 right-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+        <h2 class="font-serif text-3xl md:text-4xl font-medium leading-tight mb-4">
+            {% trans "Une question sur" %} <span class="italic text-accent">{% trans "votre dossier" %}</span> ?
+        </h2>
+        <p class="text-cream/80 text-lg mb-8 max-w-2xl mx-auto">
+            {% blocktrans %}Notre équipe administrative est à votre disposition pour vous accompagner dans votre démarche de candidature.{% endblocktrans %}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'contacts:contact' %}" class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-7 py-4 transition-all hover:gap-3 group">
+                {% trans "Nous contacter" %}
+                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+            <a href="tel:{{ site_settings.telephone_1 }}" class="inline-flex items-center justify-center gap-2 border border-cream/30 hover:border-accent hover:text-accent text-cream font-semibold px-7 py-4 transition-all">
+                {{ site_settings.telephone_1 }}
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,15 +1,18 @@
 {% load i18n static %}
 
+<!-- ================================================================ -->
+<!-- NAVBAR - Navigation principale du site                            -->
+<!-- Sticky : reste visible au scroll                                  -->
+<!-- ================================================================ -->
 <header class="bg-primary-darker sticky top-0 z-50 shadow-lg shadow-black/20">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-8">
 
-        {# Logo + nom de l'établissement #}
+        <!-- Logo + nom de l'établissement -->
         <a href="{% url 'core:home' %}" class="flex items-center gap-4 group flex-shrink-0">
             <div class="relative">
-                {# Halo or subtil au hover - effet premium #}
                 <div class="absolute inset-0 bg-accent/20 rounded-full blur-xl scale-0 group-hover:scale-150 transition-transform duration-500"></div>
                 <img src="{% static 'images/logo_light.png' %}" alt="ENIET/ENIEG"
-                     class="relative h-16 w-auto md:h-20 transition-transform duration-300 group-hover:scale-105">
+                     class="relative h-14 sm:h-16 w-auto md:h-20 transition-transform duration-300 group-hover:scale-105">
             </div>
             <div class="hidden sm:block border-l border-cream/15 pl-4">
                 <div class="font-serif text-cream text-xl md:text-2xl leading-tight font-semibold tracking-tight">
@@ -21,31 +24,179 @@
             </div>
         </a>
 
-        {# Navigation desktop #}
+        <!-- Navigation desktop -->
         <nav class="hidden lg:flex items-center gap-7">
-            <a href="{% url 'core:home' %}" class="text-cream text-sm font-medium relative pb-1 border-b-2 border-accent">
-                {% trans "Accueil" %}
-            </a>
-            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "L'École" %}</a>
-            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Formations" %}</a>
-            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Admission" %}</a>
-            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Actualités" %}</a>
-            <a href="#" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Contact" %}</a>
+            <a href="{% url 'core:home' %}" class="text-cream text-sm font-medium hover:text-accent transition-colors">{% trans "Accueil" %}</a>
+            <a href="{% url 'pages:ecole' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "L'École" %}</a>
+            <a href="{% url 'ecoles:formations_list' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Formations" %}</a>
+            <a href="{% url 'ecoles:admission' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Admission" %}</a>
+            <a href="{% url 'blog:list' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Actualités" %}</a>
+            <a href="{% url 'pages:galerie' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Galerie" %}</a>
+            <a href="{% url 'contacts:contact' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Contact" %}</a>
         </nav>
 
-        {# CTA principal - mise en avant du concours #}
-        <a href="#" class="hidden lg:inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-5 py-2.5 text-sm transition-all hover:gap-3 group">
-            {% trans "Concours 2025-2026" %}
+        <!-- CTA principal desktop -->
+        <a href="{% url 'ecoles:admission' %}" class="hidden lg:inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-5 py-2.5 text-sm transition-all hover:gap-3 group">
+            {% trans "Concours" %} {{ site_settings.annee_scolaire }}
             <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
             </svg>
         </a>
 
-        {# Bouton burger mobile #}
-        <button class="lg:hidden text-cream p-2" aria-label="Menu">
+        <!-- Bouton burger mobile - data-attribute utilisé par le JS -->
+        <button type="button"
+                id="mobile-menu-toggle"
+                data-menu-toggle
+                class="lg:hidden text-cream p-2 hover:text-accent transition-colors"
+                aria-label="{% trans 'Ouvrir le menu' %}"
+                aria-expanded="false"
+                aria-controls="mobile-menu">
             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
         </button>
     </div>
 </header>
+
+<!-- ================================================================ -->
+<!-- MENU MOBILE - Drawer latéral qui slide depuis la droite           -->
+<!-- ================================================================ -->
+
+<!-- Overlay sombre derrière le menu (clic = fermeture) -->
+<div id="mobile-menu-overlay"
+     data-menu-overlay
+     class="fixed inset-0 z-40 bg-primary-darker/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden">
+</div>
+
+<!--
+    Le drawer lui-même
+    - fixed inset-y-0 right-0 : ancré à droite, pleine hauteur
+    - translate-x-full : caché par défaut (translaté de 100% vers la droite)
+    - transition-transform : animation au changement de state
+    - data-menu-drawer : sélecteur utilisé par le JS
+-->
+<aside id="mobile-menu"
+       data-menu-drawer
+       class="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-primary-darker text-cream translate-x-full transition-transform duration-300 ease-out lg:hidden flex flex-col"
+       aria-hidden="true"
+       aria-label="{% trans 'Menu principal' %}">
+
+    <!-- En-tête du menu mobile -->
+    <div class="flex items-center justify-between p-6 border-b border-cream/10">
+        <div class="flex items-center gap-3">
+            <img src="{% static 'images/logo_light.png' %}" alt="ENIET/ENIEG" class="h-12 w-auto">
+            <div>
+                <div class="font-serif text-lg font-semibold">
+                    ENIET <span class="text-accent">/</span> ENIEG
+                </div>
+                <div class="text-cream/60 text-[10px] uppercase tracking-wider">
+                    {% trans "Excellence Professionnelle" %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton fermer -->
+        <button type="button"
+                data-menu-close
+                class="w-10 h-10 flex items-center justify-center text-cream hover:text-accent transition-colors"
+                aria-label="{% trans 'Fermer le menu' %}">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Liens de navigation -->
+    <nav class="flex-1 overflow-y-auto py-6">
+        <ul class="space-y-1">
+            <li>
+                <a href="{% url 'core:home' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                    <span class="font-medium">{% trans "Accueil" %}</span>
+                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'pages:ecole' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                    <span class="font-medium">{% trans "L'École" %}</span>
+                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'ecoles:formations_list' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                    <span class="font-medium">{% trans "Formations" %}</span>
+                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'ecoles:admission' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                    <span class="font-medium">{% trans "Admission" %}</span>
+                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'pages:galerie' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                    <span class="font-medium">{% trans "Galerie" %}</span>
+                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'blog:list' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                    <span class="font-medium">{% trans "Actualité" %}</span>
+                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'contacts:contact' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                    <span class="font-medium">{% trans "Contact" %}</span>
+                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Footer du menu mobile : CTA + langue + coordonnées -->
+    <div class="border-t border-cream/10 p-6 space-y-4">
+
+        <!-- CTA principal -->
+        <a href="{% url 'ecoles:admission' %}" class="flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold w-full py-3 transition-colors">
+            {% trans "Concours" %} {{ site_settings.annee_scolaire }}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+        </a>
+
+        <!-- Sélecteur de langue mobile -->
+        <form action="{% url 'set_language' %}" method="post" class="flex items-center justify-center gap-2 text-sm">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+            {% for lang_code, lang_name in LANGUAGES %}
+                <button type="submit" name="language" value="{{ lang_code }}"
+                        class="px-3 py-1 font-semibold tracking-wider transition-colors {% if LANGUAGE_CODE == lang_code %}bg-accent text-primary-darker{% else %}text-cream/60 hover:text-cream{% endif %}">
+                    {{ lang_code|upper }}
+                </button>
+            {% endfor %}
+        </form>
+
+        <!-- Téléphone direct -->
+        <a href="tel:{{ site_settings.telephone_1 }}" class="flex items-center justify-center gap-2 text-cream/70 hover:text-accent transition-colors text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            {{ site_settings.telephone_1 }}
+        </a>
+    </div>
+</aside>

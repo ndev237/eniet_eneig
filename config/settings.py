@@ -39,6 +39,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 # Apps tierces (installées via pip)
@@ -50,11 +51,11 @@ THIRD_PARTY_APPS = [
 # Nos propres apps - on les ajoutera au fur et à mesure
 LOCAL_APPS = [
     'apps.core',
-    # 'apps.pages',
-    # 'apps.ecoles',
-    # 'apps.blog',
+    'apps.pages',
+    'apps.ecoles',
+    'apps.blog',
     # 'apps.medias',
-    # 'apps.contacts',
+    'apps.contacts',
     # 'apps.accounts',
     # 'apps.dashboard',
 ]
@@ -101,6 +102,7 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',  # ← Pour LANGUAGE_CODE dans les templates
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.core.context_processors.site_settings',
             ],
         },
     },
@@ -203,3 +205,23 @@ INTERNAL_IPS = ['127.0.0.1']
 # 12. DIVERS
 # ============================================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# ============================================================
+# 13. EMAIL
+# ============================================================
+# En développement : on affiche les emails dans la console au lieu de les envoyer
+# Permet de tester sans configurer SMTP, et sans spammer une vraie boîte mail
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Email d'expédition par défaut
+DEFAULT_FROM_EMAIL = 'noreply@eniet-eneig.cm'
+
+# Email destinataire pour les notifications du site
+CONTACT_EMAIL = 'efpsaf@yahoo.fr'
+
+# Plus tard en production, on remplacera EMAIL_BACKEND par SMTP :
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.hostinger.com'
+# EMAIL_HOST_USER = '...'
+# EMAIL_HOST_PASSWORD = '...' (en variable d'environnement)
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True

@@ -6,45 +6,45 @@
 /* Import du framework Tailwind */
 @import "tailwindcss";
 
-/* Import de daisyUI (optionnel, utile pour le dashboard plus tard) */
+/* Import de daisyUI (composants prêts, utiles pour le dashboard plus tard) */
 @plugin "daisyui";
 
-/* Chemins où Tailwind scanne les classes utilisées 
-   IMPORTANT : sans @source, Tailwind ne génère pas les classes des templates externes */
+/* Chemins où Tailwind scanne les classes utilisées
+   IMPORTANT : sans @source, Tailwind ne génère pas les classes des templates Django */
 @source "../../../templates/**/*.html";
 @source "../../../apps/**/*.html";
 @source "../../../apps/**/*.py";
 
 /* ============================================================
    CHARTE GRAPHIQUE - Variables CSS personnalisées
-   ============================================================
    En Tailwind v4, on définit les couleurs/fonts dans @theme
    Ces variables génèrent automatiquement les classes utilitaires
    Ex: --color-primary → bg-primary, text-primary, border-primary
    ============================================================ */
 @theme {
-  /* Palette principale - vert palmier */
+  /* === Palette principale : vert palmier === */
   --color-primary: #0B5D2C;
   --color-primary-dark: #074A22;
   --color-primary-darker: #053818;
   --color-primary-light: #E8F3EC;
 
-  /* Accent - or institutionnel */
+  /* === Accent : or institutionnel === */
   --color-accent: #D4A017;
   --color-accent-light: #F5E6B8;
   --color-accent-dark: #A67D0E;
 
-  /* Neutres */
+  /* === Neutres === */
   --color-cream: #FAF8F3;
   --color-ink: #1A1A1A;
 
-  /* Typographie */
+  /* === Typographie === */
   --font-serif: "Fraunces", Georgia, serif;
   --font-sans: "DM Sans", system-ui, sans-serif;
 }
 
 /* ============================================================
    STYLES DE BASE
+   Appliqués à tout le document
    ============================================================ */
 @layer base {
   body {
@@ -52,48 +52,101 @@
     background-color: var(--color-cream);
     color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* text-rendering : améliore le rendu des polices (kerning, ligatures) */
+    text-rendering: optimizeLegibility;
   }
 
-  /* Optical sizing automatique pour Fraunces (police variable) */
-  .font-serif, h1, h2, h3, .font-display {
+  /* Optical sizing pour Fraunces */
+  .font-serif, h1, h2, h3 {
     font-family: var(--font-serif);
     font-optical-sizing: auto;
     letter-spacing: -0.02em;
   }
+
+  /* Scroll smooth pour les ancres */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Sélection de texte avec notre couleur or */
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-primary-darker);
+  }
+
+  /* ============================================================
+     JUSTIFICATION DES PARAGRAPHES
+     On applique uniquement aux paragraphes "longs" (dans <main>)
+     Pour éviter de justifier des phrases courtes/titres
+     ============================================================ */
+  main p {
+    /* text-align: justify ; rend les marges droite et gauche alignées */
+    text-align: justify;
+    /* hyphens: auto ; permet la coupure des mots aux endroits autorisés
+       Évite les grands espaces blancs disgracieux entre les mots */
+    hyphens: auto;
+    /* text-wrap: pretty (CSS récent) ; améliore les fins de paragraphes
+       Évite les "veuves" (un seul mot sur la dernière ligne)
+       Fallback gracieux : ignoré par les navigateurs anciens */
+    text-wrap: pretty;
+  }
+
+  /* Exception : on ne justifie PAS les paragraphes dans les éléments suivants
+     car ce sont des contextes spécifiques (descriptions courtes, boutons, etc.) */
+  main button p,
+  main a p,
+  main .text-center p,
+  main .no-justify p {
+    text-align: inherit;
+    hyphens: none;
+  }
 }
 
 /* ============================================================
-   COMPOSANTS RÉUTILISABLES (CSS personnalisé)
-   ============================================================
-   On peut créer ici des classes composées avec @apply
-   Exemple ci-dessous - on peut ajouter d'autres au besoin
+   COMPOSANTS RÉUTILISABLES
+   Classes composées avec @apply pour DRY
    ============================================================ */
 @layer components {
+  /* Bouton primaire - CTA principal sur fond sombre */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 
-           bg-accent hover:bg-accent-light 
-           text-primary-darker font-semibold 
-           px-7 py-4 rounded-sm transition;
+    @apply inline-flex items-center justify-center gap-2
+           bg-accent hover:bg-accent-light
+           text-primary-darker font-semibold
+           px-7 py-4 transition-all hover:gap-3;
   }
 
+  /* Bouton ghost - CTA secondaire avec bordure */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 
-           border border-cream/30 hover:border-accent hover:text-accent 
-           text-cream font-semibold 
-           px-7 py-4 rounded-sm transition;
+    @apply inline-flex items-center justify-center gap-2
+           border border-cream/30 hover:border-accent hover:text-accent
+           text-cream font-semibold
+           px-7 py-4 transition-all;
   }
 
-  .underline-deco {
-    position: relative;
-    display: inline-block;
+  /* Numéro de section éditorial - style magazine */
+  .section-number {
+    @apply text-xs uppercase tracking-[0.2em] text-accent font-semibold italic;
   }
-  .underline-deco::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: var(--color-accent);
+}
+
+/* ============================================================
+   ANIMATIONS PERSONNALISÉES
+   ============================================================ */
+@layer utilities {
+  /* Apparition douce du bas vers le haut */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out backwards;
   }
 }

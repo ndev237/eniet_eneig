@@ -5,37 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {# Titre dynamique : chaque page surcharge le block #}
+    <!-- Titre dynamique surchargeable par chaque page -->
     <title>{% block title %}ENIET / ENIEG — Excellence Professionnelle{% endblock %}</title>
 
-    {# Meta description pour le SEO #}
+    <!-- Meta description pour SEO -->
     <meta name="description" content="{% block meta_description %}{% trans "École Normale d'Instituteurs de l'Enseignement Général et Technique, Douala, Cameroun." %}{% endblock %}">
 
-    {# Préchargement des polices Google Fonts #}
+    <!-- Favicon - on utilisera le logo plus tard en .ico -->
+    <link rel="icon" type="image/png" href="{% static 'images/logo_light.png' %}">
+
+    <!-- Préchargement des polices Google Fonts
+       Fraunces : police variable serif avec optical sizing - distinctive et académique
+       DM Sans : sans-serif moderne, excellente lisibilité, alternative à Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,500;1,9..144,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {# CSS compilé par django-tailwind #}
+    <!-- CSS compilé par django-tailwind avec notre charte graphique -->
     {% tailwind_css %}
 
+    <!-- Block extensible pour ajouter du contenu dans <head> depuis une page -->
     {% block extra_head %}{% endblock %}
 </head>
-<body>
-    {# Top bar avec coordonnées et sélecteur de langue #}
+<body class="font-sans bg-cream text-ink antialiased">
+
+    <!-- ============================================================
+       Barre supérieure : coordonnées et sélecteur de langue
+       Visible uniquement sur écrans md+ (à partir de 768px)
+       ============================================================ -->
     {% include "partials/topbar.html" %}
 
-    {# Header avec navigation principale #}
+   <!-- ============================================================
+       Header principal : logo, navigation, CTA
+       Sticky : reste visible au scroll
+       ============================================================ -->
     {% include "partials/navbar.html" %}
 
-    {# Contenu principal de chaque page #}
+
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    {# Footer #}
+    <!-- ============================================================
+       Pied de page : coordonnées complètes, navigation secondaire
+       ============================================================ -->
     {% include "partials/footer.html" %}
 
+    <!-- Block extensible pour scripts JS spécifiques à une page-->
+    <script src="{% static 'js/site.js' %}" defer></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

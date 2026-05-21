@@ -1,0 +1,517 @@
+# Translations for ENIET/ENIEG website
+# Copyright (C) 2026 ENIET/ENIEG
+# This file is distributed under the same license as the project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eniet_eneig 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:30+0100\n"
+"PO-Revision-Date: 2026-05-19 14:30+0100\n"
+"Last-Translator: ENIET/ENIEG Team\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+#: .\config\settings.py:147
+msgid "Français"
+msgstr "French"
+
+#: .\config\settings.py:148
+msgid "English"
+msgstr "English"
+
+#: .\templates\base_public.html:12
+msgid ""
+"École Normale d'Instituteurs de l'Enseignement Général et Technique, Douala, "
+"Cameroun."
+msgstr "Teacher Training College for General and Technical Education, Douala, Cameroon."
+
+#: .\templates\core\home.html:4 .\templates\partials\navbar.html:27
+msgid "Accueil"
+msgstr "Home"
+
+#: .\templates\core\home.html:4 .\templates\partials\footer.html:23
+#: .\templates\partials\navbar.html:19
+msgid "Excellence Professionnelle"
+msgstr "Professional Excellence"
+
+#: .\templates\core\home.html:6
+msgid ""
+"École Normale d'Instituteurs de l'Enseignement Général et Technique à "
+"Douala. Formations CAPIEMP et CAPIET. Concours d'entrée 2025-2026 ouvert."
+msgstr "Teacher Training College for General and Technical Education in Douala. CAPIEMP and CAPIET programs. 2025-2026 entrance exam open."
+
+
+#: .\templates\core\home.html:32
+msgid "Agréé par le MINESEC — Arrêté n°26/15 & n°69/15"
+msgstr "Accredited by MINESEC — Decree No. 26/15 & No. 69/15"
+
+#: .\templates\core\home.html:37
+msgid "Former les"
+msgstr "Training the"
+
+#: .\templates\core\home.html:38
+msgid "éducateurs"
+msgstr "educators"
+
+#: .\templates\core\home.html:40
+msgid "de demain"
+msgstr "of tomorrow"
+
+#: .\templates\core\home.html:44
+msgid ""
+"L'ENIET et l'ENIEG forment depuis 2015 les instituteurs de l'enseignement "
+"général et technique au Cameroun, avec une exigence : l'excellence "
+"professionnelle."
+msgstr "Since 2015, ENIET and ENIEG have been training teachers for general and technical education in Cameroon, with one requirement: professional excellence."
+
+#: .\templates\core\home.html:50
+msgid "Découvrir nos formations"
+msgstr "Discover our programs"
+
+#: .\templates\core\home.html:57
+msgid "Procédure d'admission"
+msgstr "Admission process"
+
+#: .\templates\core\home.html:68
+msgid "Étudiants en formation à l\\"
+msgstr "Students training at ENIET"
+
+#: .\templates\core\home.html:80
+msgid "année de formation d'instituteurs d'élite"
+msgstr "years training elite teachers"
+
+#: .\templates\core\home.html:86
+msgid "Concours ouvert"
+msgstr "Exam open"
+
+#: .\templates\core\home.html:101
+msgid "Année de création"
+msgstr "Year founded"
+
+#: .\templates\core\home.html:105
+msgid "Filières techniques"
+msgstr "Technical programs"
+
+#: .\templates\core\home.html:109
+msgid "Cursus : CAPIEMP & CAPIET"
+msgstr "Programs: CAPIEMP & CAPIET"
+
+#: .\templates\core\home.html:113
+msgid "Diplômes reconnus par l'État"
+msgstr "State-recognized diplomas"
+
+#: .\templates\core\home.html:132
+msgid "Notre structure"
+msgstr "Our structure"
+
+#: .\templates\core\home.html:135
+msgid "Deux écoles,"
+msgstr "one shared"
+
+#: .\templates\core\home.html:136
+msgid "une même"
+msgstr "one shared"
+
+#: .\templates\core\home.html:137
+msgid "excellence"
+msgstr "excellence"
+
+#: .\templates\core\home.html:140
+msgid ""
+"Notre complexe abrite deux institutions complémentaires qui forment les "
+"instituteurs de la prochaine génération, dans le respect des standards "
+"officiels camerounais."
+msgstr "Our complex houses two complementary institutions training the next generation of teachers, following official Cameroonian standards."
+
+#: .\templates\core\home.html:153 .\templates\core\home.html:205
+msgid "École Normale d'Instituteurs"
+msgstr "Teacher Training College"
+
+#: .\templates\core\home.html:156
+msgid "Enseignement Général"
+msgstr "General Education"
+
+#: .\templates\core\home.html:166
+msgid ""
+"Certificat d'Aptitude Pédagogique d'Instituteurs de l'Enseignement Maternel "
+"et Primaire Général. Formation de 2 ans pour les futurs maîtres de l'école "
+"primaire."
+msgstr "Certificate of Teaching Aptitude for Nursery and Primary General Education Teachers. Two-year program for future primary school teachers."
+
+#: .\templates\core\home.html:174
+msgid "Recrutement sur concours (Bac requis)"
+msgstr "Selection through entrance exam (high school diploma required)"
+
+#: .\templates\core\home.html:180
+msgid "Durée : 2 ans en formation continue"
+msgstr "Duration: 2 years of continuous training"
+
+#: .\templates\core\home.html:186
+msgid "Scolarité 1ʳᵉ année : 225 000 FCFA"
+msgstr "First-year tuition: 225,000 FCFA"
+
+#: .\templates\core\home.html:191
+msgid "En savoir plus sur l'ENIEG"
+msgstr "Learn more about ENIEG"
+
+#: .\templates\core\home.html:208
+msgid "Enseignement Technique"
+msgstr "Technical Education"
+
+#: .\templates\core\home.html:218
+msgid ""
+"Certificat d'Aptitude Pédagogique d'Instituteurs de l'Enseignement "
+"Technique. Sept filières spécialisées pour former des instituteurs experts "
+"dans leur domaine."
+msgstr "Certificate of Teaching Aptitude for Technical Education Teachers. Seven specialized programs training expert teachers in their field."
+
+#: .\templates\core\home.html:226
+msgid "Accessible aux titulaires de BT, PBT, BP ou Bac technique"
+msgstr "Open to BT, PBT, BP or Technical Baccalaureate holders"
+
+#: .\templates\core\home.html:232
+msgid "7 filières professionnelles au choix"
+msgstr "7 professional programs to choose from"
+
+#: .\templates\core\home.html:238
+msgid "Scolarité 1ʳᵉ année : 300 000 FCFA"
+msgstr "First-year tuition: 300,000 FCFA"
+
+#: .\templates\core\home.html:243
+msgid "Explorer les filières ENIET"
+msgstr "Explore ENIET programs"
+
+#: .\templates\core\home.html:264
+msgid "Filières ENIET"
+msgstr "ENIET Programs"
+
+#: .\templates\core\home.html:267
+msgid "Sept voies vers"
+msgstr "Seven paths to"
+
+#: .\templates\core\home.html:268
+msgid "l'enseignement technique"
+msgstr "technical teaching"
+
+#: .\templates\core\home.html:272
+msgid "Toutes les filières"
+msgstr "All programs"
+
+#: .\templates\core\home.html:289
+msgid "Électricité"
+msgstr "Electrical Engineering"
+
+#: .\templates\core\home.html:291
+msgid ""
+"Formation aux installations électriques et à la pédagogie de la spécialité."
+msgstr "Training in electrical installations and pedagogy of the specialty."
+
+#: .\templates\core\home.html:302
+msgid "Maçonnerie & Béton Armé"
+msgstr "Masonry & Reinforced Concrete"
+
+#: .\templates\core\home.html:304
+msgid "Construction, structures et techniques pédagogiques du bâtiment."
+msgstr "Construction, structures and teaching techniques for buildings."
+
+#: .\templates\core\home.html:315
+msgid "Couture (Flou)"
+msgstr "Garment Making"
+
+#: .\templates\core\home.html:317
+msgid "Techniques de couture, design textile et enseignement professionnel."
+msgstr "Sewing techniques, textile design and professional teaching."
+
+#: .\templates\core\home.html:328
+msgid "Économie Sociale & Familiale"
+msgstr "Social & Family Economics"
+
+#: .\templates\core\home.html:330
+msgid "Sciences humaines appliquées à la vie domestique et sociale."
+msgstr "Humanities applied to domestic and social life."
+
+#: .\templates\core\home.html:341
+msgid "Comptabilité & Gestion"
+msgstr "Accounting & Management"
+
+#: .\templates\core\home.html:343
+msgid "Méthodes comptables, gestion d'entreprise et pédagogie spécialisée."
+msgstr "Accounting methods, business management and specialized pedagogy."
+
+#: .\templates\core\home.html:354
+msgid "Bureautique"
+msgstr "Office Software"
+
+#: .\templates\core\home.html:356
+msgid "Outils numériques de bureau et formation pédagogique associée."
+msgstr "Office digital tools and associated teaching training."
+
+#: .\templates\core\home.html:367
+msgid "Communication Administrative"
+msgstr "Administrative Communication"
+
+#: .\templates\core\home.html:369
+msgid "Techniques de communication formelle et secrétariat moderne."
+msgstr "Formal communication techniques and modern secretarial skills."
+
+#: .\templates\core\home.html:382
+msgid "Voir toutes les formations"
+msgstr "View all programs"
+
+#: .\templates\core\home.html:384
+msgid ""
+"Découvrez les programmes détaillés, débouchés et conditions d'admission."
+msgstr "Discover detailed programs, career outcomes and admission requirements."
+
+#: .\templates\core\home.html:407 .\templates\partials\footer.html:60
+#: .\templates\partials\navbar.html:31
+msgid "Admission"
+msgstr "Admission"
+
+#: .\templates\core\home.html:410
+msgid "Concours d'entrée"
+msgstr "Entrance Exam"
+
+#: .\templates\core\home.html:414
+msgid ""
+"Le recrutement se fait sur concours, ouvert aux titulaires du Baccalauréat "
+"(enseignement général ou technique selon l'école visée). Frais de concours : "
+"12 000 FCFA non remboursables."
+msgstr "Recruitment is done through an entrance exam, open to high school diploma holders (general or technical education depending on the school). Exam fee: 12,000 FCFA non-refundable."
+
+#: .\templates\core\home.html:418
+msgid "Composition du dossier"
+msgstr "Application requirements"
+
+#: .\templates\core\home.html:423
+msgid "Photocopie CNI"
+msgstr "ID card photocopy"
+
+#: .\templates\core\home.html:426
+msgid "Baccalauréat certifié"
+msgstr "Certified high school diploma"
+
+#: .\templates\core\home.html:429
+msgid "Acte de naissance"
+msgstr "Birth certificate"
+
+#: .\templates\core\home.html:432
+msgid "4 photos 4×4"
+msgstr "4 photos 4×4"
+
+#: .\templates\core\home.html:435
+msgid "Fiche d'inscription"
+msgstr "Registration form"
+
+#: .\templates\core\home.html:438
+msgid "Demande manuscrite au Directeur"
+msgstr "Handwritten request to the Director"
+
+#: .\templates\core\home.html:443
+msgid "Procédure complète"
+msgstr "Full procedure"
+
+#: .\templates\core\home.html:452
+msgid "Échéancier de scolarité"
+msgstr "Tuition payment schedule"
+
+#: .\templates\core\home.html:457
+msgid "ENIEG (1ʳᵉ année)"
+msgstr "ENIEG (Year 1)"
+
+#: .\templates\core\home.html:460
+msgid "ENIET (1ʳᵉ année)"
+msgstr "ENIET (Year 1)"
+
+#: .\templates\core\home.html:467
+msgid "Inscription"
+msgstr "Registration"
+
+#: .\templates\core\home.html:468
+msgid "Non remboursable"
+msgstr "Non-refundable"
+
+#: .\templates\core\home.html:474
+msgid "1ʳᵉ tranche"
+msgstr "1st installment"
+
+#: .\templates\core\home.html:475
+msgid "À l'inscription"
+msgstr "At registration"
+
+#: .\templates\core\home.html:481
+msgid "2ᵉ tranche"
+msgstr "2nd installment"
+
+#: .\templates\core\home.html:482
+msgid "Le 10 décembre"
+msgstr "December 10"
+
+#: .\templates\core\home.html:488
+msgid "3ᵉ tranche"
+msgstr "3rd installment"
+
+#: .\templates\core\home.html:489
+msgid "Le 9 janvier"
+msgstr "January 9"
+
+#: .\templates\core\home.html:494
+msgid "Total"
+msgstr "Total"
+
+#: .\templates\core\home.html:513 .\templates\partials\footer.html:61
+#: .\templates\partials\navbar.html:32
+msgid "Actualités"
+msgstr "News"
+
+#: .\templates\core\home.html:516
+msgid "La vie de"
+msgstr "Life at"
+
+#: .\templates\core\home.html:517
+msgid "notre établissement"
+msgstr "our institution"
+
+#: .\templates\core\home.html:520
+msgid "Suivez les événements, communiqués et moments forts de l'ENIET/ENIEG."
+msgstr "Follow events, announcements and highlights from ENIET/ENIEG."
+
+#: .\templates\core\home.html:524
+msgid "Toutes les actualités"
+msgstr "All news"
+
+#: .\templates\core\home.html:537
+msgid "Cérémonie de remise des diplômes"
+msgstr "Graduation ceremony"
+
+#: .\templates\core\home.html:540
+msgid "À la une"
+msgstr "Featured"
+
+#: .\templates\core\home.html:544 .\templates\core\home.html:564
+msgid "mai"
+msgstr "May"
+
+#: .\templates\core\home.html:546
+msgid "Événement"
+msgstr "Event"
+
+#: .\templates\core\home.html:549
+msgid "Cérémonie de remise des diplômes : promotion 2025"
+msgstr "Graduation ceremony: class of 2025"
+
+#: .\templates\core\home.html:552
+msgid ""
+"Notre établissement a célébré la 8ᵉ promotion d'instituteurs diplômés lors "
+"d'une cérémonie en présence du Délégué Régional du MINESEC."
+msgstr "Our institution celebrated the 8th graduating class of teachers during a ceremony attended by the Regional MINESEC Delegate."
+
+#: .\templates\core\home.html:560
+msgid "Ouverture des inscriptions"
+msgstr "Registration open"
+
+#: .\templates\core\home.html:566
+msgid "Communiqué"
+msgstr "Announcement"
+
+#: .\templates\core\home.html:569
+msgid "Ouverture des inscriptions au concours 2025-2026"
+msgstr "Registration open for the 2025-2026 entrance exam"
+
+#: .\templates\core\home.html:577
+msgid "Atelier filière électricité"
+msgstr "Electrical engineering workshop"
+
+#: .\templates\core\home.html:581
+msgid "avril"
+msgstr "April"
+
+#: .\templates\core\home.html:583
+msgid "Vie scolaire"
+msgstr "School life"
+
+#: .\templates\core\home.html:586
+msgid ""
+"Atelier pratique de la filière Électricité avec un partenaire industriel"
+msgstr "Practical workshop of the Electrical Engineering program with an industrial partner"
+
+#: .\templates\core\home.html:605
+msgid ""
+"L'éducation est l'arme la plus puissante pour changer une nation. Nos "
+"instituteurs en sont les artisans."
+msgstr "Education is the most powerful weapon to change a nation. Our teachers are its craftsmen."
+
+#: .\templates\core\home.html:608
+msgid "Paix"
+msgstr "Peace"
+
+
+#: .\templates\core\home.html:610
+msgid "Travail"
+msgstr "Work"
+
+#: .\templates\core\home.html:612
+msgid "Patrie"
+msgstr "Fatherland"
+
+#: .\templates\partials\footer.html:28
+msgid ""
+"École Normale d'Instituteurs de l'Enseignement Général et Technique. "
+"Établissement agréé par le Ministère des Enseignements Secondaires du "
+"Cameroun, dédié à former les éducateurs du futur."
+msgstr "Teacher Training College for General and Technical Education. Institution accredited by the Cameroonian Ministry of Secondary Education, dedicated to training future educators."
+
+#: .\templates\partials\footer.html:54
+msgid "Navigation"
+msgstr "Navigation"
+
+#: .\templates\partials\footer.html:58 .\templates\partials\navbar.html:29
+msgid "L'École"
+msgstr "The School"
+
+#: .\templates\partials\footer.html:59 .\templates\partials\navbar.html:30
+msgid "Formations"
+msgstr "Programs"
+
+#: .\templates\partials\footer.html:62
+msgid "Galerie"
+msgstr "Gallery"
+
+#: .\templates\partials\footer.html:63 .\templates\partials\navbar.html:33
+msgid "Contact"
+msgstr "Contact"
+
+#: .\templates\partials\footer.html:70
+msgid "Coordonnées"
+msgstr "Contact info"
+
+#: .\templates\partials\footer.html:79
+msgid "Yassa, Entrée Planète Voyage"
+msgstr "Yassa, Entrée Planète Voyage"
+
+#: .\templates\partials\footer.html:79
+msgid "Douala, Cameroun"
+msgstr "Douala, Cameroon"
+
+#: .\templates\partials\footer.html:104
+msgid "Tous droits réservés."
+msgstr "All rights reserved."
+
+#: .\templates\partials\footer.html:107
+msgid "Mentions légales"
+msgstr "Legal notice"
+
+#: .\templates\partials\footer.html:108
+msgid "Politique de confidentialité"
+msgstr "Privacy policy"
+
+#: .\templates\partials\navbar.html:38
+msgid "Concours 2025-2026"
+msgstr "2025-2026 Entrance Exam"
+
+#: .\templates\partials\topbar.html:26
+msgid "Yassa, Douala — Cameroun"
+msgstr "Yassa, Douala — Cameroon"

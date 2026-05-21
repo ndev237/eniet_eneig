@@ -25,8 +25,16 @@ urlpatterns = [
 # URLs AVEC préfixe de langue : /fr/... et /en/...
 urlpatterns += i18n_patterns(
     path('', include('apps.core.urls')),
+    path('ecole/', include('apps.pages.urls')),
+    path('formations/', include('apps.ecoles.urls')),
+    path('actualites/', include('apps.blog.urls')),
+    path('contact/', include('apps.contacts.urls')),
+
+    path('admission/', RedirectView.as_view(pattern_name='ecoles:admission', permanent=True), name='admission_legacy'),
     prefix_default_language=True,
+
 )
+
 
 # Servir les fichiers média uniquement en mode DEBUG
 if settings.DEBUG:

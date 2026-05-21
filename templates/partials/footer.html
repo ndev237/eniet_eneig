@@ -1,8 +1,8 @@
 {% load i18n static %}
 
-{# ============================================================
+<!-- ============================================================
    FOOTER - Pied de page riche avec toutes les infos importantes
-   ============================================================ #}
+   ============================================================ -->
 <footer class="bg-primary-darker text-cream pt-20 pb-8 relative overflow-hidden">
     {# Décoration de fond - halo or subtil #}
     <div class="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -11,7 +11,7 @@
     <div class="relative max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
-            {# Colonne 1 : Logo + présentation (occupe 2 colonnes sur desktop) #}
+           <!-- Colonne 1 : Logo + présentation (occupe 2 colonnes sur desktop) -->
             <div class="lg:col-span-2 lg:pr-8">
                 <div class="flex items-center gap-4 mb-6">
                     <img src="{% static 'images/logo_light.png' %}" alt="ENIET/ENIEG" class="h-20 w-auto">
@@ -28,7 +28,7 @@
                     {% blocktrans %}École Normale d'Instituteurs de l'Enseignement Général et Technique. Établissement agréé par le Ministère des Enseignements Secondaires du Cameroun, dédié à former les éducateurs du futur.{% endblocktrans %}
                 </p>
 
-                {# Réseaux sociaux avec design soigné #}
+               <!-- Réseaux sociaux avec design soigné -->
                 <div class="flex gap-3">
                     <a href="#" class="w-10 h-10 border border-cream/20 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-primary-darker transition-all" aria-label="Facebook">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -48,23 +48,23 @@
                 </div>
             </div>
 
-            {# Colonne 2 : Navigation #}
+           <!-- Colonne 2 : Navigation -->
             <div>
                 <h4 class="font-serif text-lg mb-5 relative pb-2 inline-block">
                     {% trans "Navigation" %}
                     <span class="absolute bottom-0 left-0 w-12 h-0.5 bg-accent"></span>
                 </h4>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="#" class="text-cream/70 hover:text-accent transition-colors">{% trans "L'École" %}</a></li>
-                    <li><a href="#" class="text-cream/70 hover:text-accent transition-colors">{% trans "Formations" %}</a></li>
-                    <li><a href="#" class="text-cream/70 hover:text-accent transition-colors">{% trans "Admission" %}</a></li>
-                    <li><a href="#" class="text-cream/70 hover:text-accent transition-colors">{% trans "Actualités" %}</a></li>
-                    <li><a href="#" class="text-cream/70 hover:text-accent transition-colors">{% trans "Galerie" %}</a></li>
-                    <li><a href="#" class="text-cream/70 hover:text-accent transition-colors">{% trans "Contact" %}</a></li>
+                    <li><a href="{% url 'pages:ecole' %}" class="text-cream/70 hover:text-accent transition-colors">{% trans "L'École" %}</a></li>
+                    <li><a href="{% url 'ecoles:formations_list' %}" class="text-cream/70 hover:text-accent transition-colors">{% trans "Formations" %}</a></li>
+                    <li><a href="{% url 'ecoles:admission' %}" class="text-cream/70 hover:text-accent transition-colors">{% trans "Admission" %}</a></li>
+                    <li><a href="{% url 'blog:list' %}" class="text-cream/70 hover:text-accent transition-colors">{% trans "Actualités" %}</a></li>
+                    <li><a href="{% url 'pages:galerie' %}" class="text-cream/70 hover:text-accent transition-colors">{% trans "Galerie" %}</a></li>
+                    <li><a href="{% url 'contacts:contact' %}" class="text-cream/70 hover:text-accent transition-colors">{% trans "Contact" %}</a></li>
                 </ul>
             </div>
 
-            {# Colonne 3 : Coordonnées complètes #}
+          <!--Colonne 3 : Coordonnées complètes -->
             <div>
                 <h4 class="font-serif text-lg mb-5 relative pb-2 inline-block">
                     {% trans "Coordonnées" %}
