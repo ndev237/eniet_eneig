@@ -6,43 +6,1329 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eniet_eneig 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:30+0100\n"
-"PO-Revision-Date: 2026-05-19 14:30+0100\n"
+"POT-Creation-Date: 2026-06-04 13:13+0100\n"
+"PO-Revision-Date: 2026-05-22 18:30+0100\n"
 "Last-Translator: ENIET/ENIEG Team\n"
 "Language-Team: English\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-#: .\config\settings.py:147
+
+#: .\apps\blog\models.py:19 .\apps\blog\models.py:99
+msgid "Nom"
+msgstr "Name"
+
+#: .\apps\blog\models.py:22
+msgid "Ex: Événement, Communiqué, Vie scolaire"
+msgstr "E.g. Event, Announcement, School life"
+
+#: .\apps\blog\models.py:26 .\apps\blog\models.py:105
+#: .\apps\blog\models.py:189 .\apps\dashboard\forms.py:108
+#: .\apps\ecoles\models.py:41 .\apps\ecoles\models.py:349
+#: .\apps\pages\models.py:331
+msgid "Slug URL"
+msgstr "URL slug"
+
+#: .\apps\blog\models.py:29
+msgid "Auto-généré depuis le nom si laissé vide"
+msgstr "Auto-generated from the name if left blank"
+
+#: .\apps\blog\models.py:33 .\apps\ecoles\models.py:66
+#: .\apps\ecoles\models.py:355 .\apps\pages\models.py:45
+msgid "Description courte"
+msgstr "Short description"
+
+#: .\apps\blog\models.py:36
+msgid "Affichée sur la page de catégorie"
+msgstr "Displayed on the category page"
+
+#: .\apps\blog\models.py:42
+msgid "Couleur"
+msgstr "Color"
+
+#: .\apps\blog\models.py:45
+msgid "Vert (par défaut)"
+msgstr "Green (default)"
+
+#: .\apps\blog\models.py:46
+msgid "Or"
+msgstr "Gold"
+
+#: .\apps\blog\models.py:47
+msgid "Bleu"
+msgstr "Blue"
+
+#: .\apps\blog\models.py:48
+msgid "Rouge"
+msgstr "Red"
+
+#: .\apps\blog\models.py:49
+msgid "Violet"
+msgstr "Purple"
+
+#: .\apps\blog\models.py:52
+msgid "Couleur d'affichage des badges de cette catégorie"
+msgstr "Display color for this category's badges"
+
+#: .\apps\blog\models.py:56 .\apps\ecoles\models.py:116
+#: .\apps\ecoles\models.py:213 .\apps\ecoles\models.py:257
+#: .\apps\ecoles\models.py:302 .\apps\ecoles\models.py:409
+#: .\apps\pages\models.py:240 .\apps\pages\models.py:304
+#: .\apps\pages\models.py:445
+msgid "Ordre d'affichage"
+msgstr "Display order"
+
+#: .\apps\blog\models.py:61 .\apps\blog\models.py:228
+#: .\apps\dashboard\forms.py:113 .\apps\ecoles\models.py:295
+msgid "Catégorie"
+msgstr "Category"
+
+#: .\apps\blog\models.py:62 .\templates\blog\list.html:273
+msgid "Catégories"
+msgstr "Categories"
+
+#: .\apps\blog\models.py:112
+msgid "Tag"
+msgstr "Tag"
+
+#: .\apps\blog\models.py:113 .\apps\blog\models.py:235
+#: .\apps\dashboard\forms.py:114 .\templates\blog\detail.html:176
+msgid "Tags"
+msgstr "Tags"
+
+#: .\apps\blog\models.py:169
+msgid "Brouillon"
+msgstr "Draft"
+
+#: .\apps\blog\models.py:170 .\apps\pages\models.py:366
+msgid "Publié"
+msgstr "Published"
+
+#: .\apps\blog\models.py:171
+msgid "Archivé"
+msgstr "Archived"
+
+#: .\apps\blog\models.py:184
+msgid "Titre"
+msgstr "Title"
+
+#: .\apps\blog\models.py:192
+msgid "Auto-généré depuis le titre. Modifier avec prudence (URLs publiques)"
+msgstr "Auto-generated from the title. Edit with caution (public URLs)"
+
+#: .\apps\blog\models.py:196
+msgid "Résumé"
+msgstr "Summary"
+
+#: .\apps\blog\models.py:198
+msgid "Phrase d'accroche affichée sur la liste et les partages sociaux"
+msgstr "Tagline shown on the list and social shares"
+
+#: .\apps\blog\models.py:202
+msgid "Contenu"
+msgstr "Content"
+
+#: .\apps\blog\models.py:203
+msgid "Texte complet de l'article. HTML autorisé."
+msgstr "Full article text. HTML allowed."
+
+#: .\apps\blog\models.py:210 .\apps\dashboard\forms.py:111
+msgid "Image à la une"
+msgstr "Featured image"
+
+#: .\apps\blog\models.py:212
+msgid "Image principale de l'article. Format paysage recommandé."
+msgstr "Main article image. Landscape format recommended."
+
+#: .\apps\blog\models.py:216
+msgid "Texte alternatif image"
+msgstr "Image alt text"
+
+#: .\apps\blog\models.py:218
+msgid "Description courte de l'image (accessibilité, SEO)"
+msgstr "Short image description (accessibility, SEO)"
+
+#: .\apps\blog\models.py:236
+msgid "Mots-clés pour affiner la recherche"
+msgstr "Keywords to refine search"
+
+#: .\apps\blog\models.py:248
+msgid "Auteur"
+msgstr "Author"
+
+#: .\apps\blog\models.py:255 .\apps\contacts\models.py:81
+msgid "Statut"
+msgstr "Status"
+
+#: .\apps\blog\models.py:259
+msgid "Brouillon = invisible sur le site. Publié = visible."
+msgstr "Draft = hidden on the site. Published = visible."
+
+#: .\apps\blog\models.py:263 .\apps\dashboard\forms.py:116
+msgid "Date de publication"
+msgstr "Publication date"
+
+#: .\apps\blog\models.py:265
+msgid ""
+"Date à partir de laquelle l'article est visible. Permet de programmer une "
+"publication future."
+msgstr ""
+"Date from which the article is visible. Allows scheduling a future "
+"publication."
+
+#: .\apps\blog\models.py:272 .\apps\pages\models.py:360
+#: .\templates\blog\detail.html:73
+#: .\templates\blog\partials\article_card.html:46
+#: .\templates\pages\galerie.html:72
+msgid "À la une"
+msgstr "Featured"
+
+#: .\apps\blog\models.py:274
+msgid "Mettre en avant cet article (homepage)"
+msgstr "Highlight this article (homepage)"
+
+#: .\apps\blog\models.py:281
+msgid "Nombre de vues"
+msgstr "View count"
+
+#: .\apps\blog\models.py:287
+msgid "Article"
+msgstr "Article"
+
+#: .\apps\blog\models.py:288
+msgid "Articles"
+msgstr "Articles"
+
+#: .\apps\contacts\forms.py:33
+msgid "Votre nom complet"
+msgstr "Your full name"
+
+#: .\apps\contacts\forms.py:51
+msgid "Décrivez votre demande..."
+msgstr "Describe your request..."
+
+#: .\apps\contacts\forms.py:58 .\apps\contacts\models.py:48
+#: .\apps\ecoles\models.py:26 .\apps\pages\models.py:267
+msgid "Nom complet"
+msgstr "Full name"
+
+#: .\apps\contacts\forms.py:59 .\apps\contacts\models.py:54
+msgid "Adresse email"
+msgstr "Email address"
+
+#: .\apps\contacts\forms.py:60 .\apps\contacts\models.py:60
+#: .\apps\dashboard\models.py:73
+msgid "Téléphone"
+msgstr "Phone"
+
+#: .\apps\contacts\forms.py:61
+msgid "Objet du message"
+msgstr "Message subject"
+
+#: .\apps\contacts\forms.py:62
+msgid "Votre message"
+msgstr "Your message"
+
+#: .\apps\contacts\forms.py:79
+msgid "Votre message doit contenir au moins 10 caractères."
+msgstr "Your message must contain at least 10 characters."
+
+#: .\apps\contacts\forms.py:85
+msgid "Votre message ne peut pas dépasser 5000 caractères."
+msgstr "Your message cannot exceed 5000 characters."
+
+#: .\apps\contacts\models.py:28
+msgid "Demande d'information"
+msgstr "Information request"
+
+#: .\apps\contacts\models.py:29
+msgid "Question sur l'admission"
+msgstr "Question about admission"
+
+#: .\apps\contacts\models.py:30
+msgid "Question sur les formations"
+msgstr "Question about programs"
+
+#: .\apps\contacts\models.py:31
+msgid "Proposition de partenariat"
+msgstr "Partnership proposal"
+
+#: .\apps\contacts\models.py:32 .\apps\ecoles\models.py:283
+msgid "Autre"
+msgstr "Other"
+
+#: .\apps\contacts\models.py:38
+msgid "Non lu"
+msgstr "Unread"
+
+#: .\apps\contacts\models.py:39
+msgid "Lu"
+msgstr "Read"
+
+#: .\apps\contacts\models.py:40
+msgid "Traité"
+msgstr "Handled"
+
+#: .\apps\contacts\models.py:50
+msgid "Nom et prénom de la personne"
+msgstr "Person's first and last name"
+
+#: .\apps\contacts\models.py:63
+msgid "Numéro de téléphone (optionnel)"
+msgstr "Phone number (optional)"
+
+#: .\apps\contacts\models.py:68
+msgid "Sujet"
+msgstr "Subject"
+
+#: .\apps\contacts\models.py:75
+msgid "Message"
+msgstr "Message"
+
+#: .\apps\contacts\models.py:76
+msgid "Contenu du message"
+msgstr "Message content"
+
+#: .\apps\contacts\models.py:89
+msgid "Note interne"
+msgstr "Internal note"
+
+#: .\apps\contacts\models.py:91
+msgid "Notes privées de l'équipe (non visible par l'expéditeur)"
+msgstr "Private team notes (not visible to the sender)"
+
+#: .\apps\contacts\models.py:95
+msgid "Message de contact"
+msgstr "Contact message"
+
+#: .\apps\contacts\models.py:96
+msgid "Messages de contact"
+msgstr "Contact messages"
+
+#: .\apps\contacts\views.py:53
+msgid ""
+"Votre message a bien été envoyé ! Nous vous répondrons dans les meilleurs "
+"délais."
+msgstr "Your message has been sent! We will reply as soon as possible."
+
+#: .\apps\contacts\views.py:68
+msgid "Veuillez corriger les erreurs ci-dessous."
+msgstr "Please correct the errors below."
+
+#: .\apps\dashboard\forms.py:59
+msgid "Titre accrocheur de l'article"
+msgstr "Catchy article title"
+
+#: .\apps\dashboard\forms.py:63
+msgid "genere-automatiquement-depuis-titre"
+msgstr "auto-generated-from-title"
+
+#: .\apps\dashboard\forms.py:68
+msgid ""
+"Phrase d'accroche affichée sur les listes et partages sociaux (max 300 "
+"caractères)"
+msgstr "Tagline shown on lists and social shares (max 300 characters)"
+
+#: .\apps\dashboard\forms.py:80
+msgid "Description de l'image (accessibilité, SEO)"
+msgstr "Image description (accessibility, SEO)"
+
+#: .\apps\dashboard\forms.py:107
+msgid "Titre de l'article"
+msgstr "Article title"
+
+#: .\apps\dashboard\forms.py:109
+msgid "Résumé / accroche"
+msgstr "Summary / tagline"
+
+#: .\apps\dashboard\forms.py:110
+msgid "Contenu de l'article"
+msgstr "Article content"
+
+#: .\apps\dashboard\forms.py:112
+msgid "Texte alternatif de l'image"
+msgstr "Image alt text"
+
+#: .\apps\dashboard\forms.py:115
+msgid "Statut de publication"
+msgstr "Publication status"
+
+#: .\apps\dashboard\forms.py:117
+msgid "Mettre à la une"
+msgstr "Set as featured"
+
+#: .\apps\dashboard\forms.py:121
+msgid "Laissez vide pour génération automatique depuis le titre"
+msgstr "Leave blank for automatic generation from the title"
+
+#: .\apps\dashboard\forms.py:122
+msgid "Pour programmer une publication future"
+msgstr "To schedule a future publication"
+
+#: .\apps\dashboard\forms.py:123
+msgid "Affiche cet article en avant sur la page d'accueil"
+msgstr "Displays this article prominently on the homepage"
+
+#: .\apps\dashboard\forms.py:146
+msgid "Le résumé doit contenir au moins 20 caractères."
+msgstr "The summary must contain at least 20 characters."
+
+#: .\apps\dashboard\forms.py:155
+msgid "Le titre doit contenir au moins 5 caractères."
+msgstr "The title must contain at least 5 characters."
+
+#: .\apps\dashboard\models.py:34
+msgid "Super administrateur"
+msgstr "Super administrator"
+
+#: .\apps\dashboard\models.py:35
+msgid "Éditeur"
+msgstr "Editor"
+
+#: .\apps\dashboard\models.py:36
+msgid "Lecteur"
+msgstr "Viewer"
+
+#: .\apps\dashboard\models.py:45
+msgid "Utilisateur"
+msgstr "User"
+
+#: .\apps\dashboard\models.py:52
+msgid "Rôle"
+msgstr "Role"
+
+#: .\apps\dashboard\models.py:59
+msgid "Photo de profil"
+msgstr "Profile photo"
+
+#: .\apps\dashboard\models.py:63
+msgid "Photo carrée recommandée"
+msgstr "Square photo recommended"
+
+#: .\apps\dashboard\models.py:67 .\apps\pages\models.py:276
+msgid "Biographie"
+msgstr "Biography"
+
+#: .\apps\dashboard\models.py:69
+msgid "Courte présentation, affichée sur les articles"
+msgstr "Short bio, displayed on articles"
+
+#: .\apps\dashboard\models.py:79 .\apps\pages\models.py:270
+msgid "Fonction"
+msgstr "Position"
+
+#: .\apps\dashboard\models.py:82
+msgid "Ex: Directeur, Responsable communication, Secrétaire"
+msgstr "E.g. Director, Communications Manager, Secretary"
+
+#: .\apps\dashboard\models.py:86
+msgid "Profil"
+msgstr "Profile"
+
+#: .\apps\dashboard\models.py:87
+msgid "Profils"
+msgstr "Profiles"
+
+#: .\apps\ecoles\models.py:19 .\templates\core\home.html:129
+msgid "Enseignement Général"
+msgstr "General Education"
+
+#: .\apps\ecoles\models.py:20 .\templates\core\home.html:181
+msgid "Enseignement Technique"
+msgstr "Technical Education"
+
+#: .\apps\ecoles\models.py:28
+msgid "Ex: École Normale d'Instituteurs de l'Enseignement Général"
+msgstr "E.g. Teacher Training College for General Education"
+
+#: .\apps\ecoles\models.py:32
+msgid "Sigle"
+msgstr "Acronym"
+
+#: .\apps\ecoles\models.py:35
+msgid "Ex: ENIEG ou ENIET"
+msgstr "E.g. ENIEG or ENIET"
+
+#: .\apps\ecoles\models.py:44
+msgid "Identifiant pour l'URL, en minuscules sans accents"
+msgstr "URL identifier, lowercase without accents"
+
+#: .\apps\ecoles\models.py:48
+msgid "Type"
+msgstr "Type"
+
+#: .\apps\ecoles\models.py:54
+msgid "Diplôme préparé"
+msgstr "Diploma prepared"
+
+#: .\apps\ecoles\models.py:56
+msgid "Ex: CAPIEMP ou CAPIET"
+msgstr "E.g. CAPIEMP or CAPIET"
+
+#: .\apps\ecoles\models.py:60
+msgid "Intitulé complet du diplôme"
+msgstr "Full diploma title"
+
+#: .\apps\ecoles\models.py:62
+msgid "Ex: Certificat d'Aptitude Pédagogique d'Instituteurs..."
+msgstr "E.g. Teaching Aptitude Certificate for Teachers..."
+
+#: .\apps\ecoles\models.py:68
+msgid "Affichée sur la page d'accueil et la liste des écoles"
+msgstr "Displayed on the homepage and the school list"
+
+#: .\apps\ecoles\models.py:72 .\apps\ecoles\models.py:361
+msgid "Description détaillée"
+msgstr "Detailed description"
+
+#: .\apps\ecoles\models.py:74
+msgid "Affichée sur la page admission de l'école"
+msgstr "Displayed on the school's admission page"
+
+#: .\apps\ecoles\models.py:81
+msgid "Pré-requis d'admission"
+msgstr "Admission prerequisites"
+
+#: .\apps\ecoles\models.py:82
+msgid "Diplômes acceptés : Bac, BT, BP, etc."
+msgstr "Accepted diplomas: Baccalaureate, BT, BP, etc."
+
+#: .\apps\ecoles\models.py:86
+msgid "Durée de la formation"
+msgstr "Program duration"
+
+#: .\apps\ecoles\models.py:96
+msgid "Frais de concours (FCFA)"
+msgstr "Entrance exam fee (FCFA)"
+
+#: .\apps\ecoles\models.py:98
+msgid "Frais d'inscription au concours, non remboursables"
+msgstr "Entrance exam registration fee, non-refundable"
+
+#: .\apps\ecoles\models.py:102
+msgid "Inscription non remboursable (FCFA)"
+msgstr "Non-refundable registration (FCFA)"
+
+#: .\apps\ecoles\models.py:107
+msgid "Matière d'œuvre (FCFA)"
+msgstr "Materials fee (FCFA)"
+
+#: .\apps\ecoles\models.py:109
+msgid "Frais de matière d'œuvre - 0 pour ENIEG, 25000 pour ENIET"
+msgstr "Materials fee - 0 for ENIEG, 25000 for ENIET"
+
+#: .\apps\ecoles\models.py:120 .\apps\ecoles\models.py:306
+#: .\apps\ecoles\models.py:413 .\apps\pages\models.py:246
+#: .\apps\pages\models.py:308
+msgid "Actif"
+msgstr "Active"
+
+#: .\apps\ecoles\models.py:123 .\apps\ecoles\models.py:179
+#: .\apps\ecoles\models.py:336
+msgid "École"
+msgstr "School"
+
+#: .\apps\ecoles\models.py:124
+msgid "Écoles"
+msgstr "Schools"
+
+#: .\apps\ecoles\models.py:186
+msgid "Année de scolarité"
+msgstr "School year"
+
+#: .\apps\ecoles\models.py:187
+msgid "1ère année"
+msgstr "Year 1"
+
+#: .\apps\ecoles\models.py:187
+msgid "2ème année"
+msgstr "Year 2"
+
+#: .\apps\ecoles\models.py:188
+msgid "À quelle année concerne cette tranche"
+msgstr "Which year this installment applies to"
+
+#: .\apps\ecoles\models.py:192
+msgid "Numéro de tranche"
+msgstr "Installment number"
+
+#: .\apps\ecoles\models.py:193
+msgid "1 pour la 1ère tranche, 2 pour la 2ème, etc."
+msgstr "1 for the 1st installment, 2 for the 2nd, etc."
+
+#: .\apps\ecoles\models.py:197
+msgid "Libellé"
+msgstr "Label"
+
+#: .\apps\ecoles\models.py:199
+msgid "Ex: \"1ère tranche\", \"2ème tranche\""
+msgstr "E.g. \"1st installment\", \"2nd installment\""
+
+#: .\apps\ecoles\models.py:203
+msgid "Montant (FCFA)"
+msgstr "Amount (FCFA)"
+
+#: .\apps\ecoles\models.py:207
+msgid "Échéance"
+msgstr "Due date"
+
+#: .\apps\ecoles\models.py:209
+msgid "Ex: \"À l'inscription\", \"Le 10 décembre\""
+msgstr "E.g. \"At registration\", \"December 10\""
+
+#: .\apps\ecoles\models.py:218
+msgid "Tranche de paiement"
+msgstr "Payment installment"
+
+#: .\apps\ecoles\models.py:219
+msgid "Tranches de paiement"
+msgstr "Payment installments"
+
+#: .\apps\ecoles\models.py:239
+msgid "Document"
+msgstr "Document"
+
+#: .\apps\ecoles\models.py:241
+msgid "Ex: \"Photocopie CNI\""
+msgstr "E.g. \"ID card photocopy\""
+
+#: .\apps\ecoles\models.py:245
+msgid "Précision"
+msgstr "Details"
+
+#: .\apps\ecoles\models.py:248
+msgid "Détails optionnels (format, exigences...)"
+msgstr "Optional details (format, requirements...)"
+
+#: .\apps\ecoles\models.py:252
+msgid "Obligatoire"
+msgstr "Required"
+
+#: .\apps\ecoles\models.py:262
+msgid "Document requis"
+msgstr "Required document"
+
+#: .\apps\ecoles\models.py:263
+msgid "Documents requis"
+msgstr "Required documents"
+
+#: .\apps\ecoles\models.py:280 .\templates\blog\list.html:321
+#: .\templates\core\home.html:378 .\templates\ecoles\admission.html:4
+#: .\templates\ecoles\admission.html:23 .\templates\ecoles\admission.html:27
+#: .\templates\partials\footer.html:82 .\templates\partials\navbar.html:52
+#: .\templates\partials\navbar.html:181
+msgid "Admission"
+msgstr "Admission"
+
+#: .\apps\ecoles\models.py:281
+msgid "Formation"
+msgstr "Program"
+
+#: .\apps\ecoles\models.py:282
+msgid "Frais et paiement"
+msgstr "Fees and payment"
+
+#: .\apps\ecoles\models.py:286
+msgid "Question"
+msgstr "Question"
+
+#: .\apps\ecoles\models.py:291
+msgid "Réponse"
+msgstr "Answer"
+
+#: .\apps\ecoles\models.py:309
+msgid "Question fréquente"
+msgstr "Frequently asked question"
+
+#: .\apps\ecoles\models.py:310 .\templates\ecoles\admission.html:162
+msgid "Questions fréquentes"
+msgstr "Frequently asked questions"
+
+#: .\apps\ecoles\models.py:343
+msgid "Nom de la filière"
+msgstr "Program name"
+
+#: .\apps\ecoles\models.py:345
+msgid "Ex: Électricité, Couture, Bureautique"
+msgstr "E.g. Electrical Engineering, Garment Making, Office Software"
+
+#: .\apps\ecoles\models.py:351
+msgid "Identifiant pour l'URL (sans accent, en minuscules)"
+msgstr "URL identifier (no accents, lowercase)"
+
+#: .\apps\ecoles\models.py:357
+msgid "Phrase d'accroche affichée sur les cartes"
+msgstr "Tagline shown on cards"
+
+#: .\apps\ecoles\models.py:363
+msgid "Présentation complète, affichée sur la page de détail"
+msgstr "Full presentation, displayed on the detail page"
+
+#: .\apps\ecoles\models.py:370
+msgid "Débouchés professionnels"
+msgstr "Career opportunities"
+
+#: .\apps\ecoles\models.py:372
+msgid "Métiers et opportunités après la formation"
+msgstr "Jobs and opportunities after the program"
+
+#: .\apps\ecoles\models.py:376
+msgid "Compétences acquises"
+msgstr "Skills acquired"
+
+#: .\apps\ecoles\models.py:378
+msgid "Une compétence par ligne"
+msgstr "One skill per line"
+
+#: .\apps\ecoles\models.py:382
+msgid "Matières principales"
+msgstr "Main subjects"
+
+#: .\apps\ecoles\models.py:384
+msgid "Une matière par ligne"
+msgstr "One subject per line"
+
+#: .\apps\ecoles\models.py:391
+msgid "Icône"
+msgstr "Icon"
+
+#: .\apps\ecoles\models.py:394
+msgid "Identifiant d'icône : bolt, building, scissors, chart, computer..."
+msgstr "Icon identifier: bolt, building, scissors, chart, computer..."
+
+#: .\apps\ecoles\models.py:398
+msgid "Image illustrative"
+msgstr "Illustrative image"
+
+#: .\apps\ecoles\models.py:402
+msgid "Photo d'illustration de la filière"
+msgstr "Illustrative photo of the program"
+
+#: .\apps\ecoles\models.py:416
+msgid "Filière"
+msgstr "Program"
+
+#: .\apps\ecoles\models.py:417 .\templates\ecoles\ecole_detail.html:100
+msgid "Filières"
+msgstr "Programs"
+
+#: .\apps\pages\models.py:31
+msgid "Nom de l'établissement"
+msgstr "Institution name"
+
+#: .\apps\pages\models.py:34
+msgid "Affiché dans le footer et les emails"
+msgstr "Displayed in the footer and emails"
+
+#: .\apps\pages\models.py:38
+msgid "Devise"
+msgstr "Motto"
+
+#: .\apps\pages\models.py:48
+msgid "Utilisée dans le footer et les méta-descriptions par défaut"
+msgstr "Used in the footer and default meta descriptions"
+
+#: .\apps\pages\models.py:55
+msgid "Email principal"
+msgstr "Main email"
+
+#: .\apps\pages\models.py:60
+msgid "Email de contact"
+msgstr "Contact email"
+
+#: .\apps\pages\models.py:62
+msgid "Email qui reçoit les messages du formulaire de contact"
+msgstr "Email that receives contact form messages"
+
+#: .\apps\pages\models.py:66
+msgid "Téléphone principal"
+msgstr "Main phone"
+
+#: .\apps\pages\models.py:72
+msgid "Téléphone secondaire"
+msgstr "Secondary phone"
+
+#: .\apps\pages\models.py:79
+msgid "Téléphone 3"
+msgstr "Phone 3"
+
+#: .\apps\pages\models.py:86
+msgid "Adresse - ligne 1"
+msgstr "Address - line 1"
+
+#: .\apps\pages\models.py:92
+msgid "Adresse - ligne 2"
+msgstr "Address - line 2"
+
+#: .\apps\pages\models.py:99
+msgid "Boîte postale"
+msgstr "P.O. Box"
+
+#: .\apps\pages\models.py:109
+msgid "Latitude"
+msgstr "Latitude"
+
+#: .\apps\pages\models.py:113
+msgid "Coordonnée GPS pour la carte (ex: 4.0511 pour Douala)"
+msgstr "GPS coordinate for the map (e.g. 4.0511 for Douala)"
+
+#: .\apps\pages\models.py:117
+msgid "Longitude"
+msgstr "Longitude"
+
+#: .\apps\pages\models.py:121
+msgid "Coordonnée GPS pour la carte"
+msgstr "GPS coordinate for the map"
+
+#: .\apps\pages\models.py:128
+msgid "Horaires lundi-vendredi"
+msgstr "Monday-Friday hours"
+
+#: .\apps\pages\models.py:135
+msgid "Horaires samedi"
+msgstr "Saturday hours"
+
+#: .\apps\pages\models.py:144
+msgid "URL Facebook"
+msgstr "Facebook URL"
+
+#: .\apps\pages\models.py:145
+msgid "URL Instagram"
+msgstr "Instagram URL"
+
+#: .\apps\pages\models.py:146
+msgid "URL YouTube"
+msgstr "YouTube URL"
+
+#: .\apps\pages\models.py:147
+msgid "URL LinkedIn"
+msgstr "LinkedIn URL"
+
+#: .\apps\pages\models.py:153
+msgid "N° arrêté ENIET"
+msgstr "ENIET decree no."
+
+#: .\apps\pages\models.py:160
+msgid "N° arrêté ENIEG"
+msgstr "ENIEG decree no."
+
+#: .\apps\pages\models.py:170
+msgid "Année scolaire en cours"
+msgstr "Current school year"
+
+#: .\apps\pages\models.py:173
+msgid "Format : YYYY-YYYY"
+msgstr "Format: YYYY-YYYY"
+
+#: .\apps\pages\models.py:177
+msgid "Paramètre du site"
+msgstr "Site setting"
+
+#: .\apps\pages\models.py:178
+msgid "Paramètres du site"
+msgstr "Site settings"
+
+#: .\apps\pages\models.py:222
+msgid "Titre de la valeur"
+msgstr "Value title"
+
+#: .\apps\pages\models.py:224
+msgid "Ex: Excellence, Rigueur, Intégrité"
+msgstr "E.g. Excellence, Rigor, Integrity"
+
+#: .\apps\pages\models.py:228 .\apps\pages\models.py:338
+msgid "Description"
+msgstr "Description"
+
+#: .\apps\pages\models.py:229
+msgid "Courte description de la valeur"
+msgstr "Short description of the value"
+
+#: .\apps\pages\models.py:233
+msgid "Icône SVG path"
+msgstr "SVG icon path"
+
+#: .\apps\pages\models.py:236
+msgid "Identifiant d'icône : star, shield, heart, book, etc."
+msgstr "Icon identifier: star, shield, heart, book, etc."
+
+#: .\apps\pages\models.py:242
+msgid "Plus le nombre est petit, plus la valeur apparaît en premier"
+msgstr "The lower the number, the earlier the value appears"
+
+#: .\apps\pages\models.py:248
+msgid "Décocher pour masquer cette valeur sans la supprimer"
+msgstr "Uncheck to hide this value without deleting it"
+
+#: .\apps\pages\models.py:252
+msgid "Valeur de l'établissement"
+msgstr "Institution value"
+
+#: .\apps\pages\models.py:253
+msgid "Valeurs de l'établissement"
+msgstr "Institution values"
+
+#: .\apps\pages\models.py:272
+msgid "Ex: Directeur, Directeur des Études, Censeur"
+msgstr "E.g. Director, Director of Studies, Vice-Principal"
+
+#: .\apps\pages\models.py:278
+msgid "Courte biographie / parcours professionnel"
+msgstr "Short biography / professional background"
+
+#: .\apps\pages\models.py:282
+msgid "Citation / Mot"
+msgstr "Quote / Message"
+
+#: .\apps\pages\models.py:284
+msgid "Citation à afficher (notamment pour le directeur)"
+msgstr "Quote to display (notably for the director)"
+
+#: .\apps\pages\models.py:288 .\apps\pages\models.py:451
+msgid "Photo"
+msgstr "Photo"
+
+#: .\apps\pages\models.py:292
+msgid "Photo professionnelle - format carré recommandé"
+msgstr "Professional photo - square format recommended"
+
+#: .\apps\pages\models.py:298
+msgid "Est le directeur"
+msgstr "Is the director"
+
+#: .\apps\pages\models.py:300
+msgid "Cochez pour le directeur principal (affichage spécial)"
+msgstr "Check for the main director (special display)"
+
+#: .\apps\pages\models.py:311
+msgid "Membre de la direction"
+msgstr "Management team member"
+
+#: .\apps\pages\models.py:312
+msgid "Membres de la direction"
+msgstr "Management team members"
+
+#: .\apps\pages\models.py:326
+msgid "Titre de l'album"
+msgstr "Album title"
+
+#: .\apps\pages\models.py:334
+msgid "Identifiant pour l'URL (généré automatiquement)"
+msgstr "URL identifier (auto-generated)"
+
+#: .\apps\pages\models.py:340
+msgid "Présentation de l'événement, contexte"
+msgstr "Event presentation, context"
+
+#: .\apps\pages\models.py:344
+msgid "Date de l'événement"
+msgstr "Event date"
+
+#: .\apps\pages\models.py:345
+msgid "Date à laquelle l'événement a eu lieu"
+msgstr "Date the event took place"
+
+#: .\apps\pages\models.py:351
+msgid "Photo de couverture"
+msgstr "Cover photo"
+
+#: .\apps\pages\models.py:355
+msgid "Optionnel - si vide, on utilise la 1ère photo de l'album"
+msgstr "Optional - if blank, the album's first photo is used"
+
+#: .\apps\pages\models.py:362
+msgid "Mettre en avant cet album"
+msgstr "Highlight this album"
+
+#: .\apps\pages\models.py:368
+msgid "Décocher pour cacher l'album sans le supprimer"
+msgstr "Uncheck to hide the album without deleting it"
+
+#: .\apps\pages\models.py:372
+msgid "Album photo"
+msgstr "Photo album"
+
+#: .\apps\pages\models.py:373
+msgid "Albums photos"
+msgstr "Photo albums"
+
+#: .\apps\pages\models.py:420
+msgid "Album"
+msgstr "Album"
+
+#: .\apps\pages\models.py:424
+msgid "Image"
+msgstr "Image"
+
+#: .\apps\pages\models.py:426
+msgid "Format JPG ou PNG, taille recommandée : 1920x1080 max"
+msgstr "JPG or PNG format, recommended size: 1920x1080 max"
+
+#: .\apps\pages\models.py:431
+msgid "Légende"
+msgstr "Caption"
+
+#: .\apps\pages\models.py:434
+msgid "Description de la photo (visible au survol et dans le lightbox)"
+msgstr "Photo description (visible on hover and in the lightbox)"
+
+#: .\apps\pages\models.py:439
+msgid "Texte alternatif"
+msgstr "Alt text"
+
+#: .\apps\pages\models.py:441
+msgid "Description courte pour les lecteurs d'écran (accessibilité)"
+msgstr "Short description for screen readers (accessibility)"
+
+#: .\apps\pages\models.py:447
+msgid "Plus le nombre est petit, plus la photo apparaît en premier"
+msgstr "The lower the number, the earlier the photo appears"
+
+#: .\apps\pages\models.py:452
+msgid "Photos"
+msgstr "Photos"
+
+#: .\config\settings.py:151
 msgid "Français"
 msgstr "French"
 
-#: .\config\settings.py:148
+#: .\config\settings.py:152
 msgid "English"
 msgstr "English"
 
 #: .\templates\base_public.html:12
 msgid ""
-"École Normale d'Instituteurs de l'Enseignement Général et Technique, Douala, "
-"Cameroun."
-msgstr "Teacher Training College for General and Technical Education, Douala, Cameroon."
+"École Normale d'Instituteurs de l'Enseignement Général et Technique, Douala,"
+" Cameroun."
+msgstr ""
+"Teacher Training College for General and Technical Education, Douala, "
+"Cameroon."
 
-#: .\templates\core\home.html:4 .\templates\partials\navbar.html:27
+#: .\templates\blog\detail.html:43 .\templates\blog\list.html:22
+#: .\templates\contacts\contact.html:23 .\templates\core\home.html:4
+#: .\templates\ecoles\admission.html:21
+#: .\templates\ecoles\ecole_detail.html:21
+#: .\templates\ecoles\filiere_detail.html:21
+#: .\templates\ecoles\formations_list.html:19
+#: .\templates\pages\album_detail.html:20 .\templates\pages\ecole.html:22
+#: .\templates\pages\galerie.html:21 .\templates\partials\navbar.html:34
+#: .\templates\partials\navbar.html:148
 msgid "Accueil"
 msgstr "Home"
 
-#: .\templates\core\home.html:4 .\templates\partials\footer.html:23
-#: .\templates\partials\navbar.html:19
+#: .\templates\blog\detail.html:45 .\templates\blog\list.html:4
+#: .\templates\blog\list.html:24 .\templates\partials\footer.html:83
+#: .\templates\partials\navbar.html:58
+msgid "Actualités"
+msgstr "News"
+
+#: .\templates\blog\detail.html:98
+msgid "Par"
+msgstr "By"
+
+#: .\templates\blog\detail.html:122
+msgid "vue"
+msgstr "view"
+
+#: .\templates\blog\detail.html:194
+msgid "Partager"
+msgstr "Share"
+
+#: .\templates\blog\detail.html:253
+msgid "À découvrir aussi"
+msgstr "Also worth exploring"
+
+#: .\templates\blog\detail.html:256 .\templates\pages\album_detail.html:172
+msgid "D'autres"
+msgstr "More"
+
+#: .\templates\blog\detail.html:256 .\templates\blog\list.html:47
+msgid "actualités"
+msgstr "news"
+
+#: .\templates\blog\detail.html:268 .\templates\blog\list.html:253
+msgid "Voir toutes les actualités"
+msgstr "View all news"
+
+#: .\templates\blog\list.html:6
+msgid "Toutes les actualités, événements et communiqués de l'ENIET/ENIEG."
+msgstr "All news, events and announcements from ENIET/ENIEG."
+
+#: .\templates\blog\list.html:35 .\templates\core\home.html:440
+msgid "Vie de l'établissement"
+msgstr "Campus life"
+
+#: .\templates\blog\list.html:45
+msgid "Recherche"
+msgstr "Search"
+
+#: .\templates\blog\list.html:47
+msgid "Toutes nos"
+msgstr "All our"
+
+#: .\templates\blog\list.html:56
+#, python-format
+msgid ""
+"\n"
+"                    %(counter)s résultat pour « <span class=\"text-accent\">%(recherche)s</span> »\n"
+"                "
+msgid_plural ""
+"\n"
+"                    %(counter)s résultats pour « <span class=\"text-accent\">%(recherche)s</span> »\n"
+"                "
+msgstr[0] ""
+"\n"
+"                    %(counter)s result for « <span class=\"text-accent\">%(recherche)s</span> »\n"
+"                "
+msgstr[1] ""
+"\n"
+"                    %(counter)s results for « <span class=\"text-accent\">%(recherche)s</span> »\n"
+"                "
+
+#: .\templates\blog\list.html:62
+msgid "Suivez les événements, communiqués et moments forts de l'ENIET/ENIEG."
+msgstr "Follow events, announcements and highlights from ENIET/ENIEG."
+
+#: .\templates\blog\list.html:87
+msgid "Rechercher un article..."
+msgstr "Search for an article..."
+
+#: .\templates\blog\list.html:105
+msgid "Filtres actifs"
+msgstr "Active filters"
+
+#: .\templates\blog\list.html:139
+msgid "Tout effacer"
+msgstr "Clear all"
+
+#: .\templates\blog\list.html:152
+#, python-format
+msgid ""
+"\n"
+"                        <strong class=\"text-primary-darker\">%(counter)s</strong> article publié\n"
+"                    "
+msgid_plural ""
+"\n"
+"                        <strong class=\"text-primary-darker\">%(counter)s</strong> articles publiés\n"
+"                    "
+msgstr[0] ""
+"\n"
+"                        <strong class=\"text-primary-darker\">%(counter)s</strong> article published\n"
+"                    "
+msgstr[1] ""
+"\n"
+"                        <strong class=\"text-primary-darker\">%(counter)s</strong> articles published\n"
+"                    "
+
+#: .\templates\blog\list.html:170
+msgid "Pagination"
+msgstr "Pagination"
+
+#: .\templates\blog\list.html:179 .\templates\blog\list.html:186
+msgid "Précédent"
+msgstr "Previous"
+
+#: .\templates\blog\list.html:213 .\templates\blog\list.html:220
+msgid "Suivant"
+msgstr "Next"
+
+#: .\templates\blog\list.html:230
+#, python-format
+msgid ""
+"\n"
+"                            Page %(current)s sur %(total)s\n"
+"                        "
+msgstr ""
+"\n"
+"                            Page %(current)s of %(total)s\n"
+"                        "
+
+#: .\templates\blog\list.html:243
+msgid "Aucun article trouvé"
+msgstr "No articles found"
+
+#: .\templates\blog\list.html:247
+msgid ""
+"Aucun article ne correspond à votre recherche. Essayez avec d'autres mots-"
+"clés."
+msgstr "No article matches your search. Try other keywords."
+
+#: .\templates\blog\list.html:249
+msgid "Aucun article publié dans cette catégorie pour le moment."
+msgstr "No article published in this category yet."
+
+#: .\templates\blog\list.html:300
+msgid "Tags populaires"
+msgstr "Popular tags"
+
+#: .\templates\blog\list.html:324
+msgid "Rejoindre l'École"
+msgstr "Join the School"
+
+#: .\templates\blog\list.html:327
+msgid "Préparez votre dossier pour rejoindre la prochaine promotion."
+msgstr "Prepare your application to join the next class."
+
+#: .\templates\blog\list.html:330
+msgid "S'inscrire"
+msgstr "Register"
+
+#: .\templates\blog\partials\article_card.html:88
+msgid "Lire l'article"
+msgstr "Read the article"
+
+#: .\templates\contacts\contact.html:4 .\templates\contacts\contact.html:25
+#: .\templates\partials\footer.html:85 .\templates\partials\navbar.html:70
+#: .\templates\partials\navbar.html:214
+msgid "Contact"
+msgstr "Contact"
+
+#: .\templates\contacts\contact.html:6
+msgid ""
+"Contactez l'ENIET/ENIEG à Douala. Formulaire de contact, téléphones et "
+"adresse de l'établissement."
+msgstr ""
+"Contact ENIET/ENIEG in Douala. Contact form, phone numbers and the "
+"institution's address."
+
+#: .\templates\contacts\contact.html:29
+msgid "Nous écrire"
+msgstr "Write to us"
+
+#: .\templates\contacts\contact.html:32
+msgid "Prenons"
+msgstr "Let's get in"
+
+#: .\templates\contacts\contact.html:33
+msgid "contact"
+msgstr "touch"
+
+#: .\templates\contacts\contact.html:36
+msgid ""
+"Une question sur nos formations, l'admission ou un projet de partenariat ? "
+"Notre équipe vous répond dans les meilleurs délais."
+msgstr ""
+"A question about our programs, admission or a partnership project? Our team "
+"will get back to you as soon as possible."
+
+#: .\templates\contacts\contact.html:52 .\templates\partials\footer.html:92
+msgid "Coordonnées"
+msgstr "Contact info"
+
+#: .\templates\contacts\contact.html:55
+msgid ""
+"Nous sommes situés à 100 mètres avant la station Tradex de Yassa, venant de "
+"Ndokoti, au sein du complexe IUES / INSAM."
+msgstr ""
+"We are located 100 metres before the Yassa Tradex station, coming from "
+"Ndokoti, within the IUES / INSAM complex."
+
+#: .\templates\contacts\contact.html:69
+msgid "Adresse"
+msgstr "Address"
+
+#: .\templates\contacts\contact.html:71 .\templates\partials\footer.html:101
+msgid "Yassa, Entrée Planète Voyage"
+msgstr "Yassa, Entrée Planète Voyage"
+
+#: .\templates\contacts\contact.html:72 .\templates\partials\footer.html:101
+msgid "Douala, Cameroun"
+msgstr "Douala, Cameroon"
+
+#: .\templates\contacts\contact.html:88
+msgid "Téléphones"
+msgstr "Phone numbers"
+
+#: .\templates\contacts\contact.html:124
+msgid "Horaires d'ouverture"
+msgstr "Opening hours"
+
+#: .\templates\contacts\contact.html:126
+msgid "Lundi — Vendredi"
+msgstr "Monday — Friday"
+
+#: .\templates\contacts\contact.html:127
+msgid "Samedi"
+msgstr "Saturday"
+
+#: .\templates\contacts\contact.html:128
+msgid "Dimanche"
+msgstr "Sunday"
+
+#: .\templates\contacts\contact.html:128
+msgid "Fermé"
+msgstr "Closed"
+
+#: .\templates\contacts\contact.html:140
+msgid "Formulaire"
+msgstr "Form"
+
+#: .\templates\contacts\contact.html:143
+msgid "Écrivez-nous"
+msgstr "Write to us"
+
+#: .\templates\contacts\contact.html:146
+msgid "Remplissez ce formulaire et notre équipe vous répondra par email."
+msgstr "Fill out this form and our team will reply by email."
+
+#: .\templates\contacts\contact.html:210
+msgid "optionnel"
+msgstr "optional"
+
+#: .\templates\contacts\contact.html:248
+msgid ""
+"En soumettant ce formulaire, vous acceptez que vos informations soient "
+"utilisées uniquement pour répondre à votre demande. Vos données ne seront "
+"jamais partagées avec des tiers."
+msgstr ""
+"By submitting this form, you agree that your information will be used solely"
+" to respond to your request. Your data will never be shared with third "
+"parties."
+
+#: .\templates\contacts\contact.html:254
+msgid "Envoyer le message"
+msgstr "Send message"
+
+#: .\templates\contacts\contact.html:276
+msgid "Localisation"
+msgstr "Location"
+
+#: .\templates\contacts\contact.html:279
+msgid "Nous trouver à Yassa"
+msgstr "Find us in Yassa"
+
+#: .\templates\contacts\contact.html:291
+msgid "Itinéraire vers l'école"
+msgstr "Get directions to the school"
+
+#: .\templates\contacts\contact.html:308
+msgid "Carte ENIET / ENIEG — Yassa, Douala"
+msgstr "Map — ENIET / ENIEG · Yassa, Douala"
+
+#: .\templates\contacts\contact.html:326
+msgid ""
+"Coordonnées GPS non renseignées. Ajoutez-les depuis Dashboard → Paramètres →"
+" Coordonnées → Position GPS."
+msgstr ""
+"GPS coordinates not set. Add them from Dashboard → Settings → Contact → GPS "
+"position."
+
+#: .\templates\core\home.html:4 .\templates\pages\ecole.html:107
+#: .\templates\partials\footer.html:23 .\templates\partials\navbar.html:22
+#: .\templates\partials\navbar.html:123
 msgid "Excellence Professionnelle"
 msgstr "Professional Excellence"
 
 #: .\templates\core\home.html:6
 msgid ""
 "École Normale d'Instituteurs de l'Enseignement Général et Technique à "
-"Douala. Formations CAPIEMP et CAPIET. Concours d'entrée 2025-2026 ouvert."
-msgstr "Teacher Training College for General and Technical Education in Douala. CAPIEMP and CAPIET programs. 2025-2026 entrance exam open."
-
+"Douala. Formations CAPIEMP (ENIEG) et CAPIET (ENIET). Admission ouverte sur "
+"concours."
+msgstr ""
+"Teacher Training College for General and Technical Education in Douala. "
+"CAPIEMP (ENIEG) and CAPIET (ENIET) programs. Admission open through entrance"
+" exam."
 
 #: .\templates\core\home.html:32
 msgid "Agréé par le MINESEC — Arrêté n°26/15 & n°69/15"
@@ -65,453 +1351,852 @@ msgid ""
 "L'ENIET et l'ENIEG forment depuis 2015 les instituteurs de l'enseignement "
 "général et technique au Cameroun, avec une exigence : l'excellence "
 "professionnelle."
-msgstr "Since 2015, ENIET and ENIEG have been training teachers for general and technical education in Cameroon, with one requirement: professional excellence."
+msgstr ""
+"Since 2015, ENIET and ENIEG have been training teachers for general and "
+"technical education in Cameroon, with one requirement: professional "
+"excellence."
 
 #: .\templates\core\home.html:50
 msgid "Découvrir nos formations"
 msgstr "Discover our programs"
 
-#: .\templates\core\home.html:57
+#: .\templates\core\home.html:57 .\templates\ecoles\filiere_detail.html:207
 msgid "Procédure d'admission"
 msgstr "Admission process"
 
-#: .\templates\core\home.html:68
-msgid "Étudiants en formation à l\\"
-msgstr "Students training at ENIET"
-
-#: .\templates\core\home.html:80
-msgid "année de formation d'instituteurs d'élite"
-msgstr "years training elite teachers"
-
-#: .\templates\core\home.html:86
-msgid "Concours ouvert"
-msgstr "Exam open"
-
-#: .\templates\core\home.html:101
+#: .\templates\core\home.html:74
 msgid "Année de création"
 msgstr "Year founded"
 
-#: .\templates\core\home.html:105
+#: .\templates\core\home.html:78
 msgid "Filières techniques"
 msgstr "Technical programs"
 
-#: .\templates\core\home.html:109
+#: .\templates\core\home.html:82
 msgid "Cursus : CAPIEMP & CAPIET"
 msgstr "Programs: CAPIEMP & CAPIET"
 
-#: .\templates\core\home.html:113
+#: .\templates\core\home.html:86
 msgid "Diplômes reconnus par l'État"
 msgstr "State-recognized diplomas"
 
-#: .\templates\core\home.html:132
+#: .\templates\core\home.html:105
 msgid "Notre structure"
 msgstr "Our structure"
 
-#: .\templates\core\home.html:135
+#: .\templates\core\home.html:108
 msgid "Deux écoles,"
-msgstr "one shared"
+msgstr "Two schools,"
 
-#: .\templates\core\home.html:136
+#: .\templates\core\home.html:109
 msgid "une même"
 msgstr "one shared"
 
-#: .\templates\core\home.html:137
+#: .\templates\core\home.html:110
 msgid "excellence"
 msgstr "excellence"
 
-#: .\templates\core\home.html:140
+#: .\templates\core\home.html:113
 msgid ""
 "Notre complexe abrite deux institutions complémentaires qui forment les "
 "instituteurs de la prochaine génération, dans le respect des standards "
 "officiels camerounais."
-msgstr "Our complex houses two complementary institutions training the next generation of teachers, following official Cameroonian standards."
+msgstr ""
+"Our complex houses two complementary institutions training the next "
+"generation of teachers, following official Cameroonian standards."
 
-#: .\templates\core\home.html:153 .\templates\core\home.html:205
+#: .\templates\core\home.html:126 .\templates\core\home.html:178
 msgid "École Normale d'Instituteurs"
 msgstr "Teacher Training College"
 
-#: .\templates\core\home.html:156
-msgid "Enseignement Général"
-msgstr "General Education"
-
-#: .\templates\core\home.html:166
+#: .\templates\core\home.html:139
 msgid ""
 "Certificat d'Aptitude Pédagogique d'Instituteurs de l'Enseignement Maternel "
 "et Primaire Général. Formation de 2 ans pour les futurs maîtres de l'école "
 "primaire."
-msgstr "Certificate of Teaching Aptitude for Nursery and Primary General Education Teachers. Two-year program for future primary school teachers."
+msgstr ""
+"Certificate of Teaching Aptitude for Nursery and Primary General Education "
+"Teachers. Two-year program for future primary school teachers."
 
-#: .\templates\core\home.html:174
+#: .\templates\core\home.html:147
 msgid "Recrutement sur concours (Bac requis)"
 msgstr "Selection through entrance exam (high school diploma required)"
 
-#: .\templates\core\home.html:180
+#: .\templates\core\home.html:153
 msgid "Durée : 2 ans en formation continue"
 msgstr "Duration: 2 years of continuous training"
 
-#: .\templates\core\home.html:186
-msgid "Scolarité 1ʳᵉ année : 225 000 FCFA"
-msgstr "First-year tuition: 225,000 FCFA"
+#: .\templates\core\home.html:159 .\templates\core\home.html:211
+msgid "Stage pratique en école d'application"
+msgstr "Practical placement in a training school"
 
-#: .\templates\core\home.html:191
+#: .\templates\core\home.html:164
 msgid "En savoir plus sur l'ENIEG"
 msgstr "Learn more about ENIEG"
 
-#: .\templates\core\home.html:208
-msgid "Enseignement Technique"
-msgstr "Technical Education"
-
-#: .\templates\core\home.html:218
+#: .\templates\core\home.html:191
 msgid ""
 "Certificat d'Aptitude Pédagogique d'Instituteurs de l'Enseignement "
 "Technique. Sept filières spécialisées pour former des instituteurs experts "
 "dans leur domaine."
-msgstr "Certificate of Teaching Aptitude for Technical Education Teachers. Seven specialized programs training expert teachers in their field."
+msgstr ""
+"Certificate of Teaching Aptitude for Technical Education Teachers. Seven "
+"specialized programs training expert teachers in their field."
 
-#: .\templates\core\home.html:226
-msgid "Accessible aux titulaires de BT, PBT, BP ou Bac technique"
-msgstr "Open to BT, PBT, BP or Technical Baccalaureate holders"
+#: .\templates\core\home.html:199
+msgid "Accessible aux titulaires de BT, BP ou Bac"
+msgstr "Open to BT, BP or Baccalaureate holders"
 
-#: .\templates\core\home.html:232
+#: .\templates\core\home.html:205
 msgid "7 filières professionnelles au choix"
 msgstr "7 professional programs to choose from"
 
-#: .\templates\core\home.html:238
-msgid "Scolarité 1ʳᵉ année : 300 000 FCFA"
-msgstr "First-year tuition: 300,000 FCFA"
-
-#: .\templates\core\home.html:243
+#: .\templates\core\home.html:216
 msgid "Explorer les filières ENIET"
 msgstr "Explore ENIET programs"
 
-#: .\templates\core\home.html:264
+#: .\templates\core\home.html:237
 msgid "Filières ENIET"
 msgstr "ENIET Programs"
 
-#: .\templates\core\home.html:267
+#: .\templates\core\home.html:240
 msgid "Sept voies vers"
 msgstr "Seven paths to"
 
-#: .\templates\core\home.html:268
+#: .\templates\core\home.html:241
 msgid "l'enseignement technique"
 msgstr "technical teaching"
 
-#: .\templates\core\home.html:272
+#: .\templates\core\home.html:245
 msgid "Toutes les filières"
 msgstr "All programs"
 
-#: .\templates\core\home.html:289
+#: .\templates\core\home.html:262
 msgid "Électricité"
 msgstr "Electrical Engineering"
 
-#: .\templates\core\home.html:291
+#: .\templates\core\home.html:264
 msgid ""
 "Formation aux installations électriques et à la pédagogie de la spécialité."
 msgstr "Training in electrical installations and pedagogy of the specialty."
 
-#: .\templates\core\home.html:302
+#: .\templates\core\home.html:275
 msgid "Maçonnerie & Béton Armé"
 msgstr "Masonry & Reinforced Concrete"
 
-#: .\templates\core\home.html:304
+#: .\templates\core\home.html:277
 msgid "Construction, structures et techniques pédagogiques du bâtiment."
 msgstr "Construction, structures and teaching techniques for buildings."
 
-#: .\templates\core\home.html:315
+#: .\templates\core\home.html:288
 msgid "Couture (Flou)"
 msgstr "Garment Making"
 
-#: .\templates\core\home.html:317
+#: .\templates\core\home.html:290
 msgid "Techniques de couture, design textile et enseignement professionnel."
 msgstr "Sewing techniques, textile design and professional teaching."
 
-#: .\templates\core\home.html:328
+#: .\templates\core\home.html:301
 msgid "Économie Sociale & Familiale"
 msgstr "Social & Family Economics"
 
-#: .\templates\core\home.html:330
+#: .\templates\core\home.html:303
 msgid "Sciences humaines appliquées à la vie domestique et sociale."
 msgstr "Humanities applied to domestic and social life."
 
-#: .\templates\core\home.html:341
+#: .\templates\core\home.html:314
 msgid "Comptabilité & Gestion"
 msgstr "Accounting & Management"
 
-#: .\templates\core\home.html:343
+#: .\templates\core\home.html:316
 msgid "Méthodes comptables, gestion d'entreprise et pédagogie spécialisée."
 msgstr "Accounting methods, business management and specialized pedagogy."
 
-#: .\templates\core\home.html:354
+#: .\templates\core\home.html:327
 msgid "Bureautique"
 msgstr "Office Software"
 
-#: .\templates\core\home.html:356
+#: .\templates\core\home.html:329
 msgid "Outils numériques de bureau et formation pédagogique associée."
 msgstr "Office digital tools and associated teaching training."
 
-#: .\templates\core\home.html:367
+#: .\templates\core\home.html:340
 msgid "Communication Administrative"
 msgstr "Administrative Communication"
 
-#: .\templates\core\home.html:369
+#: .\templates\core\home.html:342
 msgid "Techniques de communication formelle et secrétariat moderne."
 msgstr "Formal communication techniques and modern secretarial skills."
 
-#: .\templates\core\home.html:382
+#: .\templates\core\home.html:355
 msgid "Voir toutes les formations"
 msgstr "View all programs"
 
-#: .\templates\core\home.html:384
+#: .\templates\core\home.html:357
 msgid ""
 "Découvrez les programmes détaillés, débouchés et conditions d'admission."
-msgstr "Discover detailed programs, career outcomes and admission requirements."
+msgstr ""
+"Discover detailed programs, career outcomes and admission requirements."
 
-#: .\templates\core\home.html:407 .\templates\partials\footer.html:60
-#: .\templates\partials\navbar.html:31
-msgid "Admission"
-msgstr "Admission"
+#: .\templates\core\home.html:381 .\templates\ecoles\admission.html:46
+msgid "Procédure"
+msgstr "Process"
 
-#: .\templates\core\home.html:410
-msgid "Concours d'entrée"
-msgstr "Entrance Exam"
+#: .\templates\core\home.html:382
+msgid "d'admission"
+msgstr "process"
 
-#: .\templates\core\home.html:414
+#: .\templates\core\home.html:385
 msgid ""
-"Le recrutement se fait sur concours, ouvert aux titulaires du Baccalauréat "
-"(enseignement général ou technique selon l'école visée). Frais de concours : "
-"12 000 FCFA non remboursables."
-msgstr "Recruitment is done through an entrance exam, open to high school diploma holders (general or technical education depending on the school). Exam fee: 12,000 FCFA non-refundable."
+"Le recrutement se fait sur concours, ouvert aux titulaires des diplômes "
+"requis selon l'école visée — Baccalauréat pour l'ENIEG, BT, BP ou Bac pour "
+"l'ENIET."
+msgstr ""
+"Recruitment is done through an entrance exam, open to holders of the "
+"diplomas required by the chosen school — Baccalaureate for ENIEG; BT, BP or "
+"Baccalaureate for ENIET."
 
-#: .\templates\core\home.html:418
+#: .\templates\core\home.html:389
 msgid "Composition du dossier"
 msgstr "Application requirements"
 
-#: .\templates\core\home.html:423
+#: .\templates\core\home.html:394
 msgid "Photocopie CNI"
 msgstr "ID card photocopy"
 
-#: .\templates\core\home.html:426
+#: .\templates\core\home.html:397
 msgid "Baccalauréat certifié"
 msgstr "Certified high school diploma"
 
-#: .\templates\core\home.html:429
+#: .\templates\core\home.html:400
 msgid "Acte de naissance"
 msgstr "Birth certificate"
 
-#: .\templates\core\home.html:432
+#: .\templates\core\home.html:403
 msgid "4 photos 4×4"
 msgstr "4 photos 4×4"
 
-#: .\templates\core\home.html:435
+#: .\templates\core\home.html:406
 msgid "Fiche d'inscription"
 msgstr "Registration form"
 
-#: .\templates\core\home.html:438
+#: .\templates\core\home.html:409
 msgid "Demande manuscrite au Directeur"
 msgstr "Handwritten request to the Director"
 
+#: .\templates\core\home.html:414
+msgid "Voir la procédure complète"
+msgstr "View the full procedure"
+
 #: .\templates\core\home.html:443
-msgid "Procédure complète"
-msgstr "Full procedure"
-
-#: .\templates\core\home.html:452
-msgid "Échéancier de scolarité"
-msgstr "Tuition payment schedule"
-
-#: .\templates\core\home.html:457
-msgid "ENIEG (1ʳᵉ année)"
-msgstr "ENIEG (Year 1)"
-
-#: .\templates\core\home.html:460
-msgid "ENIET (1ʳᵉ année)"
-msgstr "ENIET (Year 1)"
-
-#: .\templates\core\home.html:467
-msgid "Inscription"
-msgstr "Registration"
-
-#: .\templates\core\home.html:468
-msgid "Non remboursable"
-msgstr "Non-refundable"
-
-#: .\templates\core\home.html:474
-msgid "1ʳᵉ tranche"
-msgstr "1st installment"
-
-#: .\templates\core\home.html:475
-msgid "À l'inscription"
-msgstr "At registration"
-
-#: .\templates\core\home.html:481
-msgid "2ᵉ tranche"
-msgstr "2nd installment"
-
-#: .\templates\core\home.html:482
-msgid "Le 10 décembre"
-msgstr "December 10"
-
-#: .\templates\core\home.html:488
-msgid "3ᵉ tranche"
-msgstr "3rd installment"
-
-#: .\templates\core\home.html:489
-msgid "Le 9 janvier"
-msgstr "January 9"
-
-#: .\templates\core\home.html:494
-msgid "Total"
-msgstr "Total"
-
-#: .\templates\core\home.html:513 .\templates\partials\footer.html:61
-#: .\templates\partials\navbar.html:32
-msgid "Actualités"
-msgstr "News"
-
-#: .\templates\core\home.html:516
 msgid "La vie de"
 msgstr "Life at"
 
-#: .\templates\core\home.html:517
+#: .\templates\core\home.html:443
 msgid "notre établissement"
 msgstr "our institution"
 
-#: .\templates\core\home.html:520
-msgid "Suivez les événements, communiqués et moments forts de l'ENIET/ENIEG."
-msgstr "Follow events, announcements and highlights from ENIET/ENIEG."
-
-#: .\templates\core\home.html:524
+#: .\templates\core\home.html:448 .\templates\core\home.html:465
 msgid "Toutes les actualités"
 msgstr "All news"
 
-#: .\templates\core\home.html:537
-msgid "Cérémonie de remise des diplômes"
-msgstr "Graduation ceremony"
-
-#: .\templates\core\home.html:540
-msgid "À la une"
-msgstr "Featured"
-
-#: .\templates\core\home.html:544 .\templates\core\home.html:564
-msgid "mai"
-msgstr "May"
-
-#: .\templates\core\home.html:546
-msgid "Événement"
-msgstr "Event"
-
-#: .\templates\core\home.html:549
-msgid "Cérémonie de remise des diplômes : promotion 2025"
-msgstr "Graduation ceremony: class of 2025"
-
-#: .\templates\core\home.html:552
-msgid ""
-"Notre établissement a célébré la 8ᵉ promotion d'instituteurs diplômés lors "
-"d'une cérémonie en présence du Délégué Régional du MINESEC."
-msgstr "Our institution celebrated the 8th graduating class of teachers during a ceremony attended by the Regional MINESEC Delegate."
-
-#: .\templates\core\home.html:560
-msgid "Ouverture des inscriptions"
-msgstr "Registration open"
-
-#: .\templates\core\home.html:566
-msgid "Communiqué"
-msgstr "Announcement"
-
-#: .\templates\core\home.html:569
-msgid "Ouverture des inscriptions au concours 2025-2026"
-msgstr "Registration open for the 2025-2026 entrance exam"
-
-#: .\templates\core\home.html:577
-msgid "Atelier filière électricité"
-msgstr "Electrical engineering workshop"
-
-#: .\templates\core\home.html:581
-msgid "avril"
-msgstr "April"
-
-#: .\templates\core\home.html:583
-msgid "Vie scolaire"
-msgstr "School life"
-
-#: .\templates\core\home.html:586
-msgid ""
-"Atelier pratique de la filière Électricité avec un partenaire industriel"
-msgstr "Practical workshop of the Electrical Engineering program with an industrial partner"
-
-#: .\templates\core\home.html:605
+#: .\templates\core\home.html:486
 msgid ""
 "L'éducation est l'arme la plus puissante pour changer une nation. Nos "
 "instituteurs en sont les artisans."
-msgstr "Education is the most powerful weapon to change a nation. Our teachers are its craftsmen."
+msgstr ""
+"Education is the most powerful weapon to change a nation. Our teachers are "
+"its craftsmen."
 
-#: .\templates\core\home.html:608
-msgid "Paix"
-msgstr "Peace"
+#: .\templates\core\home.html:489
+msgid "Discipline"
+msgstr "Discipline"
 
-
-#: .\templates\core\home.html:610
+#: .\templates\core\home.html:491
 msgid "Travail"
 msgstr "Work"
 
-#: .\templates\core\home.html:612
-msgid "Patrie"
-msgstr "Fatherland"
+#: .\templates\core\home.html:493
+msgid "Intégrité"
+msgstr "Integrity"
+
+#: .\templates\ecoles\admission.html:6
+msgid ""
+"Procédure d'admission au concours ENIEG/ENIET. Conditions, frais de "
+"scolarité, documents requis et calendrier des inscriptions."
+msgstr ""
+"Admission procedure for the ENIEG/ENIET entrance exam. Requirements, tuition"
+" fees, required documents and registration schedule."
+
+#: .\templates\ecoles\admission.html:30
+msgid "Rejoignez"
+msgstr "Join"
+
+#: .\templates\ecoles\admission.html:31
+msgid "notre école"
+msgstr "our school"
+
+#: .\templates\ecoles\admission.html:34
+msgid ""
+"Découvrez la procédure d'admission et les documents nécessaires pour "
+"préparer votre dossier de candidature."
+msgstr ""
+"Discover the admission procedure and the documents needed to prepare your "
+"application."
+
+#: .\templates\ecoles\admission.html:49
+msgid "Quatre étapes"
+msgstr "Four steps"
+
+#: .\templates\ecoles\admission.html:49
+msgid "pour candidater"
+msgstr "to apply"
+
+#: .\templates\ecoles\admission.html:59
+msgid "Préparation du dossier"
+msgstr "Preparing your application"
+
+#: .\templates\ecoles\admission.html:61
+msgid ""
+"Rassemblez l'ensemble des pièces requises (CNI, diplôme, photos, etc.) selon"
+" la liste officielle."
+msgstr ""
+"Gather all required documents (ID card, diploma, photos, etc.) according to "
+"the official list."
+
+#: .\templates\ecoles\admission.html:67
+msgid "Inscription au concours"
+msgstr "Exam registration"
+
+#: .\templates\ecoles\admission.html:69
+msgid ""
+"Déposez votre dossier complet à l'établissement et acquittez les frais de "
+"concours."
+msgstr ""
+"Submit your complete application to the institution and pay the entrance-"
+"exam fee."
+
+#: .\templates\ecoles\admission.html:75
+msgid "Épreuves du concours"
+msgstr "Exam sessions"
+
+#: .\templates\ecoles\admission.html:77
+msgid ""
+"Présentez-vous aux épreuves écrites et orales du concours d'entrée à la date"
+" fixée."
+msgstr ""
+"Attend the written and oral entrance exam sessions on the scheduled date."
+
+#: .\templates\ecoles\admission.html:83
+msgid "Inscription définitive"
+msgstr "Final enrollment"
+
+#: .\templates\ecoles\admission.html:85
+msgid ""
+"En cas d'admission, finalisez votre inscription et réglez la première "
+"tranche de scolarité."
+msgstr ""
+"If admitted, finalize your enrollment and pay the first tuition installment."
+
+#: .\templates\ecoles\admission.html:101
+msgid "Dossier"
+msgstr "Application"
+
+#: .\templates\ecoles\admission.html:104
+msgid "Pièces à"
+msgstr "Documents to"
+
+#: .\templates\ecoles\admission.html:104
+msgid "fournir"
+msgstr "provide"
+
+#: .\templates\ecoles\admission.html:107
+msgid ""
+"Voici la liste complète des documents à fournir pour constituer votre "
+"dossier de candidature. Préparez-les soigneusement pour éviter tout retard."
+msgstr ""
+"Here is the complete list of documents to provide for your application. "
+"Prepare them carefully to avoid any delay."
+
+#: .\templates\ecoles\admission.html:111
+msgid "Important"
+msgstr "Important"
+
+#: .\templates\ecoles\admission.html:113
+msgid ""
+"Préparez chaque pièce avec soin : un dossier incomplet peut retarder votre "
+"inscription au concours."
+msgstr ""
+"Prepare each document carefully: an incomplete file may delay your entrance-"
+"exam registration."
+
+#: .\templates\ecoles\admission.html:144
+msgid "Document obligatoire"
+msgstr "Required document"
+
+#: .\templates\ecoles\admission.html:165
+msgid "Tout ce que vous voulez"
+msgstr "Everything you want to"
+
+#: .\templates\ecoles\admission.html:165
+msgid "savoir"
+msgstr "know"
+
+#: .\templates\ecoles\admission.html:204
+msgid "Une question sur"
+msgstr "A question about"
+
+#: .\templates\ecoles\admission.html:204
+msgid "votre dossier"
+msgstr "your application"
+
+#: .\templates\ecoles\admission.html:207
+msgid ""
+"Notre équipe administrative est à votre disposition pour vous accompagner "
+"dans votre démarche de candidature."
+msgstr ""
+"Our administrative team is available to support you throughout your "
+"application process."
+
+#: .\templates\ecoles\admission.html:211 .\templates\pages\ecole.html:319
+msgid "Nous contacter"
+msgstr "Contact us"
+
+#: .\templates\ecoles\ecole_detail.html:23
+#: .\templates\ecoles\filiere_detail.html:23
+#: .\templates\ecoles\formations_list.html:4
+#: .\templates\ecoles\formations_list.html:21
+#: .\templates\partials\footer.html:81 .\templates\partials\navbar.html:46
+#: .\templates\partials\navbar.html:170
+msgid "Formations"
+msgstr "Programs"
+
+#: .\templates\ecoles\ecole_detail.html:51
+#: .\templates\ecoles\filiere_detail.html:64 .\templates\pages\ecole.html:28
+msgid "Présentation"
+msgstr "Overview"
+
+#: .\templates\ecoles\ecole_detail.html:54
+msgid "À propos de"
+msgstr "About"
+
+#: .\templates\ecoles\ecole_detail.html:68
+#: .\templates\ecoles\formations_list.html:64
+msgid "Pré-requis"
+msgstr "Prerequisites"
+
+#: .\templates\ecoles\ecole_detail.html:74
+#: .\templates\ecoles\formations_list.html:68
+msgid "Durée"
+msgstr "Duration"
+
+#: .\templates\ecoles\ecole_detail.html:80
+#: .\templates\ecoles\formations_list.html:72
+msgid "Diplôme"
+msgstr "Diploma"
+
+#: .\templates\ecoles\ecole_detail.html:103
+msgid "Choisissez votre"
+msgstr "Choose your"
+
+#: .\templates\ecoles\ecole_detail.html:103
+msgid "spécialité"
+msgstr "specialty"
+
+#: .\templates\ecoles\ecole_detail.html:122
+msgid "En savoir plus"
+msgstr "Learn more"
+
+#: .\templates\ecoles\ecole_detail.html:145
+msgid "Candidater"
+msgstr "Apply"
+
+#: .\templates\ecoles\ecole_detail.html:148 .\templates\pages\ecole.html:306
+msgid "Rejoignez la prochaine"
+msgstr "Join the next"
+
+#: .\templates\ecoles\ecole_detail.html:148 .\templates\pages\ecole.html:306
+msgid "promotion"
+msgstr "class"
+
+#: .\templates\ecoles\ecole_detail.html:151
+msgid ""
+"Préparez votre dossier de candidature et venez écrire votre parcours "
+"d'instituteur à nos côtés."
+msgstr ""
+"Prepare your application and come write your teaching journey alongside us."
+
+#: .\templates\ecoles\ecole_detail.html:154
+msgid "Voir la procédure d'admission"
+msgstr "See the admission process"
+
+#: .\templates\ecoles\filiere_detail.html:67
+msgid "À propos de cette"
+msgstr "About this"
+
+#: .\templates\ecoles\filiere_detail.html:67
+msgid "filière"
+msgstr "program"
+
+#: .\templates\ecoles\filiere_detail.html:87
+msgid "Compétences"
+msgstr "Skills"
+
+#: .\templates\ecoles\filiere_detail.html:90
+msgid "Ce que vous saurez"
+msgstr "What you'll be able to"
+
+#: .\templates\ecoles\filiere_detail.html:90
+msgid "faire"
+msgstr "do"
+
+#: .\templates\ecoles\filiere_detail.html:114
+msgid "Programme"
+msgstr "Curriculum"
+
+#: .\templates\ecoles\filiere_detail.html:117
+msgid "Matières"
+msgstr "Subjects"
+
+#: .\templates\ecoles\filiere_detail.html:117
+msgid "enseignées"
+msgstr "taught"
+
+#: .\templates\ecoles\filiere_detail.html:146
+msgid "Débouchés"
+msgstr "Careers"
+
+#: .\templates\ecoles\filiere_detail.html:149
+msgid "Vos perspectives"
+msgstr "Your prospects"
+
+#: .\templates\ecoles\filiere_detail.html:149
+msgid "d'avenir"
+msgstr "for the future"
+
+#: .\templates\ecoles\filiere_detail.html:167
+msgid "Autres filières"
+msgstr "Other programs"
+
+#: .\templates\ecoles\filiere_detail.html:170
+msgid "Explorez d'autres"
+msgstr "Explore other"
+
+#: .\templates\ecoles\filiere_detail.html:170
+msgid "spécialités"
+msgstr "specialties"
+
+#: .\templates\ecoles\filiere_detail.html:200
+msgid "Prêt à"
+msgstr "Ready to"
+
+#: .\templates\ecoles\filiere_detail.html:200
+msgid "vous lancer"
+msgstr "get started"
+
+#: .\templates\ecoles\filiere_detail.html:203
+msgid ""
+"Le concours d'entrée est ouvert. Préparez votre dossier et venez écrire "
+"votre parcours d'instituteur à nos côtés."
+msgstr ""
+"The entrance exam is open. Prepare your application and come write your "
+"teaching journey with us."
+
+#: .\templates\ecoles\filiere_detail.html:213
+msgid "Poser une question"
+msgstr "Ask a question"
+
+#: .\templates\ecoles\formations_list.html:25
+msgid "Nos formations"
+msgstr "Our programs"
+
+#: .\templates\ecoles\formations_list.html:28
+msgid "Devenir"
+msgstr "Becoming a"
+
+#: .\templates\ecoles\formations_list.html:29
+msgid "instituteur"
+msgstr "teacher"
+
+#: .\templates\ecoles\formations_list.html:32
+msgid ""
+"Découvrez les programmes de formation des deux écoles de notre complexe : "
+"ENIEG pour l'enseignement général, ENIET pour l'enseignement technique."
+msgstr ""
+"Discover the training programs of the two schools in our complex: ENIEG for "
+"general education, ENIET for technical education."
+
+#: .\templates\ecoles\formations_list.html:78
+msgid "Découvrir"
+msgstr "Discover"
+
+#: .\templates\ecoles\formations_list.html:114
+msgid ""
+"Formation polyvalente en 2 ans préparant à l'enseignement dans les écoles "
+"maternelles et primaires du Cameroun."
+msgstr ""
+"A versatile 2-year program preparing for teaching in Cameroon's nursery and "
+"primary schools."
+
+#: .\templates\pages\album_detail.html:4
+#: .\templates\pages\album_detail.html:22 .\templates\pages\galerie.html:4
+#: .\templates\pages\galerie.html:23 .\templates\partials\footer.html:84
+#: .\templates\partials\navbar.html:64 .\templates\partials\navbar.html:192
+msgid "Galerie"
+msgstr "Gallery"
+
+#: .\templates\pages\album_detail.html:92
+msgid "Cet album ne contient pas encore de photos."
+msgstr "This album does not contain any photos yet."
+
+#: .\templates\pages\album_detail.html:108
+msgid "Fermer"
+msgstr "Close"
+
+#: .\templates\pages\album_detail.html:123
+msgid "Photo précédente"
+msgstr "Previous photo"
+
+#: .\templates\pages\album_detail.html:133
+msgid "Photo suivante"
+msgstr "Next photo"
+
+#: .\templates\pages\album_detail.html:169
+msgid "À découvrir"
+msgstr "Discover more"
+
+#: .\templates\pages\album_detail.html:172
+msgid "moments"
+msgstr "moments"
+
+#: .\templates\pages\ecole.html:4 .\templates\pages\ecole.html:24
+#: .\templates\partials\footer.html:80 .\templates\partials\navbar.html:40
+#: .\templates\partials\navbar.html:159
+msgid "L'École"
+msgstr "The School"
+
+#: .\templates\pages\ecole.html:6
+msgid ""
+"Découvrez l'histoire, la mission et les valeurs de l'ENIET/ENIEG, école "
+"normale d'instituteurs de l'excellence professionnelle à Douala."
+msgstr ""
+"Discover the history, mission and values of ENIET/ENIEG, a teacher training "
+"college of professional excellence in Douala."
+
+#: .\templates\pages\ecole.html:31
+msgid "Notre"
+msgstr "Our"
+
+#: .\templates\pages\ecole.html:32
+msgid "établissement"
+msgstr "institution"
+
+#: .\templates\pages\ecole.html:35
+msgid ""
+"Une institution d'excellence dédiée à la formation des instituteurs de "
+"l'enseignement général et technique au Cameroun."
+msgstr ""
+"An institution of excellence dedicated to training teachers for general and "
+"technical education in Cameroon."
+
+#: .\templates\pages\ecole.html:49
+msgid "Notre histoire"
+msgstr "Our history"
+
+#: .\templates\pages\ecole.html:52
+msgid "Depuis"
+msgstr "Since"
+
+#: .\templates\pages\ecole.html:52
+msgid "former l'élite enseignante du Cameroun"
+msgstr "training Cameroon's teaching elite"
+
+#: .\templates\pages\ecole.html:57
+msgid ""
+"Fondée en 2015, notre école est agréée par le Ministère des Enseignements "
+"Secondaires du Cameroun. Elle réunit en un seul complexe deux établissements"
+" complémentaires : l'ENIEG pour la formation des instituteurs de "
+"l'enseignement général, et l'ENIET pour ceux de l'enseignement technique."
+msgstr ""
+"Founded in 2015, our school is accredited by Cameroon's Ministry of "
+"Secondary Education. It brings together two complementary institutions in a "
+"single complex: ENIEG for training general education teachers, and ENIET for"
+" technical education teachers."
+
+#: .\templates\pages\ecole.html:60
+msgid ""
+"Notre mission est claire : préparer les futurs instituteurs aux Certificats "
+"d'Aptitude Pédagogique (CAPIEMP et CAPIET) avec un haut niveau d'exigence "
+"académique et un sens aigu de la pédagogie."
+msgstr ""
+"Our mission is clear: to prepare future teachers for the Teaching Aptitude "
+"Certificates (CAPIEMP and CAPIET) with high academic standards and a strong "
+"sense of pedagogy."
+
+#: .\templates\pages\ecole.html:63
+msgid ""
+"Au fil des promotions, nos diplômés intègrent les écoles publiques et "
+"privées du Cameroun, portant avec eux les valeurs d'excellence, de rigueur "
+"et d'engagement qui font notre identité."
+msgstr ""
+"Class after class, our graduates join public and private schools across "
+"Cameroon, carrying with them the values of excellence, rigor and commitment "
+"that define our identity."
+
+#: .\templates\pages\ecole.html:70
+msgid "Agréments officiels"
+msgstr "Official accreditations"
+
+#: .\templates\pages\ecole.html:75 .\templates\pages\ecole.html:79
+msgid "Arrêté"
+msgstr "Decree"
+
+#: .\templates\pages\ecole.html:114
+msgid "années d'excellence dans la formation des éducateurs"
+msgstr "years of excellence in training educators"
+
+#: .\templates\pages\ecole.html:132
+msgid "Nos valeurs"
+msgstr "Our values"
+
+#: .\templates\pages\ecole.html:135
+msgid "Les principes qui"
+msgstr "The principles that"
+
+#: .\templates\pages\ecole.html:135
+msgid "nous animent"
+msgstr "drive us"
+
+#: .\templates\pages\ecole.html:138
+msgid "Quatre valeurs guident notre action pédagogique au quotidien."
+msgstr "Four values guide our teaching practice every day."
+
+#: .\templates\pages\ecole.html:182
+msgid "Aucune valeur définie pour le moment."
+msgstr "No values defined yet."
+
+#: .\templates\pages\ecole.html:221
+msgid "Mot du directeur"
+msgstr "A word from the director"
+
+#: .\templates\pages\ecole.html:259
+msgid "Équipe dirigeante"
+msgstr "Leadership team"
+
+#: .\templates\pages\ecole.html:262
+msgid "Une équipe"
+msgstr "An experienced"
+
+#: .\templates\pages\ecole.html:262
+msgid "expérimentée"
+msgstr "team"
+
+#: .\templates\pages\ecole.html:309
+msgid ""
+"Le concours d'entrée pour l'année scolaire est ouvert. Préparez votre "
+"dossier et venez écrire votre histoire à nos côtés."
+msgstr ""
+"The entrance exam for the school year is open. Prepare your application and "
+"come write your story with us."
+
+#: .\templates\pages\ecole.html:313
+msgid "Découvrir l'admission"
+msgstr "Explore admission"
+
+#: .\templates\pages\galerie.html:6
+msgid ""
+"Découvrez en images les événements, ateliers et moments forts de "
+"l'ENIET/ENIEG à Douala."
+msgstr ""
+"Discover ENIET/ENIEG's events, workshops and highlights in pictures, in "
+"Douala."
+
+#: .\templates\pages\galerie.html:27
+msgid "Souvenirs"
+msgstr "Memories"
+
+#: .\templates\pages\galerie.html:30
+msgid "La vie"
+msgstr "Life"
+
+#: .\templates\pages\galerie.html:31
+msgid "en images"
+msgstr "in pictures"
+
+#: .\templates\pages\galerie.html:34
+msgid ""
+"Cérémonies, ateliers, sorties pédagogiques et moments de partage — découvrez"
+" l'établissement à travers nos albums photos."
+msgstr ""
+"Ceremonies, workshops, field trips and shared moments — discover the "
+"institution through our photo albums."
+
+#: .\templates\pages\galerie.html:78
+msgid "photo"
+msgstr "photo"
+
+#: .\templates\pages\galerie.html:107
+msgid "Aucun album disponible pour le moment. Revenez bientôt !"
+msgstr "No albums available yet. Check back soon!"
 
 #: .\templates\partials\footer.html:28
 msgid ""
 "École Normale d'Instituteurs de l'Enseignement Général et Technique. "
 "Établissement agréé par le Ministère des Enseignements Secondaires du "
 "Cameroun, dédié à former les éducateurs du futur."
-msgstr "Teacher Training College for General and Technical Education. Institution accredited by the Cameroonian Ministry of Secondary Education, dedicated to training future educators."
+msgstr ""
+"Teacher Training College for General and Technical Education. Institution "
+"accredited by the Cameroonian Ministry of Secondary Education, dedicated to "
+"training future educators."
 
-#: .\templates\partials\footer.html:54
+#: .\templates\partials\footer.html:76
 msgid "Navigation"
 msgstr "Navigation"
 
-#: .\templates\partials\footer.html:58 .\templates\partials\navbar.html:29
-msgid "L'École"
-msgstr "The School"
-
-#: .\templates\partials\footer.html:59 .\templates\partials\navbar.html:30
-msgid "Formations"
-msgstr "Programs"
-
-#: .\templates\partials\footer.html:62
-msgid "Galerie"
-msgstr "Gallery"
-
-#: .\templates\partials\footer.html:63 .\templates\partials\navbar.html:33
-msgid "Contact"
-msgstr "Contact"
-
-#: .\templates\partials\footer.html:70
-msgid "Coordonnées"
-msgstr "Contact info"
-
-#: .\templates\partials\footer.html:79
-msgid "Yassa, Entrée Planète Voyage"
-msgstr "Yassa, Entrée Planète Voyage"
-
-#: .\templates\partials\footer.html:79
-msgid "Douala, Cameroun"
-msgstr "Douala, Cameroon"
-
-#: .\templates\partials\footer.html:104
+#: .\templates\partials\footer.html:132
 msgid "Tous droits réservés."
 msgstr "All rights reserved."
 
-#: .\templates\partials\footer.html:107
+#: .\templates\partials\footer.html:135
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: .\templates\partials\footer.html:108
+#: .\templates\partials\footer.html:136
 msgid "Politique de confidentialité"
 msgstr "Privacy policy"
 
-#: .\templates\partials\navbar.html:38
-msgid "Concours 2025-2026"
-msgstr "2025-2026 Entrance Exam"
+#: .\templates\partials\navbar.html:81
+msgid "Ouvrir le menu"
+msgstr "Open menu"
+
+#: .\templates\partials\navbar.html:112
+msgid "Menu principal"
+msgstr "Main menu"
+
+#: .\templates\partials\navbar.html:132
+msgid "Fermer le menu"
+msgstr "Close menu"
+
+#: .\templates\partials\navbar.html:203
+msgid "Actualité"
+msgstr "News"
 
 #: .\templates\partials\topbar.html:26
 msgid "Yassa, Douala — Cameroun"
 msgstr "Yassa, Douala — Cameroon"
+
+#: .\templates\partials\topbar.html:58
+msgid "Tableau de bord"
+msgstr "Dashboard"
+
+#: .\templates\partials\topbar.html:62
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: .\templates\partials\topbar.html:67
+msgid "Connexion administration"
+msgstr "Admin login"
+
+#: .\templates\partials\topbar.html:71
+msgid "Connexion"
+msgstr "Login"

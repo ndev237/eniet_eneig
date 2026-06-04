@@ -46,6 +46,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'tailwind',
     'theme',
+    'tinymce',
 ]
 
 # Nos propres apps - on les ajoutera au fur et à mesure
@@ -57,7 +58,7 @@ LOCAL_APPS = [
     # 'apps.medias',
     'apps.contacts',
     # 'apps.accounts',
-    # 'apps.dashboard',
+    'apps.dashboard',
 ]
 
 # Concaténation des 3 listes - pattern pro pour rester organisé quand le projet grandit
@@ -103,6 +104,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.core.context_processors.site_settings',
+                'apps.core.context_processors.dashboard_badges',
             ],
         },
     },
@@ -225,3 +227,44 @@ CONTACT_EMAIL = 'efpsaf@yahoo.fr'
 # EMAIL_HOST_PASSWORD = '...' (en variable d'environnement)
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
+
+# ============================================================
+# 14. AUTHENTIFICATION ET DASHBOARD
+# ============================================================
+# URL de redirection après connexion réussie
+LOGIN_REDIRECT_URL = 'dashboard:home'
+
+# URL de redirection si une page nécessite une connexion
+LOGIN_URL = 'dashboard:login'
+
+# URL après déconnexion
+LOGOUT_REDIRECT_URL = 'dashboard:login'
+
+# ============================================================
+# 15. ÉDITEUR DE TEXTE ENRICHI (TinyMCE)
+# ============================================================
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 500,
+    'menubar': False,
+    'plugins': (
+        'advlist autolink lists link image charmap print preview anchor '
+        'searchreplace visualblocks code fullscreen '
+        'insertdatetime media table paste code help wordcount'
+    ),
+    'toolbar': (
+        'undo redo | formatselect | bold italic underline | '
+        'alignleft aligncenter alignright alignjustify | '
+        'bullist numlist outdent indent | link image | removeformat | code | help'
+    ),
+    # Format select : niveaux de titres autorisés
+    'block_formats': (
+        'Paragraphe=p; Titre H2=h2; Titre H3=h3; Citation=blockquote'
+    ),
+    'content_style': (
+        'body { font-family: Inter, sans-serif; font-size: 16px; line-height: 1.7; }'
+    ),
+    'language': 'fr_FR',
+    'branding': False,  # Cache le logo TinyMCE
+    'promotion': False,
+    'images_upload_url': '/dashboard/tinymce/upload-image/',  # Pour uploader des images dans l'article
+}

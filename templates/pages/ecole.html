@@ -82,16 +82,33 @@
             </div>
         </div>
 
-        <!-- Visuel + carte (5/12) -->
+        <!-- Panneau marque (5/12) — en attendant les photos officielles -->
         <div class="lg:col-span-5">
             <div class="relative">
-                <div class="relative aspect-[4/5] overflow-hidden">
-                    <img src="https://picsum.photos/seed/ecole-batiment/600/750"
-                         alt="{% trans 'Bâtiment de l\'ENIET/ENIEG' %}"
-                         class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary-darker/40 to-transparent mix-blend-multiply"></div>
+                <!-- Panneau vert palmier avec logo + texture, à angles droits éditoriaux -->
+                <div class="relative aspect-[4/5] overflow-hidden bg-primary-darker text-cream flex items-center justify-center">
+                    <!-- Texture grille discrète -->
+                    <div class="absolute inset-0 opacity-25 pointer-events-none"
+                         style="background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 48px 48px;"></div>
+                    <!-- Halos or -->
+                    <div class="absolute -top-24 -right-16 w-72 h-72 bg-accent/15 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-24 -left-16 w-72 h-72 bg-primary/40 rounded-full blur-3xl pointer-events-none"></div>
+                    <!-- Coins or -->
+                    <div class="absolute top-6 left-6 w-10 h-10 border-t-2 border-l-2 border-accent/60"></div>
+                    <div class="absolute bottom-6 right-6 w-10 h-10 border-b-2 border-r-2 border-accent/60"></div>
+
+                    <div class="relative text-center px-8">
+                        <img src="{% static 'images/logo_light.png' %}" alt="ENIET / ENIEG"
+                             class="h-32 w-auto mx-auto mb-6 drop-shadow-2xl">
+                        <div class="font-serif text-3xl font-semibold leading-tight">
+                            ENIET <span class="text-accent">/</span> ENIEG
+                        </div>
+                        <div class="text-[11px] uppercase tracking-[0.2em] text-accent mt-2">
+                            {% trans "Excellence Professionnelle" %}
+                        </div>
+                    </div>
                 </div>
-                <!-- Carte stat flottante -->
+                <!-- Carte stat flottante - chevauchement éditorial -->
                 <div class="absolute -bottom-6 -left-6 bg-accent text-primary-darker p-6 max-w-[260px] shadow-2xl">
                     <div class="font-serif text-4xl font-semibold leading-none mb-2">10+</div>
                     <div class="text-sm font-medium">{% trans "années d'excellence dans la formation des éducateurs" %}</div>
@@ -292,7 +309,7 @@
             {% blocktrans %}Le concours d'entrée pour l'année scolaire est ouvert. Préparez votre dossier et venez écrire votre histoire à nos côtés.{% endblocktrans %}
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#" class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-cream font-semibold px-7 py-4 transition-all hover:gap-3 group">
+            <a href="{% url 'ecoles:admission' %}" class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-cream font-semibold px-7 py-4 transition-all hover:gap-3 group">
                 {% trans "Découvrir l'admission" %}
                 <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>

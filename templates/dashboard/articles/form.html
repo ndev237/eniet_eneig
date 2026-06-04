@@ -1,0 +1,364 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block page_title %}{{ page_title }}{% endblock %}
+
+{% block page_subtitle %}
+{% if mode == 'update' %}
+    <p class="text-sm text-ink/60 mt-0.5">
+        Modifié le {{ article.updated_at|date:"d F Y à H:i" }}
+        {% if article.auteur %} · Par {{ article.auteur.profil.nom_complet }}{% endif %}
+    </p>
+{% else %}
+    <p class="text-sm text-ink/60 mt-0.5">Remplissez les informations ci-dessous</p>
+{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<!-- TinyMCE depuis CDN (alternative locale possible) -->
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- enctype="multipart/form-data" : OBLIGATOIRE pour uploader des fichiers (images) -->
+<form method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+    
+    <!-- Erreurs globales du formulaire -->
+    {% if form.non_field_errors %}
+        <div class="bg-red-50 border-l-4 border-red-600 p-4">
+            {% for error in form.non_field_errors %}
+                <p class="text-sm text-red-800">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- ================================================================ -->
+    <!-- LAYOUT GRID : Colonne principale + Sidebar                        -->
+    <!-- ================================================================ -->
+    <div class="grid lg:grid-cols-3 gap-6">
+
+        <!-- ============================================================ -->
+        <!-- COLONNE PRINCIPALE (2/3) - Contenu de l'article              -->
+        <!-- ============================================================ -->
+        <div class="lg:col-span-2 space-y-6">
+
+            <!-- Carte : Informations principales -->
+            <div class="bg-white border border-primary/10 shadow-sm p-6">
+                <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                    Informations principales
+                </h2>
+
+                <!-- Titre -->
+                <div class="mb-5">
+                    <label for="{{ form.titre.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.titre.label }} <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.titre }}
+                    {% if form.titre.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.titre.errors|first }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Slug (auto-généré) -->
+                <div class="mb-5">
+                    <label for="{{ form.slug.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.slug.label }}
+                        <span class="text-xs text-ink/50 font-normal">(optionnel, auto-généré)</span>
+                    </label>
+                    {{ form.slug }}
+                    <p class="text-xs text-ink/50 mt-1.5">{{ form.slug.help_text }}</p>
+                    {% if form.slug.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.slug.errors|first }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Résumé -->
+                <div>
+                    <label for="{{ form.resume.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.resume.label }} <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.resume }}
+                    <div class="flex justify-between items-center mt-1.5">
+                        <p class="text-xs text-ink/50">Affiché sur les listes et les partages sociaux</p>
+                        <p class="text-xs text-ink/50" id="resume-counter">
+                            <span id="resume-current">0</span>/300
+                        </p>
+                    </div>
+                    {% if form.resume.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.resume.errors|first }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Carte : Contenu (éditeur riche) -->
+            <div class="bg-white border border-primary/10 shadow-sm p-6">
+                <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                    Contenu de l'article
+                </h2>
+                <div>
+                    <label for="{{ form.contenu.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.contenu.label }} <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.contenu }}
+                    {% if form.contenu.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.contenu.errors|first }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Carte : Image à la une -->
+            <div class="bg-white border border-primary/10 shadow-sm p-6">
+                <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                    Image à la une
+                </h2>
+
+                <!-- Aperçu de l'image actuelle (en mode édition) -->
+                {% if form.image_une.value %}
+                    <div class="mb-4 relative inline-block">
+                        <img src="{{ form.image_une.value.url }}" 
+                             alt="Image actuelle" 
+                             class="max-w-full h-48 object-cover border border-primary/10">
+                        <div class="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1">
+                            Image actuelle
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Input file stylisé -->
+                <div class="mb-5">
+                    <label for="{{ form.image_une.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.image_une.label }} {% if mode == 'create' %}<span class="text-red-500">*</span>{% endif %}
+                    </label>
+                    <div class="relative">
+                        <input type="file" 
+                               name="{{ form.image_une.name }}" 
+                               id="{{ form.image_une.id_for_label }}"
+                               accept="image/*"
+                               class="block w-full text-sm text-ink/70
+                                      file:mr-4 file:py-2.5 file:px-5 file:border-0 
+                                      file:text-sm file:font-semibold 
+                                      file:bg-primary file:text-cream 
+                                      hover:file:bg-primary-dark file:cursor-pointer cursor-pointer">
+                    </div>
+                    <p class="text-xs text-ink/50 mt-1.5">Format JPG, PNG ou WebP. Taille recommandée : 1200×630px.</p>
+                    {% if form.image_une.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.image_une.errors|first }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Alt -->
+                <div>
+                    <label for="{{ form.image_une_alt.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.image_une_alt.label }} <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.image_une_alt }}
+                    <p class="text-xs text-ink/50 mt-1.5">Description courte pour l'accessibilité et le SEO</p>
+                    {% if form.image_une_alt.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.image_une_alt.errors|first }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SIDEBAR (1/3) - Métadonnées + Publication                    -->
+        <!-- ============================================================ -->
+        <div class="space-y-6">
+
+            <!-- Carte : Publication -->
+            <div class="bg-white border border-primary/10 shadow-sm p-6 sticky top-24">
+                <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                    Publication
+                </h2>
+
+                <!-- Statut -->
+                <div class="mb-4">
+                    <label for="{{ form.statut.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.statut.label }}
+                    </label>
+                    {{ form.statut }}
+                </div>
+
+                <!-- Date de publication -->
+                <div class="mb-4">
+                    <label for="{{ form.date_publication.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.date_publication.label }}
+                    </label>
+                    {{ form.date_publication }}
+                    <p class="text-xs text-ink/50 mt-1.5">{{ form.date_publication.help_text }}</p>
+                </div>
+
+                <!-- À la une -->
+                <div class="mb-6">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        {{ form.est_a_la_une }}
+                        <div>
+                            <span class="text-sm font-semibold text-primary-darker block">
+                                {{ form.est_a_la_une.label }}
+                            </span>
+                            <span class="text-xs text-ink/60">
+                                {{ form.est_a_la_une.help_text }}
+                            </span>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="space-y-2 pt-4 border-t border-primary/10">
+                    <button type="submit" name="save" class="w-full bg-primary hover:bg-primary-dark text-cream font-semibold py-3 transition-colors text-sm flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        {% if mode == 'create' %}Créer l'article{% else %}Enregistrer{% endif %}
+                    </button>
+
+                    {% if mode == 'update' %}
+                        <button type="submit" name="save_and_continue" class="w-full border border-primary/30 hover:border-primary text-primary-darker font-semibold py-3 transition-colors text-sm">
+                            Enregistrer et continuer
+                        </button>
+                    {% endif %}
+
+                    <a href="{% url 'dashboard:articles_list' %}" class="block w-full text-center py-3 text-sm text-ink/60 hover:text-ink transition-colors">
+                        Annuler
+                    </a>
+                </div>
+            </div>
+
+            <!-- Carte : Classification -->
+            <div class="bg-white border border-primary/10 shadow-sm p-6">
+                <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                    Classification
+                </h2>
+
+                <!-- Catégorie -->
+                <div class="mb-5">
+                    <label for="{{ form.categorie.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.categorie.label }} <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.categorie }}
+                    {% if form.categorie.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.categorie.errors|first }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Tags -->
+                <div>
+                    <label for="{{ form.tags.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.tags.label }}
+                    </label>
+                    {{ form.tags }}
+                    <p class="text-xs text-ink/50 mt-1.5">Ctrl+clic pour sélection multiple</p>
+                </div>
+            </div>
+
+            <!-- Carte : Statistiques (mode édition uniquement) -->
+            {% if mode == 'update' %}
+                <div class="bg-white border border-primary/10 shadow-sm p-6">
+                    <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                        Statistiques
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-ink/60">Vues</span>
+                            <span class="font-semibold text-primary-darker">{{ article.nombre_vues }}</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-ink/60">Créé le</span>
+                            <span class="text-sm text-ink/70">{{ article.created_at|date:"d M Y" }}</span>
+                        </div>
+                        {% if article.statut == 'publie' %}
+                            <a href="{{ article.get_absolute_url }}" target="_blank" 
+                               class="block w-full text-center mt-4 py-2.5 border border-primary/30 hover:border-primary text-primary-darker text-sm font-semibold transition-colors">
+                                Voir sur le site →
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/**
+ * Compteur de caractères pour le résumé
+ */
+(function() {
+    const textarea = document.getElementById('{{ form.resume.id_for_label }}');
+    const counter = document.getElementById('resume-current');
+    
+    if (textarea && counter) {
+        function updateCounter() {
+            const length = textarea.value.length;
+            counter.textContent = length;
+            if (length > 280) {
+                counter.parentElement.style.color = '#f59e0b';
+            } else {
+                counter.parentElement.style.color = '';
+            }
+        }
+        textarea.addEventListener('input', updateCounter);
+        updateCounter();
+    }
+})();
+
+/**
+ * Initialisation TinyMCE
+ */
+tinymce.init({
+    selector: 'textarea#{{ form.contenu.id_for_label }}',
+    height: 500,
+    menubar: false,
+    language: 'fr_FR',
+    language_url: 'https://cdn.jsdelivr.net/gh/tinymce/tinymce-i18n@main/langs6/fr_FR.js',
+    plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+    toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | link image | removeformat | code | help',
+    block_formats: 'Paragraphe=p; Titre H2=h2; Titre H3=h3; Citation=blockquote',
+    content_style: 'body { font-family: Inter, sans-serif; font-size: 16px; line-height: 1.7; }',
+    branding: false,
+    promotion: false,
+    
+    // Upload d'image dans le contenu
+    images_upload_url: '{% url "dashboard:tinymce_upload_image" %}',
+    images_upload_credentials: true,
+    
+    // CSRF token pour l'upload
+    images_upload_handler: function(blobInfo, progress) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            xhr.open('POST', '{% url "dashboard:tinymce_upload_image" %}');
+            
+            // Récupère le CSRF token depuis le cookie
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            xhr.setRequestHeader('X-CSRFToken', csrfToken);
+            
+            xhr.upload.onprogress = (e) => {
+                progress(e.loaded / e.total * 100);
+            };
+            
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const json = JSON.parse(xhr.responseText);
+                    resolve(json.location);
+                } else {
+                    reject('Erreur HTTP: ' + xhr.status);
+                }
+            };
+            
+            xhr.onerror = () => reject('Erreur réseau');
+            
+            const formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+            xhr.send(formData);
+        });
+    }
+});
+</script>
+{% endblock %}

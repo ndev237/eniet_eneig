@@ -1,0 +1,203 @@
+{% load static %}
+
+<!-- ================================================================ -->
+<!-- SIDEBAR - Navigation principale du dashboard                      -->
+<!-- ================================================================ -->
+<!--
+    fixed sur desktop : reste en place quand on scrolle le contenu
+    translate-x-full sur mobile : caché par défaut, slide depuis la gauche
+-->
+<aside id="dashboard-sidebar"
+       class="fixed inset-y-0 left-0 z-50 w-72 bg-primary-darker text-cream
+              -translate-x-full lg:translate-x-0 transition-transform duration-300
+              flex flex-col">
+
+    <!-- ============================================================ -->
+    <!-- HEADER de la sidebar avec logo et nom                         -->
+    <!-- ============================================================ -->
+    <div class="p-6 border-b border-cream/10">
+        <a href="{% url 'dashboard:home' %}" class="flex items-center gap-3 group">
+            <img src="{% static 'images/logo_light.png' %}"
+                 alt="ENIET/ENIEG"
+                 class="h-12 w-auto transition-transform group-hover:scale-105">
+            <div>
+                <div class="font-display text-lg font-semibold leading-tight">
+                    ENIET <span class="text-accent">/</span> ENIEG
+                </div>
+                <div class="text-[10px] text-cream/60 uppercase tracking-wider">
+                    Dashboard
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- NAVIGATION                                                   -->
+    <!-- Scroll vertical si nombreuses entrées                        -->
+    <!-- ============================================================ -->
+    <nav class="flex-1 overflow-y-auto dashboard-scroll py-6 px-4 space-y-1">
+
+        <!-- ============================================ -->
+        <!-- Section : Vue d'ensemble                     -->
+        <!-- ============================================ -->
+        <div class="px-3 mb-2">
+            <div class="text-[10px] uppercase tracking-[0.15em] text-cream/40 font-semibold">
+                Vue d'ensemble
+            </div>
+        </div>
+
+        <a href="{% url 'dashboard:home' %}"
+           class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors
+                  {% if request.resolver_match.url_name == 'home' %}bg-accent text-primary-darker{% else %}text-cream/70 hover:text-cream hover:bg-cream/5{% endif %}">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span>Accueil</span>
+        </a>
+
+        <!-- ============================================ -->
+        <!-- Section : Contenu                            -->
+        <!-- ============================================ -->
+        <div class="px-3 mb-2 mt-6">
+            <div class="text-[10px] uppercase tracking-[0.15em] text-cream/40 font-semibold">
+                Contenu
+            </div>
+        </div>
+        <!-- ============================================ -->
+        <!--  Articles                                    -->
+        <!-- ============================================ -->
+        <a href="{% url 'dashboard:articles_list' %}"
+           class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors
+                  {% if 'articles' in request.resolver_match.url_name %}bg-accent text-primary-darker{% else %}text-cream/70 hover:text-cream hover:bg-cream/5{% endif %}">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-5 0V20"/>
+            </svg>
+            <span>Articles</span>
+        </a>
+        <!-- ============================================ -->
+        <!--  Galerie                                     -->
+        <!-- ============================================ -->
+        <a href="{% url 'dashboard:medias_list' %}"
+           class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors
+                  {% if 'media' in request.resolver_match.url_name or 'album' in request.resolver_match.url_name %}bg-accent text-primary-darker{% else %}text-cream/70 hover:text-cream hover:bg-cream/5{% endif %}">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span>Galerie</span>
+        </a>
+
+        <!-- ============================================ -->
+        <!-- Section: Communication                      -->
+        <!-- ============================================ -->
+        <div class="px-3 mb-2 mt-6">
+            <div class="text-[10px] uppercase tracking-[0.15em] text-cream/40 font-semibold">
+                Communication
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!--  Messages                                    -->
+        <!-- ============================================ -->
+        <a href="{% url 'dashboard:messages_list' %}"
+           class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors
+                  {% if 'message' in request.resolver_match.url_name %}bg-accent text-primary-darker{% else %}text-cream/70 hover:text-cream hover:bg-cream/5{% endif %}">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <span>Messages</span>
+            <!-- Badge nombre de non-lus -->
+            {% if badge_messages_non_lus > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-[10px] font-semibold w-5 h-5 rounded-full flex items-center justify-center">
+                    {{ badge_messages_non_lus }}
+                </span>
+            {% endif %}
+        </a>
+
+        <!-- ============================================ -->
+        <!-- Section: Configuration                       -->
+        <!-- ============================================ -->
+        <div class="px-3 mb-2 mt-6">
+            <div class="text-[10px] uppercase tracking-[0.15em] text-cream/40 font-semibold">
+                Configuration
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!--  Paramètres                                  -->
+        <!-- ============================================ -->
+        <a href="{% url 'dashboard:parametres' %}"
+           class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors
+                  {% if request.resolver_match.url_name == 'parametres' %}bg-accent text-primary-darker{% else %}text-cream/70 hover:text-cream hover:bg-cream/5{% endif %}">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            <span>Paramètres</span>
+        </a>
+        <!-- ============================================ -->
+        <!--  Utilisateurs                                  -->
+        <!-- ============================================ -->
+        {% if user.profil.est_super_admin %}
+        <a href="{% url 'dashboard:utilisateurs_list' %}"
+           class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors
+                  {% if 'utilisateur' in request.resolver_match.url_name %}bg-accent text-primary-darker{% else %}text-cream/70 hover:text-cream hover:bg-cream/5{% endif %}">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <span>Utilisateurs</span>
+        </a>
+        {% endif %}
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- FOOTER de la sidebar : profil + déconnexion                  -->
+    <!-- ============================================================ -->
+    <div class="border-t border-cream/10 p-4">
+
+        <!-- Carte profil utilisateur -->
+        <a href="{% url 'dashboard:mon_profil' %}"
+           class="flex items-center gap-3 p-3 bg-cream/5 mb-3 hover:bg-cream/10 transition-colors">
+            {% if user.profil.photo %}
+                <img src="{{ user.profil.photo.url }}" alt="{{ user.profil.nom_complet }}" class="w-10 h-10 object-cover rounded-full">
+            {% else %}
+                <div class="w-10 h-10 bg-accent text-primary-darker font-semibold flex items-center justify-center rounded-full text-sm">
+                    {{ user.profil.initiales }}
+                </div>
+            {% endif %}
+            <div class="flex-1 min-w-0">
+                <div class="text-sm font-semibold truncate">
+                    {{ user.profil.nom_complet }}
+                </div>
+                <div class="text-[10px] text-cream/60 uppercase tracking-wider">
+                    {{ user.profil.get_role_display }}
+                </div>
+            </div>
+            <svg class="w-4 h-4 text-cream/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </a>
+
+        <!-- Liens d'actions -->
+        <div class="space-y-1">
+            <a href="{% url 'core:home' %}"
+               target="_blank"
+               class="flex items-center gap-3 px-3 py-2 text-sm text-cream/70 hover:text-cream hover:bg-cream/5 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                <span>Voir le site</span>
+            </a>
+
+            <!-- Déconnexion : doit être POST pour des raisons de sécurité (CSRF) -->
+            <form method="post" action="{% url 'dashboard:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="w-full flex items-center gap-3 px-3 py-2 text-sm text-cream/70 hover:text-cream hover:bg-cream/5 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    <span>Se déconnecter</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</aside>

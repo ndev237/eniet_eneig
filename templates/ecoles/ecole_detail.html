@@ -25,32 +25,19 @@
             <span class="text-accent">{{ ecole.sigle }}</span>
         </nav>
 
-        <div class="grid lg:grid-cols-3 gap-8 items-end">
-            <div class="lg:col-span-2">
-                <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
-                    — {{ ecole.get_type_ecole_display }}
-                </div>
-                <h1 class="font-serif text-5xl md:text-7xl font-medium leading-[1.05] mb-4">
-                    {{ ecole.sigle }}
-                </h1>
-                <div class="text-2xl text-accent font-semibold mb-4">
-                    {{ ecole.diplome_prepare }}
-                </div>
-                <p class="text-cream/80 text-lg max-w-2xl">
-                    {{ ecole.diplome_complet }}
-                </p>
+        <div>
+            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+                — {{ ecole.get_type_ecole_display }}
             </div>
-
-            <!-- Carte tarif rapide -->
-            <div class="bg-accent text-primary-darker p-6">
-                <div class="text-xs uppercase tracking-wider font-semibold mb-2">
-                    {% trans "Scolarité 1ʳᵉ année" %}
-                </div>
-                <div class="font-serif text-4xl font-bold mb-2">
-                    {{ ecole.total_premiere_annee|floatformat:0|intcomma }}
-                </div>
-                <div class="text-sm font-semibold">FCFA</div>
+            <h1 class="font-serif text-5xl md:text-7xl font-medium leading-[1.05] mb-4">
+                {{ ecole.sigle }}
+            </h1>
+            <div class="text-2xl text-accent font-semibold mb-4">
+                {{ ecole.diplome_prepare }}
             </div>
+            <p class="text-cream/80 text-lg max-w-3xl">
+                {{ ecole.diplome_complet }}
+            </p>
         </div>
     </div>
 </section>
@@ -90,9 +77,9 @@
             </div>
             <div class="bg-cream border-l-4 border-accent p-5">
                 <div class="text-xs uppercase tracking-wider text-accent font-semibold mb-2">
-                    {% trans "Concours" %}
+                    {% trans "Diplôme" %}
                 </div>
-                <div class="text-ink/80 text-sm leading-relaxed">{{ ecole.frais_concours|floatformat:0|intcomma }} FCFA</div>
+                <div class="text-ink/80 text-sm leading-relaxed">{{ ecole.diplome_prepare }}</div>
             </div>
         </div>
     </div>
@@ -145,84 +132,30 @@
 {% endif %}
 
 <!-- ================================================================ -->
-<!-- TARIFS - Échéancier détaillé                                      -->
+<!-- CTA - Vers la procédure d'admission                               -->
 <!-- ================================================================ -->
 <section class="py-20 bg-primary-darker text-cream relative overflow-hidden">
     <div class="absolute inset-0 opacity-30 pointer-events-none"
          style="background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 60px 60px;">
     </div>
+    <div class="absolute top-20 right-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative max-w-4xl mx-auto px-6">
-        <div class="text-center mb-12">
-            <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
-                — {% if filieres %}03{% else %}02{% endif %} / {% trans "Frais" %}
-            </div>
-            <h2 class="font-serif text-3xl md:text-4xl font-medium leading-tight">
-                {% trans "Investissez dans votre" %} <span class="italic text-accent">{% trans "avenir" %}</span>
-            </h2>
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+            — {% if filieres %}03{% else %}02{% endif %} / {% trans "Candidater" %}
         </div>
-
-        <div class="bg-cream/5 backdrop-blur border border-cream/20 p-8">
-            <h3 class="font-serif text-2xl mb-6">
-                {{ ecole.sigle }} — {% trans "Échéancier 1ʳᵉ année" %}
-            </h3>
-
-            <div class="space-y-3">
-                <div class="flex justify-between items-center pb-3 border-b border-cream/10">
-                    <div>
-                        <div class="font-semibold">{% trans "Inscription" %}</div>
-                        <div class="text-xs text-cream/60">{% trans "Non remboursable" %}</div>
-                    </div>
-                    <div class="font-serif text-lg text-accent">
-                        {{ ecole.frais_inscription_non_remboursable|intcomma }} FCFA
-                    </div>
-                </div>
-
-                {% if ecole.matiere_oeuvre > 0 %}
-                    <div class="flex justify-between items-center pb-3 border-b border-cream/10">
-                        <div>
-                            <div class="font-semibold">{% trans "Matière d'œuvre" %}</div>
-                            <div class="text-xs text-cream/60">{% trans "À l'inscription" %}</div>
-                        </div>
-                        <div class="font-serif text-lg text-accent">
-                            {{ ecole.matiere_oeuvre|intcomma }} FCFA
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% for tranche in tranches %}
-                    {% if tranche.annee == 1 %}
-                        <div class="flex justify-between items-center pb-3 border-b border-cream/10">
-                            <div>
-                                <div class="font-semibold">{{ tranche.libelle }}</div>
-                                <div class="text-xs text-cream/60">{{ tranche.echeance }}</div>
-                            </div>
-                            <div class="font-serif text-lg">
-                                {{ tranche.montant|intcomma }} FCFA
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            <div class="bg-accent text-primary-darker p-5 mt-6">
-                <div class="flex justify-between items-center">
-                    <div class="font-serif text-lg font-semibold">{% trans "Total 1ère année" %}</div>
-                    <div class="font-serif text-3xl font-bold">
-                        {{ ecole.total_premiere_annee|intcomma }} FCFA
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-8">
-            <a href="{% url 'ecoles:admission' %}" class="inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-7 py-4 transition-all hover:gap-3 group">
-                {% trans "Voir la procédure d'admission" %}
-                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                </svg>
-            </a>
-        </div>
+        <h2 class="font-serif text-3xl md:text-4xl font-medium leading-tight mb-6">
+            {% trans "Rejoignez la prochaine" %} <span class="italic text-accent">{% trans "promotion" %}</span>
+        </h2>
+        <p class="text-cream/80 text-lg mb-8 max-w-2xl mx-auto">
+            {% blocktrans %}Préparez votre dossier de candidature et venez écrire votre parcours d'instituteur à nos côtés.{% endblocktrans %}
+        </p>
+        <a href="{% url 'ecoles:admission' %}" class="inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-7 py-4 transition-all hover:gap-3 group">
+            {% trans "Voir la procédure d'admission" %}
+            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+        </a>
     </div>
 </section>
 

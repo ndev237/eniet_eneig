@@ -6,8 +6,9 @@
 /* Import du framework Tailwind */
 @import "tailwindcss";
 
-/* Import de daisyUI (composants prêts, utiles pour le dashboard plus tard) */
-@plugin "daisyui";
+/* daisyUI retiré : non utilisé dans les templates, et ses thèmes écrasaient
+   les couleurs de la charte (--color-primary / --color-accent) en plus de
+   provoquer une collision de classe avec « tab-content ». */
 
 /* Chemins où Tailwind scanne les classes utilisées
    IMPORTANT : sans @source, Tailwind ne génère pas les classes des templates Django */

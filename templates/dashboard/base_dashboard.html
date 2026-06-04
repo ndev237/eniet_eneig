@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %} — ENIET / ENIEG</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'images/logo_light.png' %}">
+
+    <!-- Polices -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind compilé -->
+    {% load tailwind_tags %}
+    {% tailwind_css %}
+
+    <style>
+        /* Force le dashboard à utiliser Inter (plus lisible pour les interfaces) */
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .font-display {
+            font-family: 'Fraunces', serif;
+        }
+
+        /* Scrollbar custom pour la sidebar */
+        .dashboard-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .dashboard-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .dashboard-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        .dashboard-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-cream text-ink antialiased min-h-screen">
+
+    <!-- ================================================================ -->
+    <!-- LAYOUT GLOBAL : Sidebar + Main content                            -->
+    <!-- ================================================================ -->
+    <div class="flex min-h-screen">
+
+        <!-- ============================================================ -->
+        <!-- SIDEBAR GAUCHE                                                -->
+        <!-- Fixed sur desktop, drawer sur mobile                          -->
+        <!-- ============================================================ -->
+        {% include "dashboard/partials/sidebar.html" %}
+
+        <!-- ============================================================ -->
+        <!-- ZONE PRINCIPALE                                               -->
+        <!-- ============================================================ -->
+        <div class="flex-1 flex flex-col lg:ml-72 min-w-0">
+
+            <!-- Topbar -->
+            {% include "dashboard/partials/topbar.html" %}
+
+            <!-- ======================================================== -->
+            <!-- MESSAGES FLASH (succès, erreur, info)                    -->
+            <!-- ======================================================== -->
+           <!-- Toasts de notification -->
+            {% include "dashboard/partials/toasts.html" %}
+
+            <!-- Contenu de la page -->
+            <main class="flex-1 p-6 lg:p-8">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Overlay mobile (pour la sidebar)                              -->
+    <!-- ============================================================ -->
+    <div id="sidebar-overlay"
+         class="lg:hidden fixed inset-0 z-40 bg-primary-darker/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    </div>
+
+    <!-- Script dashboard -->
+    <script src="{% static 'js/dashboard.js' %}" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,197 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}Messages — Dashboard{% endblock %}
+{% block page_title %}Messages{% endblock %}
+{% block page_subtitle %}
+<p class="text-sm text-ink/60 mt-0.5">
+    {% if stats.non_lus > 0 %}
+        {{ stats.non_lus }} message{{ stats.non_lus|pluralize }} non lu{{ stats.non_lus|pluralize }}
+    {% else %}
+        Tous les messages sont lus
+    {% endif %}
+</p>
+{% endblock %}
+
+{% block content %}
+
+<!-- ================================================================ -->
+<!-- BARRE D'OUTILS                                                    -->
+<!-- ================================================================ -->
+<div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between mb-6">
+
+    <!-- Recherche -->
+    <form method="get" action="{% url 'dashboard:messages_list' %}" class="flex-1 max-w-md">
+        <div class="relative">
+            <input type="search" 
+                   name="q" 
+                   value="{{ recherche }}"
+                   placeholder="Rechercher (nom, email, contenu)..."
+                   class="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/15 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            {% if statut_actif %}<input type="hidden" name="statut" value="{{ statut_actif }}">{% endif %}
+        </div>
+    </form>
+
+    <!-- Filtre par sujet -->
+    <form method="get" action="{% url 'dashboard:messages_list' %}" id="filtre-sujet">
+        {% if statut_actif %}<input type="hidden" name="statut" value="{{ statut_actif }}">{% endif %}
+        {% if recherche %}<input type="hidden" name="q" value="{{ recherche }}">{% endif %}
+        <select name="sujet" onchange="document.getElementById('filtre-sujet').submit()"
+                class="px-4 py-2.5 bg-white border border-primary/15 focus:border-primary focus:outline-none text-sm">
+            <option value="">Tous les sujets</option>
+            {% for valeur, libelle in sujets %}
+                <option value="{{ valeur }}" {% if sujet_actif == valeur %}selected{% endif %}>
+                    {{ libelle }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+</div>
+
+<!-- ================================================================ -->
+<!-- ONGLETS PAR STATUT                                                -->
+<!-- ================================================================ -->
+<div class="flex flex-wrap gap-2 mb-6 border-b border-primary/10 pb-1">
+    <a href="{% url 'dashboard:messages_list' %}{% if recherche %}?q={{ recherche }}{% endif %}" 
+       class="px-4 py-2 text-sm font-medium transition-colors {% if not statut_actif %}bg-primary text-cream{% else %}text-ink/70 hover:bg-cream{% endif %}">
+        Tous <span class="ml-1 text-xs opacity-70">({{ stats.total }})</span>
+    </a>
+    <a href="?statut=non_lu{% if recherche %}&q={{ recherche }}{% endif %}" 
+       class="px-4 py-2 text-sm font-medium transition-colors flex items-center gap-2 {% if statut_actif == 'non_lu' %}bg-blue-600 text-white{% else %}text-ink/70 hover:bg-cream{% endif %}">
+        Non lus 
+        <span class="text-xs {% if statut_actif == 'non_lu' %}bg-white/20{% else %}bg-blue-100 text-blue-700{% endif %} px-1.5 py-0.5 rounded">{{ stats.non_lus }}</span>
+    </a>
+    <a href="?statut=lu{% if recherche %}&q={{ recherche }}{% endif %}" 
+       class="px-4 py-2 text-sm font-medium transition-colors {% if statut_actif == 'lu' %}bg-primary text-cream{% else %}text-ink/70 hover:bg-cream{% endif %}">
+        Lus <span class="ml-1 text-xs opacity-70">({{ stats.lus }})</span>
+    </a>
+    <a href="?statut=traite{% if recherche %}&q={{ recherche }}{% endif %}" 
+       class="px-4 py-2 text-sm font-medium transition-colors {% if statut_actif == 'traite' %}bg-green-600 text-white{% else %}text-ink/70 hover:bg-cream{% endif %}">
+        Traités <span class="ml-1 text-xs opacity-70">({{ stats.traites }})</span>
+    </a>
+</div>
+
+<!-- ================================================================ -->
+<!-- LISTE DES MESSAGES (style inbox)                                  -->
+<!-- ================================================================ -->
+{% if page_obj.object_list %}
+    <div class="bg-white border border-primary/10 shadow-sm divide-y divide-primary/5">
+        {% for msg in page_obj.object_list %}
+            <a href="{% url 'dashboard:message_detail' pk=msg.pk %}" 
+               class="block p-4 hover:bg-cream/40 transition-colors group
+                      {% if msg.statut == 'non_lu' %}bg-blue-50/40{% endif %}">
+                <div class="flex items-start gap-4">
+
+                    <!-- Indicateur non lu + Avatar initiales -->
+                    <div class="flex items-center gap-3 flex-shrink-0">
+                        <!-- Pastille non lu -->
+                        {% if msg.statut == 'non_lu' %}
+                            <span class="w-2 h-2 bg-blue-500 rounded-full" title="Non lu"></span>
+                        {% else %}
+                            <span class="w-2 h-2"></span>
+                        {% endif %}
+
+                        <!-- Avatar avec initiale -->
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm
+                            {% if msg.statut == 'non_lu' %}bg-blue-500 text-white
+                            {% elif msg.statut == 'traite' %}bg-green-100 text-green-700
+                            {% else %}bg-primary/10 text-primary
+                            {% endif %}">
+                            {{ msg.nom|first|upper }}
+                        </div>
+                    </div>
+
+                    <!-- Contenu du message -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between gap-3 mb-1">
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="font-semibold text-primary-darker text-sm truncate
+                                    {% if msg.statut == 'non_lu' %}font-bold{% endif %}">
+                                    {{ msg.nom }}
+                                </span>
+                                <!-- Badge sujet -->
+                                <span class="text-[10px] uppercase tracking-wider bg-cream px-2 py-0.5 text-ink/60 flex-shrink-0 hidden sm:inline">
+                                    {{ msg.get_sujet_display }}
+                                </span>
+                            </div>
+                            <!-- Date relative -->
+                            <span class="text-xs text-ink/40 whitespace-nowrap flex-shrink-0">
+                                {{ msg.created_at|timesince }}
+                            </span>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="text-xs text-ink/50 mb-1 truncate">
+                            {{ msg.email }}
+                            {% if msg.telephone %} · {{ msg.telephone }}{% endif %}
+                        </div>
+
+                        <!-- Aperçu du message -->
+                        <p class="text-sm text-ink/70 line-clamp-1">
+                            {{ msg.message|truncatechars:120 }}
+                        </p>
+                    </div>
+
+                    <!-- Badge statut traité -->
+                    {% if msg.statut == 'traite' %}
+                        <div class="flex-shrink-0">
+                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" title="Traité">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- PAGINATION -->
+    {% if page_obj.has_other_pages %}
+        <div class="flex items-center justify-between gap-4 mt-6">
+            <div class="text-sm text-ink/60">
+                {{ page_obj.paginator.count }} message{{ page_obj.paginator.count|pluralize }}
+            </div>
+            <div class="flex items-center gap-2">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if statut_actif %}&statut={{ statut_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}"
+                       class="px-3 py-2 bg-white border border-primary/15 hover:border-primary text-sm transition-colors">
+                        ← Précédent
+                    </a>
+                {% endif %}
+                <span class="px-3 py-2 bg-primary text-cream text-sm font-semibold">{{ page_obj.number }}</span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if statut_actif %}&statut={{ statut_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}"
+                       class="px-3 py-2 bg-white border border-primary/15 hover:border-primary text-sm transition-colors">
+                        Suivant →
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+{% else %}
+    <!-- ÉTAT VIDE -->
+    <div class="bg-white border border-primary/10 shadow-sm p-16 text-center">
+        <svg class="w-16 h-16 text-primary/20 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        <h3 class="font-display text-xl text-primary-darker font-semibold mb-2">
+            {% if recherche or statut_actif or sujet_actif %}
+                Aucun message ne correspond
+            {% else %}
+                Aucun message reçu
+            {% endif %}
+        </h3>
+        <p class="text-ink/60 max-w-md mx-auto">
+            {% if recherche or statut_actif or sujet_actif %}
+                Essayez avec d'autres critères de recherche.
+            {% else %}
+                Les messages envoyés via le formulaire de contact apparaîtront ici.
+            {% endif %}
+        </p>
+    </div>
+{% endif %}
+
+{% endblock %}

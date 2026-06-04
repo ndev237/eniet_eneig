@@ -18,6 +18,7 @@ Avec context processor :
 """
 
 from apps.pages.models import SiteSettings
+from apps.contacts.models import MessageContact
 
 
 def site_settings(request):
@@ -32,3 +33,28 @@ def site_settings(request):
     return {
         'site_settings': SiteSettings.load(),
     }
+
+
+def dashboard_badges(request):
+    """
+    Compteurs pour les badges de la sidebar du dashboard.
+
+    On ne charge ces compteurs que si l'utilisateur est connecté
+    pour éviter des requêtes inutiles sur le site public.
+    """
+    # Pas de badges si pas connecté ou pas dans le dashboard
+    if not request.user.is_authenticated:
+        return {}
+
+    # On évite la requête sur les pages publiques (optimisation)
+    if not request.path.startswith('/dashboard'):
+        return {}
+
+    nb_messages_non_lus = MessageContact.objects.filter(
+        statut=MessageContact.StatutChoices.NON_LU
+    ).count()
+
+    return {
+        'badge_messages_non_lus': nb_messages_non_lus,
+    }
+

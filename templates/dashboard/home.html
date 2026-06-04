@@ -1,0 +1,269 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}Tableau de bord{% endblock %}
+{% block page_title %}Tableau de bord{% endblock %}
+
+{% block page_subtitle %}
+<p class="text-sm text-ink/60 mt-0.5">
+    Bienvenue {{ user.profil.nom_complet }} 👋
+</p>
+{% endblock %}
+
+{% block content %}
+
+<!-- ================================================================ -->
+<!-- KPI CARDS - 4 chiffres clés                                       -->
+<!-- ================================================================ -->
+<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+
+    <!-- Articles publiés -->
+    <div class="bg-white border border-primary/10 shadow-sm p-6 group hover:border-primary/30 hover:shadow-md transition-all">
+        <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+                <svg class="w-5 h-5 text-primary group-hover:text-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-5 0V20"/>
+                </svg>
+            </div>
+            {% if nb_articles_30j > 0 %}
+                <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 font-semibold">
+                    +{{ nb_articles_30j }} ce mois
+                </span>
+            {% endif %}
+        </div>
+        <div class="text-3xl font-display font-semibold text-primary-darker mb-1">
+            {{ nb_articles_publies }}
+        </div>
+        <div class="text-sm text-ink/60">Articles publiés</div>
+        {% if nb_articles_brouillons > 0 %}
+            <div class="text-xs text-ink/50 mt-1">
+                + {{ nb_articles_brouillons }} brouillon{{ nb_articles_brouillons|pluralize }}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Messages non lus -->
+    <div class="bg-white border border-primary/10 shadow-sm p-6 group hover:border-primary/30 hover:shadow-md transition-all">
+        <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 bg-accent/20 flex items-center justify-center group-hover:bg-accent transition-colors">
+                <svg class="w-5 h-5 text-accent group-hover:text-primary-darker transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            {% if nb_messages_non_lus > 0 %}
+                <span class="text-xs bg-red-50 text-red-700 px-2 py-0.5 font-semibold animate-pulse">
+                    À traiter
+                </span>
+            {% endif %}
+        </div>
+        <div class="text-3xl font-display font-semibold text-primary-darker mb-1">
+            {{ nb_messages_non_lus }}
+        </div>
+        <div class="text-sm text-ink/60">Messages non lus</div>
+        {% if nb_messages_30j > 0 %}
+            <div class="text-xs text-ink/50 mt-1">
+                {{ nb_messages_30j }} reçu{{ nb_messages_30j|pluralize }} ce mois
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Vues totales -->
+    <div class="bg-white border border-primary/10 shadow-sm p-6 group hover:border-primary/30 hover:shadow-md transition-all">
+        <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 bg-blue-50 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                <svg class="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="text-3xl font-display font-semibold text-primary-darker mb-1">
+            {{ total_vues }}
+        </div>
+        <div class="text-sm text-ink/60">Vues totales</div>
+        <div class="text-xs text-ink/50 mt-1">Sur tous les articles publiés</div>
+    </div>
+
+    <!-- Albums photos -->
+    <div class="bg-white border border-primary/10 shadow-sm p-6 group hover:border-primary/30 hover:shadow-md transition-all">
+        <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 bg-purple-50 flex items-center justify-center group-hover:bg-purple-600 transition-colors">
+                <svg class="w-5 h-5 text-purple-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="text-3xl font-display font-semibold text-primary-darker mb-1">
+            {{ nb_albums }}
+        </div>
+        <div class="text-sm text-ink/60">Albums publiés</div>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- GRILLE PRINCIPALE : 2 colonnes                                    -->
+<!-- ================================================================ -->
+<div class="grid lg:grid-cols-3 gap-6 mb-8">
+
+    <!-- ============================================ -->
+    <!-- Colonne gauche (2/3) - Derniers articles      -->
+    <!-- ============================================ -->
+    <div class="lg:col-span-2 bg-white border border-primary/10 shadow-sm">
+        <div class="p-6 border-b border-primary/10 flex items-center justify-between">
+            <h2 class="font-display text-lg font-semibold text-primary-darker">
+                Derniers articles
+            </h2>
+            <a href="#" class="text-sm text-primary hover:text-primary-dark font-semibold inline-flex items-center gap-1 group">
+                Voir tous
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+
+        {% if derniers_articles %}
+            <div class="divide-y divide-primary/10">
+                {% for article in derniers_articles %}
+                    <div class="p-5 hover:bg-cream/30 transition-colors flex items-center gap-4">
+                        <!-- Image miniature -->
+                        <div class="w-16 h-16 flex-shrink-0 bg-primary/5 overflow-hidden">
+                            {% if article.image_une %}
+                                <img src="{{ article.image_une.url }}"
+                                     alt="{{ article.image_une_alt }}"
+                                     class="w-full h-full object-cover">
+                            {% else %}
+                                <div class="w-full h-full flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-primary/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] uppercase tracking-wider font-semibold text-primary">
+                                    {{ article.categorie.nom }}
+                                </span>
+                                {% if article.statut == 'brouillon' %}
+                                    <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 uppercase tracking-wider font-semibold">
+                                        Brouillon
+                                    </span>
+                                {% endif %}
+                            </div>
+                            <h3 class="font-semibold text-primary-darker text-sm leading-tight mb-1 truncate">
+                                {{ article.titre }}
+                            </h3>
+                            <div class="text-xs text-ink/50">
+                                {{ article.updated_at|date:"d F Y à H:i" }}
+                            </div>
+                        </div>
+
+                        <div class="text-right hidden sm:block">
+                            <div class="text-xs text-ink/50 flex items-center gap-1 justify-end">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                {{ article.nombre_vues }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="p-12 text-center text-ink/50">
+                <p>Aucun article pour le moment</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- ============================================ -->
+    <!-- Colonne droite (1/3) - Derniers messages      -->
+    <!-- ============================================ -->
+    <div class="bg-white border border-primary/10 shadow-sm">
+        <div class="p-6 border-b border-primary/10 flex items-center justify-between">
+            <h2 class="font-display text-lg font-semibold text-primary-darker">
+                Messages récents
+            </h2>
+            {% if nb_messages_non_lus > 0 %}
+                <span class="bg-red-500 text-white text-xs font-semibold w-6 h-6 rounded-full flex items-center justify-center">
+                    {{ nb_messages_non_lus }}
+                </span>
+            {% endif %}
+        </div>
+
+        {% if derniers_messages %}
+            <div class="divide-y divide-primary/10">
+                {% for message in derniers_messages %}
+                    <div class="p-4 hover:bg-cream/30 transition-colors {% if message.statut == 'non_lu' %}bg-blue-50/50{% endif %}">
+                        <div class="flex items-start gap-3">
+                            {% if message.statut == 'non_lu' %}
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                            {% else %}
+                                <div class="w-2 h-2 bg-transparent mt-2 flex-shrink-0"></div>
+                            {% endif %}
+                            <div class="flex-1 min-w-0">
+                                <div class="font-semibold text-sm text-primary-darker truncate">
+                                    {{ message.nom }}
+                                </div>
+                                <div class="text-[11px] text-ink/50 truncate">
+                                    {{ message.email }}
+                                </div>
+                                <div class="text-xs text-ink/70 mt-1.5 line-clamp-2">
+                                    {{ message.message|truncatechars:80 }}
+                                </div>
+                                <div class="text-[10px] text-ink/40 mt-1.5 uppercase tracking-wider">
+                                    {{ message.created_at|timesince }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="p-12 text-center text-ink/50">
+                <p class="text-sm">Aucun message pour le moment</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- ARTICLES POPULAIRES                                               -->
+<!-- ================================================================ -->
+{% if articles_populaires %}
+<div class="bg-white border border-primary/10 shadow-sm">
+    <div class="p-6 border-b border-primary/10">
+        <h2 class="font-display text-lg font-semibold text-primary-darker">
+            Articles les plus vus
+        </h2>
+        <p class="text-sm text-ink/60 mt-0.5">Top 5 du classement actuel</p>
+    </div>
+
+    <div class="divide-y divide-primary/10">
+        {% for article in articles_populaires %}
+            <div class="p-4 flex items-center gap-4 hover:bg-cream/30 transition-colors">
+                <div class="font-display text-2xl text-primary/30 font-bold w-8 text-center">
+                    {{ forloop.counter }}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-primary-darker text-sm truncate">
+                        {{ article.titre }}
+                    </h3>
+                    <div class="text-xs text-ink/50">
+                        {{ article.categorie.nom }} · {{ article.date_publication|date:"d F Y" }}
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-lg font-display font-semibold text-primary-darker">
+                        {{ article.nombre_vues }}
+                    </div>
+                    <div class="text-[10px] text-ink/50 uppercase tracking-wider">vues</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

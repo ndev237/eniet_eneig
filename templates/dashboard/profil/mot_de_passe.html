@@ -1,0 +1,117 @@
+{% extends "dashboard/base_dashboard.html" %}
+{% load static %}
+
+{% block title %}Mot de passe — Dashboard{% endblock %}
+{% block page_title %}Mon profil{% endblock %}
+{% block page_subtitle %}
+<p class="text-sm text-ink/60 mt-0.5">
+    Gérez vos informations personnelles et votre sécurité
+</p>
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl space-y-6">
+
+    <!-- Onglets -->
+    <div class="flex gap-1 border-b border-primary/10">
+        <a href="{% url 'dashboard:mon_profil' %}"
+           class="px-4 py-3 text-sm font-semibold border-b-2 border-transparent text-ink/55 hover:text-ink transition-colors">
+            Informations
+        </a>
+        <a href="{% url 'dashboard:mon_mot_de_passe' %}"
+           class="px-4 py-3 text-sm font-semibold border-b-2 border-primary text-primary">
+            Mot de passe
+        </a>
+    </div>
+
+    <!-- Carte : formulaire + panneau illustration -->
+    <div class="bg-white border border-primary/10 shadow-sm">
+        <div class="grid lg:grid-cols-[1.4fr_1fr]">
+
+            <!-- ============================================ -->
+            <!-- Colonne formulaire                            -->
+            <!-- ============================================ -->
+            <div class="p-7 lg:p-8">
+                <p class="section-number">Sécurité du compte</p>
+                <h2 class="font-display text-xl font-semibold text-primary-darker mt-1.5 mb-6">
+                    Changer mon mot de passe
+                </h2>
+
+                {% if form.errors %}
+                    <div class="bg-red-50 border-l-4 border-red-600 p-4 mb-5">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <p class="text-sm text-red-800">{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post" class="space-y-5">
+                    {% csrf_token %}
+
+                    <div>
+                        <label for="{{ form.old_password.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.old_password.label }}
+                        </label>
+                        {{ form.old_password }}
+                    </div>
+                    <div>
+                        <label for="{{ form.new_password1.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.new_password1.label }}
+                        </label>
+                        {{ form.new_password1 }}
+                        {% if form.new_password1.help_text %}
+                            <div class="text-xs text-ink/50 mt-1.5">{{ form.new_password1.help_text|safe }}</div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="{{ form.new_password2.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.new_password2.label }}
+                        </label>
+                        {{ form.new_password2 }}
+                    </div>
+
+                    <button type="submit" class="bg-primary hover:bg-primary-dark text-cream font-semibold px-6 py-3 transition-colors text-sm inline-flex items-center gap-2 group mt-1">
+                        Changer le mot de passe
+                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- Colonne illustration + conseils               -->
+            <!-- ============================================ -->
+            <aside class="relative hidden lg:flex flex-col justify-between bg-primary-light/60 border-l border-primary/10 p-8">
+                <div class="relative">
+                    <div class="absolute top-0 right-0 w-9 h-9 border-t-2 border-r-2 border-accent/50"></div>
+                    <img src="{% static 'images/mot_de_passe.svg' %}" alt="" class="w-full max-w-[260px] mx-auto" aria-hidden="true">
+                </div>
+                <div class="relative mt-6">
+                    <h3 class="font-display text-base font-semibold text-primary-darker mb-2">
+                        Un mot de passe solide
+                    </h3>
+                    <ul class="space-y-2 text-sm text-ink/65">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 13l4 4L19 7"/></svg>
+                            Au moins 8 caractères
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 13l4 4L19 7"/></svg>
+                            Lettres, chiffres et symboles
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 13l4 4L19 7"/></svg>
+                            Unique à ce compte
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

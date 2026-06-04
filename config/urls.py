@@ -13,12 +13,9 @@ from django.views.generic import RedirectView   # ← Nouveau
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('dashboard/', include('apps.dashboard.urls')),
+    path('tinymce/', include('tinymce.urls')),
 
-    # Redirection de la racine vers la langue par défaut
-    # RedirectView est une vue intégrée de Django qui redirige vers une URL
-    # url='/fr/' : destination
-    # permanent=False : redirection 302 (temporaire), pas 301 (permanente)
-    # On utilise 302 car la langue cible peut changer selon le navigateur
     path('', RedirectView.as_view(url='/fr/', permanent=False), name='root_redirect'),
 ]
 

@@ -24,24 +24,54 @@
             </div>
         </a>
 
-        <!-- Navigation desktop -->
+        <!-- Navigation desktop — marqueur or sous l'item courant -->
+        {# ns + un permettent de détecter la page active sans répéter la requête #}
+        {% with ns=request.resolver_match.namespace un=request.resolver_match.url_name %}
         <nav class="hidden lg:flex items-center gap-7">
-            <a href="{% url 'core:home' %}" class="text-cream text-sm font-medium hover:text-accent transition-colors">{% trans "Accueil" %}</a>
-            <a href="{% url 'pages:ecole' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "L'École" %}</a>
-            <a href="{% url 'ecoles:formations_list' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Formations" %}</a>
-            <a href="{% url 'ecoles:admission' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Admission" %}</a>
-            <a href="{% url 'blog:list' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Actualités" %}</a>
-            <a href="{% url 'pages:galerie' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Galerie" %}</a>
-            <a href="{% url 'contacts:contact' %}" class="text-cream/70 text-sm font-medium hover:text-accent transition-colors">{% trans "Contact" %}</a>
+            <a href="{% url 'core:home' %}"
+               class="relative py-1 text-sm font-medium transition-colors {% if ns == 'core' %}text-cream{% else %}text-cream/70 hover:text-accent{% endif %}"
+               {% if ns == 'core' %}aria-current="page"{% endif %}>
+                {% trans "Accueil" %}
+                {% if ns == 'core' %}<span class="absolute -bottom-1.5 left-0 right-0 h-px bg-accent"></span>{% endif %}
+            </a>
+            <a href="{% url 'pages:ecole' %}"
+               class="relative py-1 text-sm font-medium transition-colors {% if ns == 'pages' and un == 'ecole' %}text-cream{% else %}text-cream/70 hover:text-accent{% endif %}"
+               {% if ns == 'pages' and un == 'ecole' %}aria-current="page"{% endif %}>
+                {% trans "L'École" %}
+                {% if ns == 'pages' and un == 'ecole' %}<span class="absolute -bottom-1.5 left-0 right-0 h-px bg-accent"></span>{% endif %}
+            </a>
+            <a href="{% url 'ecoles:formations_list' %}"
+               class="relative py-1 text-sm font-medium transition-colors {% if ns == 'ecoles' and un != 'admission' %}text-cream{% else %}text-cream/70 hover:text-accent{% endif %}"
+               {% if ns == 'ecoles' and un != 'admission' %}aria-current="page"{% endif %}>
+                {% trans "Formations" %}
+                {% if ns == 'ecoles' and un != 'admission' %}<span class="absolute -bottom-1.5 left-0 right-0 h-px bg-accent"></span>{% endif %}
+            </a>
+            <a href="{% url 'ecoles:admission' %}"
+               class="relative py-1 text-sm font-medium transition-colors {% if ns == 'ecoles' and un == 'admission' %}text-cream{% else %}text-cream/70 hover:text-accent{% endif %}"
+               {% if ns == 'ecoles' and un == 'admission' %}aria-current="page"{% endif %}>
+                {% trans "Admission" %}
+                {% if ns == 'ecoles' and un == 'admission' %}<span class="absolute -bottom-1.5 left-0 right-0 h-px bg-accent"></span>{% endif %}
+            </a>
+            <a href="{% url 'blog:list' %}"
+               class="relative py-1 text-sm font-medium transition-colors {% if ns == 'blog' %}text-cream{% else %}text-cream/70 hover:text-accent{% endif %}"
+               {% if ns == 'blog' %}aria-current="page"{% endif %}>
+                {% trans "Actualités" %}
+                {% if ns == 'blog' %}<span class="absolute -bottom-1.5 left-0 right-0 h-px bg-accent"></span>{% endif %}
+            </a>
+            <a href="{% url 'pages:galerie' %}"
+               class="relative py-1 text-sm font-medium transition-colors {% if ns == 'pages' and un != 'ecole' %}text-cream{% else %}text-cream/70 hover:text-accent{% endif %}"
+               {% if ns == 'pages' and un != 'ecole' %}aria-current="page"{% endif %}>
+                {% trans "Galerie" %}
+                {% if ns == 'pages' and un != 'ecole' %}<span class="absolute -bottom-1.5 left-0 right-0 h-px bg-accent"></span>{% endif %}
+            </a>
+            <a href="{% url 'contacts:contact' %}"
+               class="relative py-1 text-sm font-medium transition-colors {% if ns == 'contacts' %}text-cream{% else %}text-cream/70 hover:text-accent{% endif %}"
+               {% if ns == 'contacts' %}aria-current="page"{% endif %}>
+                {% trans "Contact" %}
+                {% if ns == 'contacts' %}<span class="absolute -bottom-1.5 left-0 right-0 h-px bg-accent"></span>{% endif %}
+            </a>
         </nav>
-
-        <!-- CTA principal desktop -->
-        <a href="{% url 'ecoles:admission' %}" class="hidden lg:inline-flex items-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold px-5 py-2.5 text-sm transition-all hover:gap-3 group">
-            {% trans "Concours" %} {{ site_settings.annee_scolaire }}
-            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-        </a>
+        {% endwith %}
 
         <!-- Bouton burger mobile - data-attribute utilisé par le JS -->
         <button type="button"
@@ -106,89 +136,118 @@
         </button>
     </div>
 
-    <!-- Liens de navigation -->
+    <!-- Liens de navigation — barre or à gauche sur l'item courant -->
+    {% with ns=request.resolver_match.namespace un=request.resolver_match.url_name %}
     <nav class="flex-1 overflow-y-auto py-6">
         <ul class="space-y-1">
             <li>
-                <a href="{% url 'core:home' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                <a href="{% url 'core:home' %}"
+                   class="relative flex items-center justify-between px-6 py-3 transition-colors group {% if ns == 'core' %}bg-cream/5 text-accent{% else %}hover:bg-cream/5 hover:text-accent{% endif %}"
+                   {% if ns == 'core' %}aria-current="page"{% endif %}>
+                    {% if ns == 'core' %}<span class="absolute left-0 top-2 bottom-2 w-0.5 bg-accent"></span>{% endif %}
                     <span class="font-medium">{% trans "Accueil" %}</span>
-                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 transition-opacity {% if ns == 'core' %}opacity-100{% else %}opacity-0 group-hover:opacity-100{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
             </li>
             <li>
-                <a href="{% url 'pages:ecole' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                <a href="{% url 'pages:ecole' %}"
+                   class="relative flex items-center justify-between px-6 py-3 transition-colors group {% if ns == 'pages' and un == 'ecole' %}bg-cream/5 text-accent{% else %}hover:bg-cream/5 hover:text-accent{% endif %}"
+                   {% if ns == 'pages' and un == 'ecole' %}aria-current="page"{% endif %}>
+                    {% if ns == 'pages' and un == 'ecole' %}<span class="absolute left-0 top-2 bottom-2 w-0.5 bg-accent"></span>{% endif %}
                     <span class="font-medium">{% trans "L'École" %}</span>
-                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 transition-opacity {% if ns == 'pages' and un == 'ecole' %}opacity-100{% else %}opacity-0 group-hover:opacity-100{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
             </li>
             <li>
-                <a href="{% url 'ecoles:formations_list' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                <a href="{% url 'ecoles:formations_list' %}"
+                   class="relative flex items-center justify-between px-6 py-3 transition-colors group {% if ns == 'ecoles' and un != 'admission' %}bg-cream/5 text-accent{% else %}hover:bg-cream/5 hover:text-accent{% endif %}"
+                   {% if ns == 'ecoles' and un != 'admission' %}aria-current="page"{% endif %}>
+                    {% if ns == 'ecoles' and un != 'admission' %}<span class="absolute left-0 top-2 bottom-2 w-0.5 bg-accent"></span>{% endif %}
                     <span class="font-medium">{% trans "Formations" %}</span>
-                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 transition-opacity {% if ns == 'ecoles' and un != 'admission' %}opacity-100{% else %}opacity-0 group-hover:opacity-100{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
             </li>
             <li>
-                <a href="{% url 'ecoles:admission' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                <a href="{% url 'ecoles:admission' %}"
+                   class="relative flex items-center justify-between px-6 py-3 transition-colors group {% if ns == 'ecoles' and un == 'admission' %}bg-cream/5 text-accent{% else %}hover:bg-cream/5 hover:text-accent{% endif %}"
+                   {% if ns == 'ecoles' and un == 'admission' %}aria-current="page"{% endif %}>
+                    {% if ns == 'ecoles' and un == 'admission' %}<span class="absolute left-0 top-2 bottom-2 w-0.5 bg-accent"></span>{% endif %}
                     <span class="font-medium">{% trans "Admission" %}</span>
-                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 transition-opacity {% if ns == 'ecoles' and un == 'admission' %}opacity-100{% else %}opacity-0 group-hover:opacity-100{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
             </li>
             <li>
-                <a href="{% url 'pages:galerie' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                <a href="{% url 'pages:galerie' %}"
+                   class="relative flex items-center justify-between px-6 py-3 transition-colors group {% if ns == 'pages' and un != 'ecole' %}bg-cream/5 text-accent{% else %}hover:bg-cream/5 hover:text-accent{% endif %}"
+                   {% if ns == 'pages' and un != 'ecole' %}aria-current="page"{% endif %}>
+                    {% if ns == 'pages' and un != 'ecole' %}<span class="absolute left-0 top-2 bottom-2 w-0.5 bg-accent"></span>{% endif %}
                     <span class="font-medium">{% trans "Galerie" %}</span>
-                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 transition-opacity {% if ns == 'pages' and un != 'ecole' %}opacity-100{% else %}opacity-0 group-hover:opacity-100{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
             </li>
             <li>
-                <a href="{% url 'blog:list' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                <a href="{% url 'blog:list' %}"
+                   class="relative flex items-center justify-between px-6 py-3 transition-colors group {% if ns == 'blog' %}bg-cream/5 text-accent{% else %}hover:bg-cream/5 hover:text-accent{% endif %}"
+                   {% if ns == 'blog' %}aria-current="page"{% endif %}>
+                    {% if ns == 'blog' %}<span class="absolute left-0 top-2 bottom-2 w-0.5 bg-accent"></span>{% endif %}
                     <span class="font-medium">{% trans "Actualité" %}</span>
-                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 transition-opacity {% if ns == 'blog' %}opacity-100{% else %}opacity-0 group-hover:opacity-100{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
             </li>
             <li>
-                <a href="{% url 'contacts:contact' %}" class="flex items-center justify-between px-6 py-3 hover:bg-cream/5 hover:text-accent transition-colors group">
+                <a href="{% url 'contacts:contact' %}"
+                   class="relative flex items-center justify-between px-6 py-3 transition-colors group {% if ns == 'contacts' %}bg-cream/5 text-accent{% else %}hover:bg-cream/5 hover:text-accent{% endif %}"
+                   {% if ns == 'contacts' %}aria-current="page"{% endif %}>
+                    {% if ns == 'contacts' %}<span class="absolute left-0 top-2 bottom-2 w-0.5 bg-accent"></span>{% endif %}
                     <span class="font-medium">{% trans "Contact" %}</span>
-                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 transition-opacity {% if ns == 'contacts' %}opacity-100{% else %}opacity-0 group-hover:opacity-100{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
                     </svg>
                 </a>
             </li>
         </ul>
     </nav>
+    {% endwith %}
 
     <!-- Footer du menu mobile : CTA + langue + coordonnées -->
     <div class="border-t border-cream/10 p-6 space-y-4">
 
-        <!-- CTA principal -->
-        <a href="{% url 'ecoles:admission' %}" class="flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-primary-darker font-semibold w-full py-3 transition-colors">
-            {% trans "Concours" %} {{ site_settings.annee_scolaire }}
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-        </a>
-
-        <!-- Sélecteur de langue mobile -->
-        <form action="{% url 'set_language' %}" method="post" class="flex items-center justify-center gap-2 text-sm">
+        <!-- Sélecteur de langue mobile - contrôle segmenté -->
+        <form action="{% url 'set_language' %}" method="post" class="flex items-center gap-3">
             {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
-            {% for lang_code, lang_name in LANGUAGES %}
-                <button type="submit" name="language" value="{{ lang_code }}"
-                        class="px-3 py-1 font-semibold tracking-wider transition-colors {% if LANGUAGE_CODE == lang_code %}bg-accent text-primary-darker{% else %}text-cream/60 hover:text-cream{% endif %}">
-                    {{ lang_code|upper }}
-                </button>
-            {% endfor %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+
+            <span class="flex items-center gap-1.5 text-cream/45" aria-hidden="true">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/>
+                </svg>
+            </span>
+
+            <div class="flex-1 flex items-center ring-1 ring-cream/15 bg-cream/[0.04]">
+                {% for lang_code, lang_name in LANGUAGES %}
+                    <button type="submit" name="language" value="{{ lang_code }}"
+                            title="{{ lang_name }}"
+                            aria-label="{{ lang_name }}"
+                            {% if LANGUAGE_CODE == lang_code %}aria-current="true"{% endif %}
+                            class="flex-1 py-2.5 text-sm font-bold tracking-[0.14em] transition-all duration-200
+                                   {% if LANGUAGE_CODE == lang_code %}bg-accent text-primary-darker{% else %}text-cream/55 hover:text-cream hover:bg-cream/10{% endif %}">
+                        {{ lang_code|upper }}
+                    </button>
+                {% endfor %}
+            </div>
         </form>
 
         <!-- Téléphone direct -->

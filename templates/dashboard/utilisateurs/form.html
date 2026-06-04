@@ -1,0 +1,142 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}{{ page_title }} — Dashboard{% endblock %}
+{% block page_title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+
+<div class="max-w-2xl">
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="bg-red-50 border-l-4 border-red-600 p-4">
+                {% for error in form.non_field_errors %}
+                    <p class="text-sm text-red-800">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Carte : Identité -->
+        <div class="bg-white border border-primary/10 shadow-sm p-6">
+            <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                Identité
+            </h2>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                    <label for="{{ form.prenom.id_for_label }}{{ form.first_name.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {% if mode == 'create' %}{{ form.prenom.label }}{% else %}{{ form.first_name.label }}{% endif %} <span class="text-red-500">*</span>
+                    </label>
+                    {% if mode == 'create' %}{{ form.prenom }}{% else %}{{ form.first_name }}{% endif %}
+                    {% if mode == 'create' and form.prenom.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.prenom.errors|first }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.nom.id_for_label }}{{ form.last_name.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {% if mode == 'create' %}{{ form.nom.label }}{% else %}{{ form.last_name.label }}{% endif %} <span class="text-red-500">*</span>
+                    </label>
+                    {% if mode == 'create' %}{{ form.nom }}{% else %}{{ form.last_name }}{% endif %}
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mt-5">
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                    {{ form.email.label }} <span class="text-red-500">*</span>
+                </label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <p class="text-sm text-red-600 mt-1.5">{{ form.email.errors|first }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Username (création uniquement) -->
+            {% if mode == 'create' %}
+                <div class="mt-5">
+                    <label for="{{ form.username.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.username.label }} <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.username }}
+                    <p class="text-xs text-ink/50 mt-1.5">{{ form.username.help_text }}</p>
+                    {% if form.username.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.username.errors|first }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Carte : Rôle et fonction -->
+        <div class="bg-white border border-primary/10 shadow-sm p-6">
+            <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                Rôle et permissions
+            </h2>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                    <label for="{{ form.role.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.role.label }} <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.role }}
+                </div>
+                <div>
+                    <label for="{{ form.fonction.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.fonction.label }}
+                    </label>
+                    {{ form.fonction }}
+                </div>
+            </div>
+
+            <!-- Explication des rôles -->
+            <div class="mt-5 bg-cream/50 p-4 text-xs text-ink/60 space-y-1">
+                <p><strong class="text-primary-darker">Super administrateur :</strong> accès total, gestion des utilisateurs.</p>
+                <p><strong class="text-primary-darker">Éditeur :</strong> gestion des articles, messages, galerie.</p>
+                <p><strong class="text-primary-darker">Lecteur :</strong> consultation uniquement.</p>
+            </div>
+        </div>
+
+        <!-- Carte : Mot de passe (création uniquement) -->
+        {% if mode == 'create' %}
+            <div class="bg-white border border-primary/10 shadow-sm p-6">
+                <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                    Mot de passe initial
+                </h2>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="{{ form.password1.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.password1.label }} <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.password1 }}
+                        <p class="text-xs text-ink/50 mt-1.5">{{ form.password1.help_text }}</p>
+                        {% if form.password1.errors %}
+                            <p class="text-sm text-red-600 mt-1.5">{{ form.password1.errors|first }}</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="{{ form.password2.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.password2.label }} <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <p class="text-sm text-red-600 mt-1.5">{{ form.password2.errors|first }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Boutons -->
+        <div class="flex items-center gap-3">
+            <button type="submit" class="bg-primary hover:bg-primary-dark text-cream font-semibold px-6 py-3 transition-colors text-sm">
+                {% if mode == 'create' %}Créer l'utilisateur{% else %}Enregistrer{% endif %}
+            </button>
+            <a href="{% url 'dashboard:utilisateurs_list' %}" class="px-6 py-3 text-sm text-ink/60 hover:text-ink transition-colors">
+                Annuler
+            </a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

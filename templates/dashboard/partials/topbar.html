@@ -1,0 +1,61 @@
+<!-- ================================================================ -->
+<!-- TOPBAR - Header de la zone principale                             -->
+<!-- ================================================================ -->
+<header class="bg-white border-b border-primary/10 shadow-sm sticky top-0 z-30">
+    <div class="flex items-center justify-between gap-4 px-6 py-4">
+
+        <!-- Côté gauche : bouton burger (mobile) + titre de page -->
+        <div class="flex items-center gap-4 min-w-0 flex-1">
+            <!-- Burger pour ouvrir la sidebar sur mobile -->
+            <button type="button"
+                    id="sidebar-toggle"
+                    class="lg:hidden p-2 -ml-2 text-primary-darker hover:bg-cream transition-colors"
+                    aria-label="Ouvrir le menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
+            <!-- Titre de la page -->
+            <div class="min-w-0">
+                <h1 class="font-display text-xl text-primary-darker font-semibold truncate">
+                    {% block page_title %}Dashboard{% endblock %}
+                </h1>
+                {% block page_subtitle %}{% endblock %}
+            </div>
+        </div>
+
+        <!-- Côté droit : actions rapides -->
+        <div class="flex items-center gap-3">
+
+            <!-- Lien vers le site public -->
+            <a href="{% url 'core:home' %}"
+               target="_blank"
+               class="hidden sm:inline-flex items-center gap-2 text-sm text-ink/70 hover:text-primary transition-colors px-3 py-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                <span>Voir le site</span>
+            </a>
+
+            <!-- Avatar -->
+            <div class="flex items-center gap-3 pl-3 border-l border-primary/10">
+                {% if user.profil.photo %}
+                    <img src="{{ user.profil.photo.url }}" alt="{{ user.profil.nom_complet }}" class="w-9 h-9 object-cover rounded-full">
+                {% else %}
+                    <div class="w-9 h-9 bg-primary text-cream font-semibold flex items-center justify-center rounded-full text-sm">
+                        {{ user.profil.initiales }}
+                    </div>
+                {% endif %}
+                <div class="hidden md:block">
+                    <div class="text-sm font-semibold text-primary-darker leading-tight">
+                        {{ user.profil.nom_complet }}
+                    </div>
+                    <div class="text-[10px] text-ink/50 uppercase tracking-wider">
+                        {{ user.profil.get_role_display }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

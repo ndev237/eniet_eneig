@@ -1,0 +1,63 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}Supprimer l'album — Dashboard{% endblock %}
+{% block page_title %}Supprimer l'album{% endblock %}
+
+{% block content %}
+
+<div class="max-w-lg mx-auto">
+    <div class="bg-white border border-primary/10 shadow-xl">
+
+        <!-- Liseré d'alerte -->
+        <div class="h-1 bg-red-500"></div>
+
+        <div class="p-8">
+            <!-- Icône d'avertissement avec coins éditoriaux -->
+            <div class="relative w-16 h-16 mx-auto mb-6">
+                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-red-400"></div>
+                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-red-400"></div>
+                <div class="w-full h-full bg-red-50 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <h2 class="text-2xl font-display font-semibold text-primary-darker text-center mb-3">
+                Supprimer cet album ?
+            </h2>
+            <p class="text-center text-ink/65 text-sm mb-6 max-w-sm mx-auto">
+                L'album <strong>« {{ album.titre }} »</strong> et
+                <strong class="text-red-600">ses {{ album.nombre_photos }} photo{{ album.nombre_photos|pluralize }}</strong>
+                seront définitivement supprimés. Cette action est irréversible.
+            </p>
+
+            {% if album.couverture_url %}
+                <div class="relative mb-7">
+                    <div class="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-accent/60 z-10"></div>
+                    <div class="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-accent/60 z-10"></div>
+                    <img src="{{ album.couverture_url }}" alt="" class="w-full h-40 object-cover border border-primary/10">
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{% url 'dashboard:medias_list' %}"
+                       class="flex-1 text-center py-3 border border-primary/25 hover:border-primary text-primary-darker font-semibold transition-colors">
+                        Annuler
+                    </a>
+                    <button type="submit"
+                            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        Oui, tout supprimer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,476 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}{{ page_title }} — Dashboard{% endblock %}
+{% block page_title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+
+<!-- ================================================================ -->
+<!-- FORMULAIRE INFOS DE L'ALBUM                                       -->
+<!-- ================================================================ -->
+<form method="post" enctype="multipart/form-data" class="mb-8">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div class="bg-red-50 border-l-4 border-red-600 p-4 mb-6">
+            {% for error in form.non_field_errors %}
+                <p class="text-sm text-red-800">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="grid lg:grid-cols-3 gap-6">
+
+        <!-- Colonne principale : infos -->
+        <div class="lg:col-span-2 bg-white border border-primary/10 shadow-sm p-6">
+            <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                Informations de l'album
+            </h2>
+
+            <div class="space-y-5">
+                <!-- Titre -->
+                <div>
+                    <label for="{{ form.titre.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.titre.label }} <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.titre }}
+                    {% if form.titre.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.titre.errors|first }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Slug + Date sur une ligne -->
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="{{ form.slug.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.slug.label }}
+                            <span class="text-xs text-ink/50 font-normal">(auto)</span>
+                        </label>
+                        {{ form.slug }}
+                    </div>
+                    <div>
+                        <label for="{{ form.date_evenement.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.date_evenement.label }} <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.date_evenement }}
+                        {% if form.date_evenement.errors %}
+                            <p class="text-sm text-red-600 mt-1.5">{{ form.date_evenement.errors|first }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.description.label }}
+                    </label>
+                    {{ form.description }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Colonne sidebar : publication + couverture -->
+        <div class="space-y-6">
+            <div class="bg-white border border-primary/10 shadow-sm p-6">
+                <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                    Publication
+                </h2>
+
+                <div class="space-y-4 mb-6">
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        {{ form.publie }}
+                        <span class="text-sm font-medium text-primary-darker">Publier l'album</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        {{ form.est_a_la_une }}
+                        <span class="text-sm font-medium text-primary-darker">Mettre à la une</span>
+                    </label>
+                </div>
+
+                <!-- Couverture -->
+                <div class="pt-4 border-t border-primary/10">
+                    <label class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.couverture.label }}
+                    </label>
+                    {% if form.couverture.value %}
+                        <img src="{{ form.couverture.value.url }}" alt="" class="w-full h-32 object-cover mb-3 border border-primary/10">
+                    {% endif %}
+                    <input type="file" 
+                           name="{{ form.couverture.name }}" 
+                           id="{{ form.couverture.id_for_label }}"
+                           accept="image/*"
+                           class="block w-full text-xs text-ink/70 file:mr-3 file:py-2 file:px-3 file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-cream hover:file:bg-primary-dark file:cursor-pointer cursor-pointer">
+                    <p class="text-xs text-ink/50 mt-2">Si vide, la 1ère photo sera utilisée.</p>
+                </div>
+
+                <!-- Boutons -->
+                <div class="space-y-2 pt-4 mt-4 border-t border-primary/10">
+                    <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-cream font-semibold py-3 transition-colors text-sm">
+                        {% if mode == 'create' %}Créer l'album{% else %}Enregistrer{% endif %}
+                    </button>
+                    <a href="{% url 'dashboard:medias_list' %}" class="block w-full text-center py-2.5 text-sm text-ink/60 hover:text-ink transition-colors">
+                        Retour à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- ================================================================ -->
+<!-- GESTION DES PHOTOS (uniquement en mode édition)                   -->
+<!-- ================================================================ -->
+{% if mode == 'edit' %}
+<div class="bg-white border border-primary/10 shadow-sm p-6"
+     data-album-id="{{ album.pk }}"
+     data-upload-url="{% url 'dashboard:photos_upload' album_pk=album.pk %}"
+     data-reorder-url="{% url 'dashboard:photos_reorder' album_pk=album.pk %}">
+
+    <div class="flex items-center justify-between mb-5 pb-3 border-b border-primary/10">
+        <h2 class="font-display text-lg font-semibold text-primary-darker">
+            Photos de l'album
+        </h2>
+        <span class="text-sm text-ink/50" id="photos-count">
+            {{ photos|length }} photo{{ photos|length|pluralize }}
+        </span>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- ZONE D'UPLOAD (drag & drop ou clic)           -->
+    <!-- ============================================ -->
+    <div id="upload-zone" 
+         class="border-2 border-dashed border-primary/20 hover:border-primary/40 transition-colors p-8 text-center cursor-pointer mb-6 bg-cream/30">
+        <input type="file" id="file-input" multiple accept="image/*" class="hidden">
+        
+        <svg class="w-12 h-12 text-primary/30 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+        </svg>
+        <p class="text-primary-darker font-semibold mb-1">
+            Glissez vos photos ici ou cliquez pour parcourir
+        </p>
+        <p class="text-xs text-ink/50">
+            JPG, PNG ou WebP · Plusieurs fichiers à la fois
+        </p>
+    </div>
+
+    <!-- Barre de progression d'upload -->
+    <div id="upload-progress" class="hidden mb-6">
+        <div class="flex items-center justify-between text-sm text-ink/60 mb-2">
+            <span id="progress-label">Upload en cours...</span>
+            <span id="progress-percent">0%</span>
+        </div>
+        <div class="h-2 bg-cream overflow-hidden">
+            <div id="progress-bar" class="h-full bg-primary transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- GRILLE DES PHOTOS (réorganisables)            -->
+    <!-- ============================================ -->
+    <div id="photos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% for photo in photos %}
+            <div class="photo-item relative group bg-cream border border-primary/10 cursor-move"
+                 draggable="true"
+                 data-photo-id="{{ photo.pk }}">
+                
+                <!-- Image -->
+                <div class="aspect-square overflow-hidden">
+                    <img src="{{ photo.image.url }}" 
+                         alt="{{ photo.alt }}"
+                         class="w-full h-full object-cover pointer-events-none">
+                </div>
+
+                <!-- Overlay au survol -->
+                <div class="absolute inset-0 bg-primary-darker/0 group-hover:bg-primary-darker/50 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                    <!-- Bouton supprimer -->
+                    <button type="button" 
+                            class="photo-delete-btn w-9 h-9 bg-red-600 hover:bg-red-700 text-white flex items-center justify-center transition-colors"
+                            data-delete-url="{% url 'dashboard:photo_delete' pk=photo.pk %}"
+                            title="Supprimer">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Indicateur de poignée de déplacement -->
+                <div class="absolute top-2 left-2 bg-primary-darker/60 text-cream w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+                    </svg>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Message si aucune photo -->
+    <div id="no-photos" class="{% if photos %}hidden{% endif %} text-center py-8 text-ink/50">
+        <p class="text-sm">Aucune photo. Ajoutez-en via la zone ci-dessus.</p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+{% if mode == 'edit' %}
+<script>
+/**
+ * Gestion des photos de l'album : upload multiple, drag & drop, suppression.
+ * Tout fonctionne en AJAX pour ne pas recharger la page.
+ */
+(function() {
+    'use strict';
+
+    // ============================================================
+    // RÉCUPÉRATION DES ÉLÉMENTS ET CONFIG
+    // ============================================================
+    const container = document.querySelector('[data-album-id]');
+    if (!container) return;
+
+    const uploadUrl = container.dataset.uploadUrl;
+    const reorderUrl = container.dataset.reorderUrl;
+    
+    const uploadZone = document.getElementById('upload-zone');
+    const fileInput = document.getElementById('file-input');
+    const photosGrid = document.getElementById('photos-grid');
+    const photosCount = document.getElementById('photos-count');
+    const noPhotos = document.getElementById('no-photos');
+    
+    const progressBox = document.getElementById('upload-progress');
+    const progressBar = document.getElementById('progress-bar');
+    const progressPercent = document.getElementById('progress-percent');
+
+    // Récupère le CSRF token (présent dans le formulaire de la page)
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    // ============================================================
+    // UPLOAD DE PHOTOS
+    // ============================================================
+    
+    // Clic sur la zone = ouvre le sélecteur de fichiers
+    uploadZone.addEventListener('click', () => fileInput.click());
+
+    // Sélection de fichiers via le dialogue
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            uploaderPhotos(fileInput.files);
+        }
+    });
+
+    // Drag & drop sur la zone
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('border-primary', 'bg-primary/5');
+    });
+    
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.classList.remove('border-primary', 'bg-primary/5');
+    });
+    
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('border-primary', 'bg-primary/5');
+        if (e.dataTransfer.files.length > 0) {
+            uploaderPhotos(e.dataTransfer.files);
+        }
+    });
+
+    /**
+     * Envoie les fichiers au serveur via XMLHttpRequest (pour la progression).
+     */
+    function uploaderPhotos(files) {
+        const formData = new FormData();
+        // Ajoute tous les fichiers sous le nom 'photos'
+        for (const file of files) {
+            formData.append('photos', file);
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', uploadUrl);
+        xhr.setRequestHeader('X-CSRFToken', csrfToken);
+
+        // Affiche la barre de progression
+        progressBox.classList.remove('hidden');
+
+        // Suivi de la progression
+        xhr.upload.addEventListener('progress', (e) => {
+            if (e.lengthComputable) {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                progressBar.style.width = percent + '%';
+                progressPercent.textContent = percent + '%';
+            }
+        });
+
+        xhr.onload = function() {
+            progressBox.classList.add('hidden');
+            progressBar.style.width = '0%';
+
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                // Ajoute les nouvelles vignettes à la grille
+                data.photos.forEach(photo => ajouterVignette(photo));
+                mettreAJourCompteur();
+                noPhotos.classList.add('hidden');
+            } else {
+                alert('Erreur lors de l\'upload. Réessayez.');
+            }
+        };
+
+        xhr.onerror = () => {
+            progressBox.classList.add('hidden');
+            alert('Erreur réseau lors de l\'upload.');
+        };
+
+        xhr.send(formData);
+    }
+
+    /**
+     * Crée et ajoute une vignette de photo dans la grille.
+     */
+    function ajouterVignette(photo) {
+        const div = document.createElement('div');
+        div.className = 'photo-item relative group bg-cream border border-primary/10 cursor-move';
+        div.draggable = true;
+        div.dataset.photoId = photo.id;
+        
+        div.innerHTML = `
+            <div class="aspect-square overflow-hidden">
+                <img src="${photo.url}" alt="${photo.alt}" class="w-full h-full object-cover pointer-events-none">
+            </div>
+            <div class="absolute inset-0 bg-primary-darker/0 group-hover:bg-primary-darker/50 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                <button type="button" class="photo-delete-btn w-9 h-9 bg-red-600 hover:bg-red-700 text-white flex items-center justify-center transition-colors"
+                        data-delete-url="/dashboard/medias/photos/${photo.id}/supprimer/" title="Supprimer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                </button>
+            </div>
+        `;
+        
+        photosGrid.appendChild(div);
+        attacherEvenementsPhoto(div);
+    }
+
+    /**
+     * Met à jour le compteur de photos.
+     */
+    function mettreAJourCompteur() {
+        const count = photosGrid.querySelectorAll('.photo-item').length;
+        photosCount.textContent = count + ' photo' + (count > 1 ? 's' : '');
+    }
+
+    // ============================================================
+    // SUPPRESSION DE PHOTOS
+    // ============================================================
+    
+    function attacherEvenementsPhoto(item) {
+        // Bouton supprimer
+        const deleteBtn = item.querySelector('.photo-delete-btn');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (confirm('Supprimer cette photo ?')) {
+                    supprimerPhoto(item, deleteBtn.dataset.deleteUrl);
+                }
+            });
+        }
+        
+        // Drag & drop pour réorganiser
+        attacherDragDrop(item);
+    }
+
+    function supprimerPhoto(item, url) {
+        fetch(url, {
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrfToken },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                item.remove();
+                mettreAJourCompteur();
+                // Affiche le message "aucune photo" si grille vide
+                if (photosGrid.querySelectorAll('.photo-item').length === 0) {
+                    noPhotos.classList.remove('hidden');
+                }
+            }
+        })
+        .catch(() => alert('Erreur lors de la suppression.'));
+    }
+
+    // ============================================================
+    // DRAG & DROP pour réorganiser les photos
+    // ============================================================
+    
+    let draggedItem = null;
+
+    function attacherDragDrop(item) {
+        item.addEventListener('dragstart', () => {
+            draggedItem = item;
+            setTimeout(() => item.classList.add('opacity-40'), 0);
+        });
+
+        item.addEventListener('dragend', () => {
+            item.classList.remove('opacity-40');
+            sauvegarderOrdre();
+        });
+
+        item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const apres = elementApres(photosGrid, e.clientX, e.clientY);
+            if (apres == null) {
+                photosGrid.appendChild(draggedItem);
+            } else {
+                photosGrid.insertBefore(draggedItem, apres);
+            }
+        });
+    }
+
+    /**
+     * Détermine après quel élément insérer l'item déplacé.
+     * Calcule la position en fonction de la souris.
+     */
+    function elementApres(container, x, y) {
+        const items = [...container.querySelectorAll('.photo-item:not(.opacity-40)')];
+        
+        return items.reduce((plusProche, child) => {
+            const box = child.getBoundingClientRect();
+            // On compare avec le centre de chaque élément
+            const offsetY = y - box.top - box.height / 2;
+            const offsetX = x - box.left - box.width / 2;
+            const offset = offsetY * 1000 + offsetX; // Priorité verticale
+            
+            if (offset < 0 && offset > plusProche.offset) {
+                return { offset: offset, element: child };
+            }
+            return plusProche;
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    /**
+     * Envoie le nouvel ordre des photos au serveur.
+     */
+    function sauvegarderOrdre() {
+        const ids = [...photosGrid.querySelectorAll('.photo-item')]
+            .map(item => item.dataset.photoId);
+
+        fetch(reorderUrl, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ordre: ids }),
+        })
+        .catch(() => console.error('Erreur sauvegarde ordre'));
+    }
+
+    // ============================================================
+    // INITIALISATION : attache les événements aux photos existantes
+    // ============================================================
+    document.querySelectorAll('.photo-item').forEach(attacherEvenementsPhoto);
+})();
+</script>
+{% endif %}
+{% endblock %}

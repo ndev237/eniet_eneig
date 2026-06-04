@@ -1,0 +1,131 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}Mon profil — Dashboard{% endblock %}
+{% block page_title %}Mon profil{% endblock %}
+
+{% block content %}
+
+<div class="max-w-2xl space-y-6">
+
+    <!-- Onglets profil / sécurité -->
+    <div class="flex gap-2 border-b border-primary/10">
+        <a href="{% url 'dashboard:mon_profil' %}" 
+           class="px-4 py-2.5 text-sm font-semibold border-b-2 {% if request.resolver_match.url_name == 'mon_profil' %}border-primary text-primary{% else %}border-transparent text-ink/60 hover:text-ink{% endif %}">
+            Informations
+        </a>
+        <a href="{% url 'dashboard:mon_mot_de_passe' %}" 
+           class="px-4 py-2.5 text-sm font-semibold border-b-2 {% if request.resolver_match.url_name == 'mon_mot_de_passe' %}border-primary text-primary{% else %}border-transparent text-ink/60 hover:text-ink{% endif %}">
+            Mot de passe
+        </a>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Carte photo de profil -->
+        <div class="bg-white border border-primary/10 shadow-sm p-6">
+            <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                Photo de profil
+            </h2>
+
+            <div class="flex items-center gap-6">
+                <!-- Aperçu actuel -->
+                <div class="flex-shrink-0">
+                    {% if request.user.profil.photo %}
+                        <img src="{{ request.user.profil.photo.url }}" alt="" class="w-24 h-24 rounded-full object-cover">
+                    {% else %}
+                        <div class="w-24 h-24 rounded-full bg-primary text-cream font-display text-2xl font-semibold flex items-center justify-center">
+                            {{ request.user.profil.initiales }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="flex-1">
+                    <input type="file" 
+                           name="{{ form.photo.name }}" 
+                           id="{{ form.photo.id_for_label }}"
+                           accept="image/*"
+                           class="block w-full text-sm text-ink/70 file:mr-3 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-cream hover:file:bg-primary-dark file:cursor-pointer cursor-pointer">
+                    <p class="text-xs text-ink/50 mt-2">JPG ou PNG, format carré recommandé.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte informations -->
+        <div class="bg-white border border-primary/10 shadow-sm p-6">
+            <h2 class="font-display text-lg font-semibold text-primary-darker mb-5 pb-3 border-b border-primary/10">
+                Informations personnelles
+            </h2>
+
+            <div class="space-y-5">
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.first_name.label }}
+                        </label>
+                        {{ form.first_name }}
+                    </div>
+                    <div>
+                        <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.last_name.label }}
+                        </label>
+                        {{ form.last_name }}
+                    </div>
+                </div>
+
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.email.label }}
+                    </label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <p class="text-sm text-red-600 mt-1.5">{{ form.email.errors|first }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div>
+                        <label for="{{ form.fonction.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.fonction.label }}
+                        </label>
+                        {{ form.fonction }}
+                    </div>
+                    <div>
+                        <label for="{{ form.telephone.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                            {{ form.telephone.label }}
+                        </label>
+                        {{ form.telephone }}
+                    </div>
+                </div>
+
+                <div>
+                    <label for="{{ form.biographie.id_for_label }}" class="block text-sm font-semibold text-primary-darker mb-2">
+                        {{ form.biographie.label }}
+                    </label>
+                    {{ form.biographie }}
+                    <p class="text-xs text-ink/50 mt-1.5">Affichée sur vos articles publiés.</p>
+                </div>
+            </div>
+
+            <!-- Info compte (lecture seule) -->
+            <div class="mt-5 pt-5 border-t border-primary/10 grid sm:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <span class="text-ink/50">Identifiant :</span>
+                    <span class="font-semibold text-primary-darker ml-1">@{{ request.user.username }}</span>
+                </div>
+                <div>
+                    <span class="text-ink/50">Rôle :</span>
+                    <span class="font-semibold text-primary-darker ml-1">{{ request.user.profil.get_role_display }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <button type="submit" class="bg-primary hover:bg-primary-dark text-cream font-semibold px-6 py-3 transition-colors text-sm">
+                Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

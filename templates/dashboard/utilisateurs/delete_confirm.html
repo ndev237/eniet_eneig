@@ -1,0 +1,75 @@
+{% extends "dashboard/base_dashboard.html" %}
+
+{% block title %}Supprimer l'utilisateur — Dashboard{% endblock %}
+{% block page_title %}Supprimer l'utilisateur{% endblock %}
+
+{% block content %}
+
+<div class="max-w-lg mx-auto">
+    <div class="bg-white border border-primary/10 shadow-xl">
+
+        <!-- Liseré d'alerte -->
+        <div class="h-1 bg-red-500"></div>
+
+        <div class="p-8">
+            <!-- Icône d'avertissement avec coins éditoriaux -->
+            <div class="relative w-16 h-16 mx-auto mb-6">
+                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-red-400"></div>
+                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-red-400"></div>
+                <div class="w-full h-full bg-red-50 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <h2 class="text-2xl font-display font-semibold text-primary-darker text-center mb-3">
+                Supprimer cet utilisateur ?
+            </h2>
+            <p class="text-center text-ink/65 text-sm mb-6 max-w-sm mx-auto">
+                Le compte de <strong>{{ utilisateur.get_full_name|default:utilisateur.username }}</strong>
+                sera définitivement supprimé. Ses articles seront conservés mais sans auteur.
+            </p>
+
+            <!-- Aperçu de l'utilisateur -->
+            <div class="bg-cream/60 p-5 border border-primary/10 mb-5 flex items-center gap-3">
+                <div class="w-11 h-11 rounded-full bg-primary text-cream font-semibold flex items-center justify-center text-sm flex-shrink-0">
+                    {{ utilisateur.profil.initiales }}
+                </div>
+                <div class="min-w-0">
+                    <div class="font-semibold text-primary-darker truncate">{{ utilisateur.profil.nom_complet }}</div>
+                    <div class="text-xs text-ink/50">@{{ utilisateur.username }} · {{ utilisateur.profil.get_role_display }}</div>
+                </div>
+            </div>
+
+            <!-- Conseil -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-7 flex items-start gap-2.5">
+                <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-sm text-amber-800">
+                    Envisagez plutôt de <strong>désactiver</strong> le compte pour conserver l'historique.
+                </p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{% url 'dashboard:utilisateurs_list' %}"
+                       class="flex-1 text-center py-3 border border-primary/25 hover:border-primary text-primary-darker font-semibold transition-colors">
+                        Annuler
+                    </a>
+                    <button type="submit"
+                            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                        Oui, supprimer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
