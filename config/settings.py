@@ -1,6 +1,10 @@
 """
 Django settings for ENIET/ENIEG project.
 Documentation: https://docs.djangoproject.com/en/6.0/
+
+Stratégie : 12-factor — tous les secrets et bascules d'environnement
+sont lus dans des variables d'environnement (via un fichier .env en local).
+Aucun secret ne doit être committé dans ce fichier.
 """
 
 from pathlib import Path
@@ -9,28 +13,71 @@ import os
 # ============================================================
 # 1. CHEMINS DE BASE
 # ============================================================
-# BASE_DIR pointe vers le dossier racine du projet (celui qui contient manage.py)
-# On utilise pathlib.Path pour avoir une gestion multi-OS (Windows/Linux)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# ============================================================
-# 2. SÉCURITÉ
-# ============================================================
-# ⚠️ Cette clé doit être secrète en production - on la sortira dans .env plus tard
-SECRET_KEY = 'django-insecure-u(4+vh*ewfj-%-*#!4g9w@eu3sl2ngiip^)^o7^o3vf%7ii8#v'
-
-# DEBUG=True en dev seulement. Affiche les erreurs détaillées dans le navigateur.
-# En production : DEBUG=False obligatoirement pour des raisons de sécurité.
-DEBUG = True
-
-# Liste des domaines autorisés à servir le site
-# En dev : localhost. En prod : on ajoutera 'eniet-eneig.cm' etc.
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# Chargement du .env (uniquement si python-dotenv est installé — silencieux sinon)
+# Le .env n'existe qu'en local ; en prod les variables viennent de la plateforme.
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / '.env')
+except ImportError:
+    pass
 
 
 # ============================================================
-# 3. APPLICATIONS INSTALLÉES
+# 2. HELPERS DE LECTURE D'ENVIRONNEMENT
+# ============================================================
+def env(key, default=None):
+    """Récupère une variable d'env, retourne default si absente."""
+    return os.environ.get(key, default)
+
+
+def env_bool(key, default=False):
+    """Lit un booléen depuis l'env : true/yes/on/1 → True, autre → False."""
+    val = os.environ.get(key)
+    if val is None:
+        return default
+    return val.strip().lower() in ('1', 'true', 'yes', 'on')
+
+
+def env_list(key, default=''):
+    """Lit une liste depuis l'env (séparateur virgule), nettoyée."""
+    raw = os.environ.get(key, default)
+    return [x.strip() for x in raw.split(',') if x.strip()]
+
+
+# ============================================================
+# 3. SÉCURITÉ
+# ============================================================
+# SECRET_KEY : obligatoire en prod, jamais committée.
+# En dev (DEBUG=True), on tolère une clé de repli pour démarrer sans .env.
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    # Repli DEV uniquement — bloque en prod (cf. ci-dessous).
+    SECRET_KEY = 'django-insecure-DEV-ONLY-CHANGE-ME-IN-PROD'
+
+# DEBUG = False par défaut → fail-safe : la prod marche même si la var oubliée.
+DEBUG = env_bool('DJANGO_DEBUG', default=False)
+
+# Hôtes autorisés. En dev par défaut ; en prod la plateforme doit fournir.
+ALLOWED_HOSTS = env_list(
+    'DJANGO_ALLOWED_HOSTS',
+    default='localhost,127.0.0.1' if DEBUG else ''
+)
+
+# Garde-fou : refus de démarrer en prod avec la clé de repli.
+if not DEBUG and SECRET_KEY.startswith('django-insecure-'):
+    raise RuntimeError(
+        "DJANGO_SECRET_KEY manquante en production. "
+        "Définis-la dans l'environnement avant de démarrer."
+    )
+
+# CSRF : domaines de confiance (scheme://host obligatoire).
+CSRF_TRUSTED_ORIGINS = env_list('DJANGO_CSRF_TRUSTED_ORIGINS')
+
+
+# ============================================================
+# 4. APPLICATIONS INSTALLÉES
 # ============================================================
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -42,40 +89,42 @@ DJANGO_APPS = [
     'django.contrib.humanize',
 ]
 
-# Apps tierces (installées via pip)
 THIRD_PARTY_APPS = [
     'tailwind',
     'theme',
     'tinymce',
 ]
 
-# Nos propres apps - on les ajoutera au fur et à mesure
 LOCAL_APPS = [
     'apps.core',
     'apps.pages',
     'apps.ecoles',
     'apps.blog',
-    # 'apps.medias',
     'apps.contacts',
-    # 'apps.accounts',
     'apps.dashboard',
 ]
 
-# Concaténation des 3 listes - pattern pro pour rester organisé quand le projet grandit
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 
 # ============================================================
-# 4. MIDDLEWARE (l'ORDRE EST CRITIQUE !)
+# 5. MIDDLEWARE
 # ============================================================
-# Le middleware traite chaque requête HTTP de haut en bas (entrée),
-# et chaque réponse de bas en haut (sortie).
-# LocaleMiddleware DOIT être placé APRÈS SessionMiddleware (besoin de la session)
-# et AVANT CommonMiddleware (qui fait des redirections).
+# WhiteNoise sert les fichiers statiques compressés en prod, juste derrière
+# SecurityMiddleware. Si la lib n'est pas installée (ex: en dev), on saute.
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+]
+
+try:
+    import whitenoise  # noqa: F401
+    MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+except ImportError:
+    pass
+
+MIDDLEWARE += [
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  # ← Ajouté pour le bilingue
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,20 +136,17 @@ ROOT_URLCONF = 'config.urls'
 
 
 # ============================================================
-# 5. TEMPLATES
+# 6. TEMPLATES
 # ============================================================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # DIRS = liste des dossiers où Django cherche les templates en priorité
-        # On ajoute le dossier 'templates/' à la racine pour nos templates globaux
         'DIRS': [BASE_DIR / 'templates'],
-        # APP_DIRS=True : Django cherche aussi dans chaque app/templates/
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
-                'django.template.context_processors.i18n',  # ← Pour LANGUAGE_CODE dans les templates
+                'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.core.context_processors.site_settings',
@@ -114,20 +160,41 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # ============================================================
-# 6. BASE DE DONNÉES
+# 7. BASE DE DONNÉES — SQLite en dev, PostgreSQL en prod
 # ============================================================
-# En dev : SQLite (simple, fichier unique)
-# En prod : on basculera sur PostgreSQL via une variable d'environnement
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Bascule via DJANGO_DB_ENGINE : 'sqlite' (défaut) ou 'postgres'.
+# En prod sur PostgreSQL : on attend les 5 variables DJANGO_DB_*.
+DB_ENGINE = env('DJANGO_DB_ENGINE', 'sqlite').lower()
+
+if DB_ENGINE in ('postgres', 'postgresql', 'pg'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DJANGO_DB_NAME', 'eniet_eneig'),
+            'USER': env('DJANGO_DB_USER', 'eniet_eneig'),
+            'PASSWORD': env('DJANGO_DB_PASSWORD', ''),
+            'HOST': env('DJANGO_DB_HOST', 'localhost'),
+            'PORT': env('DJANGO_DB_PORT', '5432'),
+            # Connexions persistantes — réduit la latence et la charge BDD.
+            'CONN_MAX_AGE': int(env('DJANGO_DB_CONN_MAX_AGE', '60')),
+            'CONN_HEALTH_CHECKS': True,
+            'OPTIONS': {
+                # SSL recommandé en prod ; désactivable via env si la BDD locale.
+                'sslmode': env('DJANGO_DB_SSLMODE', 'prefer'),
+            },
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # ============================================================
-# 7. VALIDATION DES MOTS DE PASSE
+# 8. VALIDATION DES MOTS DE PASSE
 # ============================================================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -138,110 +205,96 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # ============================================================
-# 8. INTERNATIONALISATION (i18n) - SITE BILINGUE FR/EN
+# 9. INTERNATIONALISATION
 # ============================================================
 from django.utils.translation import gettext_lazy as _
 
-# Langue par défaut quand le navigateur ne précise rien
 LANGUAGE_CODE = 'fr'
 
-# Langues supportées par le site
-# Le tuple (code, nom traduisible) sera utilisé par le sélecteur de langue
 LANGUAGES = [
     ('fr', _('Français')),
     ('en', _('English')),
 ]
 
-# Dossier où Django va stocker/chercher les fichiers de traduction (.po et .mo)
-# On le créera à la prochaine étape
 LOCALE_PATHS = [BASE_DIR / 'locale']
-
-# Fuseau horaire pour le Cameroun (Africa/Douala = UTC+1, pas de changement d'heure)
 TIME_ZONE = 'Africa/Douala'
-
-# Active le système d'internationalisation Django
 USE_I18N = True
-
-# Stocke les dates en UTC en base, convertit à l'affichage selon TIME_ZONE
 USE_TZ = True
 
 
 # ============================================================
-# 9. FICHIERS STATIQUES (CSS, JS, images du design)
+# 10. FICHIERS STATIQUES
 # ============================================================
-# URL de base pour accéder aux fichiers statiques dans le navigateur
 STATIC_URL = '/static/'
-
-# Dossiers où Django va chercher les fichiers statiques en mode dev
-# (en plus de chaque app/static/)
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# Dossier où collectstatic regroupera tous les statiques pour la prod
-# (Django collectera tous les /static/ des apps ici lors du déploiement)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# WhiteNoise : versionne et compresse les statiques (long-cache safe).
+# Si whitenoise n'est pas installé, Django utilise le stockage standard.
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': (
+            'whitenoise.storage.CompressedManifestStaticFilesStorage'
+            if 'whitenoise.middleware.WhiteNoiseMiddleware' in MIDDLEWARE and not DEBUG
+            else 'django.contrib.staticfiles.storage.StaticFilesStorage'
+        ),
+    },
+}
+
 
 # ============================================================
-# 10. FICHIERS MÉDIAS (uploads des utilisateurs : photos d'articles, etc.)
+# 11. FICHIERS MÉDIAS (uploads)
 # ============================================================
-# Important : MEDIA est différent de STATIC.
-# STATIC = fichiers du développeur (CSS, JS, logo)
-# MEDIA = fichiers uploadés par les utilisateurs (photos d'articles, etc.)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # ============================================================
-# 11. DJANGO-TAILWIND
+# 12. DJANGO-TAILWIND
 # ============================================================
 TAILWIND_APP_NAME = 'theme'
 
-# Chemin vers npm sur Windows - à adapter si chemin différent chez toi
-NPM_BIN_PATH = r'C:\Program Files\nodejs\npm.cmd'
-
-# IPs internes - pour le hot-reload de Tailwind en dev
+NPM_BIN_PATH = env('NPM_BIN_PATH', r'C:\Program Files\nodejs\npm.cmd')
 INTERNAL_IPS = ['127.0.0.1']
 
 
 # ============================================================
-# 12. DIVERS
+# 13. DIVERS
 # ============================================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# ============================================================
-# 13. EMAIL
-# ============================================================
-# En développement : on affiche les emails dans la console au lieu de les envoyer
-# Permet de tester sans configurer SMTP, et sans spammer une vraie boîte mail
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Email d'expédition par défaut
-DEFAULT_FROM_EMAIL = 'noreply@eniet-eneig.cm'
-
-# Email destinataire pour les notifications du site
-CONTACT_EMAIL = 'efpsaf@yahoo.fr'
-
-# Plus tard en production, on remplacera EMAIL_BACKEND par SMTP :
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.hostinger.com'
-# EMAIL_HOST_USER = '...'
-# EMAIL_HOST_PASSWORD = '...' (en variable d'environnement)
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
 
 # ============================================================
-# 14. AUTHENTIFICATION ET DASHBOARD
+# 14. EMAIL
 # ============================================================
-# URL de redirection après connexion réussie
+EMAIL_BACKEND = env(
+    'DJANGO_EMAIL_BACKEND',
+    'django.core.mail.backends.console.EmailBackend' if DEBUG
+    else 'django.core.mail.backends.smtp.EmailBackend',
+)
+EMAIL_HOST = env('DJANGO_EMAIL_HOST', '')
+EMAIL_PORT = int(env('DJANGO_EMAIL_PORT', '587'))
+EMAIL_HOST_USER = env('DJANGO_EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = env('DJANGO_EMAIL_HOST_PASSWORD', '')
+EMAIL_USE_TLS = env_bool('DJANGO_EMAIL_USE_TLS', default=True)
+EMAIL_USE_SSL = env_bool('DJANGO_EMAIL_USE_SSL', default=False)
+DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL', 'noreply@eniet-eneig.cm')
+CONTACT_EMAIL = env('DJANGO_CONTACT_EMAIL', 'efpsaf@yahoo.fr')
+
+
+# ============================================================
+# 15. AUTHENTIFICATION ET DASHBOARD
+# ============================================================
 LOGIN_REDIRECT_URL = 'dashboard:home'
-
-# URL de redirection si une page nécessite une connexion
 LOGIN_URL = 'dashboard:login'
-
-# URL après déconnexion
 LOGOUT_REDIRECT_URL = 'dashboard:login'
 
+
 # ============================================================
-# 15. ÉDITEUR DE TEXTE ENRICHI (TinyMCE)
+# 16. TINYMCE
 # ============================================================
 TINYMCE_DEFAULT_CONFIG = {
     'height': 500,
@@ -256,7 +309,6 @@ TINYMCE_DEFAULT_CONFIG = {
         'alignleft aligncenter alignright alignjustify | '
         'bullist numlist outdent indent | link image | removeformat | code | help'
     ),
-    # Format select : niveaux de titres autorisés
     'block_formats': (
         'Paragraphe=p; Titre H2=h2; Titre H3=h3; Citation=blockquote'
     ),
@@ -264,7 +316,74 @@ TINYMCE_DEFAULT_CONFIG = {
         'body { font-family: Inter, sans-serif; font-size: 16px; line-height: 1.7; }'
     ),
     'language': 'fr_FR',
-    'branding': False,  # Cache le logo TinyMCE
+    'branding': False,
     'promotion': False,
-    'images_upload_url': '/dashboard/tinymce/upload-image/',  # Pour uploader des images dans l'article
+    'images_upload_url': '/dashboard/tinymce/upload-image/',
+}
+
+
+# ============================================================
+# 17. SÉCURITÉ DE PRODUCTION
+# ============================================================
+# Tous ces réglages ne s'appliquent que lorsque DEBUG=False.
+# Le proxy header est nécessaire derrière nginx/Cloudflare qui terminent le TLS.
+if not DEBUG:
+    # Cookies : transmis uniquement sur HTTPS, non lisibles par JS.
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_SAMESITE = 'Lax'
+
+    # Force la redirection HTTP → HTTPS (à désactiver si la plateforme la gère).
+    SECURE_SSL_REDIRECT = env_bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+
+    # HSTS : le navigateur exige HTTPS pendant N secondes (1 an par défaut).
+    SECURE_HSTS_SECONDS = int(env('DJANGO_SECURE_HSTS_SECONDS', '31536000'))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
+    SECURE_HSTS_PRELOAD = env_bool('DJANGO_SECURE_HSTS_PRELOAD', default=False)
+
+    # Anti-sniffing + politique referrer raisonnable.
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'same-origin'
+
+    # Behind a TLS-terminating proxy (nginx, Cloudflare, Heroku, etc.) :
+    # Django doit savoir que la requête entrante est sécurisée.
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Anti-clickjacking strict.
+    X_FRAME_OPTIONS = 'DENY'
+
+
+# ============================================================
+# 18. LOGGING — utile en prod pour tracer les erreurs sans DEBUG
+# ============================================================
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{asctime}] {levelname} {name}: {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': env('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
 }
