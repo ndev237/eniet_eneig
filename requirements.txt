@@ -22,6 +22,10 @@ gunicorn==23.0.0
 # psycopg[binary] = wheel précompilée, pas de libpq système à installer
 psycopg[binary]==3.2.3
 
+# --- Traitement d'images (OBLIGATOIRE pour ImageField) ---
+# Sans Pillow, tout upload d'image (album, article, photo) renvoie HTTP 500.
+Pillow==11.0.0
+
 # --- Variables d'environnement ---
 python-dotenv==1.0.1
 
