@@ -296,8 +296,9 @@ LOGOUT_REDIRECT_URL = 'dashboard:login'
 # ============================================================
 # 16. TINYMCE
 # ============================================================
+# Clé API TinyMCE (obligatoire depuis TinyMCE 6)
+TINYMCE_API_KEY = env('TINYMCE_API_KEY', 'zrehrwjgfxgqjzkfknb0e75jbye4hlvkzitgil0sdo8ci145')
 TINYMCE_DEFAULT_CONFIG = {
-    'api_key': env('TINYMCE_API_KEY', 'zrehrwjgfxgqjzkfknb0e75jbye4hlvkzitgil0sdo8ci145'),
     'height': 500,
     'menubar': False,
     'plugins': (
