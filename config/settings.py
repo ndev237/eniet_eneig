@@ -149,6 +149,7 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.core.context_processors.tinymce_key',
                 'apps.core.context_processors.site_settings',
                 'apps.core.context_processors.dashboard_badges',
             ],

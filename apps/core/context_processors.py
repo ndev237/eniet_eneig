@@ -19,7 +19,12 @@ Avec context processor :
 
 from apps.pages.models import SiteSettings
 from apps.contacts.models import MessageContact
+from django.conf import settings
 
+def tinymce_key(request):
+    return {
+        'TINYMCE_API_KEY': getattr(settings, 'TINYMCE_API_KEY', '')
+    }
 
 def site_settings(request):
     """
