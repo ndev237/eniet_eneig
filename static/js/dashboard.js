@@ -180,6 +180,46 @@
     }
 
     // ============================================================
+    // SLUG AUTO depuis le TITRE
+    // ============================================================
+    /**
+     * Remplit le champ #id_slug en temps réel quand l'utilisateur tape
+     * dans #id_titre. S'arrête dès que l'utilisateur édite manuellement
+     * le slug (pour ne pas écraser un slug volontairement personnalisé).
+     *
+     * S'active automatiquement sur les pages article/album/utilisateur
+     * dès que les deux champs sont présents.
+     */
+    function slugify(value) {
+        return (value || '')
+            .toString()
+            .normalize('NFD')                       // sépare les diacritiques
+            .replace(/[̀-ͯ]/g, '')        // retire les accents
+            .toLowerCase()
+            .trim()
+            .replace(/['’"`]/g, '')                 // retire les apostrophes/quotes
+            .replace(/[^a-z0-9]+/g, '-')            // tout le reste → tiret
+            .replace(/^-+|-+$/g, '');               // pas de tiret en bord
+    }
+
+    function initSlugAuto() {
+        const titre = document.getElementById('id_titre');
+        const slug = document.getElementById('id_slug');
+        if (!titre || !slug) return;
+
+        // Si le slug est déjà rempli (mode édition), on respecte l'existant.
+        let userEdited = slug.value.trim() !== '';
+
+        // Tout input direct dans le slug = l'utilisateur prend la main.
+        slug.addEventListener('input', () => { userEdited = true; });
+
+        titre.addEventListener('input', () => {
+            if (userEdited) return;
+            slug.value = slugify(titre.value);
+        });
+    }
+
+    // ============================================================
     // BOUTON RETOUR EN HAUT
     // ============================================================
 
@@ -220,6 +260,7 @@
             initSidebar();
             initToasts();
             initModales();
+            initSlugAuto();
             initRetourHaut();
         });
     } else {
