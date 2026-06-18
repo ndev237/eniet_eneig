@@ -86,7 +86,7 @@
             <div class="text-sm text-ink/60 uppercase tracking-wider">{% trans "Année de création" %}</div>
         </div>
         <div class="text-center lg:text-left">
-            <div class="font-serif text-5xl text-primary font-semibold mb-1">07</div>
+            <div class="font-serif text-5xl text-primary font-semibold mb-1">06</div>
             <div class="text-sm text-ink/60 uppercase tracking-wider">{% trans "Filières techniques" %}</div>
         </div>
         <div class="text-center lg:text-left">
@@ -138,7 +138,7 @@
                             {% trans "École Normale d'Instituteurs" %}
                         </div>
                         <h3 class="font-serif text-4xl font-semibold mb-2">ENIEG</h3>
-                        <div class="text-cream/80 text-sm italic">{% trans "de l'Excellence Professionnelle — Enseignement Général" %}</div>
+                        <div class="text-cream/80 text-sm italic">{% trans "de l'Excellence Professionnelle — Maternel et Primaire" %}</div>
                     </div>
                 </div>
 
@@ -171,11 +171,13 @@
                             <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                             </svg>
-                            <span class="text-sm text-ink/80">{% trans "Scolarité : 200 000 FCFA / an · Inscription : 25 000 FCFA" %}</span>
+                            <span class="text-sm text-ink/80">{% trans "Inscription : 25 000 FCFA" %}</span>
                         </li>
                     </ul>
 
-                    <a href="#" class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:gap-3 transition-all">
+                    {# Lien sécurisé : si l'objet ENIEG n'existe pas en BDD, on retombe sur la liste des formations #}
+                    <a href="{% if ecole_enieg %}{% url 'ecoles:ecole_detail' ecole_slug=ecole_enieg.slug %}{% else %}{% url 'ecoles:formations_list' %}{% endif %}"
+                       class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:gap-3 transition-all">
                         {% trans "En savoir plus sur l'ENIEG" %}
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -226,11 +228,13 @@
                             <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                             </svg>
-                            <span class="text-sm text-ink/80">{% trans "Scolarité : 250 000 FCFA / an · Inscription : 50 000 FCFA" %}</span>
+                            <span class="text-sm text-ink/80">{% trans "Inscription : 50 000 FCFA" %}</span>
                         </li>
                     </ul>
 
-                    <a href="#" class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:gap-3 transition-all">
+                    {# Lien sécurisé : si l'objet ENIET n'existe pas en BDD, on retombe sur la liste des formations #}
+                    <a href="{% if ecole_eniet %}{% url 'ecoles:ecole_detail' ecole_slug=ecole_eniet.slug %}{% else %}{% url 'ecoles:formations_list' %}{% endif %}"
+                       class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:gap-3 transition-all">
                         {% trans "Explorer les filières ENIET" %}
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -243,8 +247,8 @@
 </section>
 
 <!-- ============================================================
-   SECTION 4 — LES 7 FILIÈRES ENIET
-   Grille de 7 cartes + 1 CTA (total 8 pour équilibre visuel 4x2)
+   SECTION 4 — LES 6 FILIÈRES ENIET
+   Grille de 6 cartes + 1 CTA (total 7 pour équilibre visuel 4x2)
    ============================================================ -->
 <section id="filieres" class="py-24 bg-cream relative">
     <div class="max-w-7xl mx-auto px-6">
@@ -405,8 +409,10 @@
             {% blocktrans %}Le recrutement se fait sur concours, ouvert aux titulaires des diplômes requis selon l'école visée — Baccalauréat pour l'ENIEG, BT, BP ou Bac pour l'ENIET.{% endblocktrans %}
         </p>
 
-        <!-- Calendrier d'ouverture — bandeau or, à la fois callout et donnée pratique -->
-        <div class="inline-flex items-center gap-3 bg-accent/15 border border-accent/40 px-5 py-3 mb-10">
+        <!-- Calendrier d'ouverture — bandeau or, à la fois callout et donnée pratique
+             flex + w-fit : occupe sa propre ligne mais reste à la largeur du contenu,
+             max-w-full : ne déborde pas sur mobile. -->
+        <div class="flex items-center gap-3 bg-accent/15 border border-accent/40 px-5 py-3 mb-10 w-fit max-w-full">
             <svg class="w-5 h-5 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
             </svg>
