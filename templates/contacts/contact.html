@@ -123,8 +123,8 @@
                     <div>
                         <div class="font-semibold text-primary-darker mb-1">{% trans "Horaires d'ouverture" %}</div>
                         <div class="text-ink/70 text-sm space-y-0.5">
-                            <div>{% trans "Lundi — Vendredi" %} : 07h30 — 17h00</div>
-                            <div>{% trans "Samedi" %} : 08h00 — 13h00</div>
+                            <div>{% trans "Lundi — Vendredi" %} : {{ site_settings.horaires_semaine|default:"07h30 — 17h00" }}</div>
+                            <div>{% trans "Samedi" %} : {{ site_settings.horaires_samedi|default:"08h00 — 12h00" }}</div>
                             <div class="text-ink/50">{% trans "Dimanche" %} : {% trans "Fermé" %}</div>
                         </div>
                     </div>

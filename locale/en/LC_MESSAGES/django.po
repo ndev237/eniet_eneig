@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eniet_eneig 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-04 13:13+0100\n"
+"POT-Creation-Date: 2026-06-18 09:35+0100\n"
 "PO-Revision-Date: 2026-05-22 18:30+0100\n"
 "Last-Translator: ENIET/ENIEG Team\n"
 "Language-Team: English\n"
@@ -430,11 +430,11 @@ msgstr "Profile"
 msgid "Profils"
 msgstr "Profiles"
 
-#: .\apps\ecoles\models.py:19 .\templates\core\home.html:129
+#: .\apps\ecoles\models.py:19
 msgid "Enseignement Général"
 msgstr "General Education"
 
-#: .\apps\ecoles\models.py:20 .\templates\core\home.html:181
+#: .\apps\ecoles\models.py:20
 msgid "Enseignement Technique"
 msgstr "Technical Education"
 
@@ -614,7 +614,7 @@ msgid "Documents requis"
 msgstr "Required documents"
 
 #: .\apps\ecoles\models.py:280 .\templates\blog\list.html:321
-#: .\templates\core\home.html:378 .\templates\ecoles\admission.html:4
+#: .\templates\core\home.html:398 .\templates\ecoles\admission.html:4
 #: .\templates\ecoles\admission.html:23 .\templates\ecoles\admission.html:27
 #: .\templates\partials\footer.html:82 .\templates\partials\navbar.html:52
 #: .\templates\partials\navbar.html:181
@@ -641,7 +641,7 @@ msgstr "Answer"
 msgid "Question fréquente"
 msgstr "Frequently asked question"
 
-#: .\apps\ecoles\models.py:310 .\templates\ecoles\admission.html:162
+#: .\apps\ecoles\models.py:310 .\templates\ecoles\admission.html:264
 msgid "Questions fréquentes"
 msgstr "Frequently asked questions"
 
@@ -989,11 +989,11 @@ msgstr "The lower the number, the earlier the photo appears"
 msgid "Photos"
 msgstr "Photos"
 
-#: .\config\settings.py:151
+#: .\config\settings.py:216
 msgid "Français"
 msgstr "French"
 
-#: .\config\settings.py:152
+#: .\config\settings.py:217
 msgid "English"
 msgstr "English"
 
@@ -1055,7 +1055,7 @@ msgstr "View all news"
 msgid "Toutes les actualités, événements et communiqués de l'ENIET/ENIEG."
 msgstr "All news, events and announcements from ENIET/ENIEG."
 
-#: .\templates\blog\list.html:35 .\templates\core\home.html:440
+#: .\templates\blog\list.html:35 .\templates\core\home.html:471
 msgid "Vie de l'établissement"
 msgstr "Campus life"
 
@@ -1290,33 +1290,7 @@ msgstr ""
 msgid "Envoyer le message"
 msgstr "Send message"
 
-#: .\templates\contacts\contact.html:276
-msgid "Localisation"
-msgstr "Location"
-
-#: .\templates\contacts\contact.html:279
-msgid "Nous trouver à Yassa"
-msgstr "Find us in Yassa"
-
-#: .\templates\contacts\contact.html:291
-msgid "Itinéraire vers l'école"
-msgstr "Get directions to the school"
-
-#: .\templates\contacts\contact.html:308
-msgid "Carte ENIET / ENIEG — Yassa, Douala"
-msgstr "Map — ENIET / ENIEG · Yassa, Douala"
-
-#: .\templates\contacts\contact.html:326
-msgid ""
-"Coordonnées GPS non renseignées. Ajoutez-les depuis Dashboard → Paramètres →"
-" Coordonnées → Position GPS."
-msgstr ""
-"GPS coordinates not set. Add them from Dashboard → Settings → Contact → GPS "
-"position."
-
-#: .\templates\core\home.html:4 .\templates\pages\ecole.html:107
-#: .\templates\partials\footer.html:23 .\templates\partials\navbar.html:22
-#: .\templates\partials\navbar.html:123
+#: .\templates\core\home.html:4
 msgid "Excellence Professionnelle"
 msgstr "Professional Excellence"
 
@@ -1331,8 +1305,8 @@ msgstr ""
 " exam."
 
 #: .\templates\core\home.html:32
-msgid "Agréé par le MINESEC — Arrêté n°26/15 & n°69/15"
-msgstr "Accredited by MINESEC — Decree No. 26/15 & No. 69/15"
+msgid "Établissement agréé par le MINESEC"
+msgstr "Accredited by the Ministry of Secondary Education (MINESEC)"
 
 #: .\templates\core\home.html:37
 msgid "Former les"
@@ -1348,13 +1322,13 @@ msgstr "of tomorrow"
 
 #: .\templates\core\home.html:44
 msgid ""
-"L'ENIET et l'ENIEG forment depuis 2015 les instituteurs de l'enseignement "
-"général et technique au Cameroun, avec une exigence : l'excellence "
-"professionnelle."
+"L'ENIET et l'ENIEG <strong class=\"text-cream\">de l'Excellence "
+"Professionnelle</strong> forment depuis 2015 les instituteurs de "
+"l'enseignement général et technique au Cameroun."
 msgstr ""
-"Since 2015, ENIET and ENIEG have been training teachers for general and "
-"technical education in Cameroon, with one requirement: professional "
-"excellence."
+"ENIET and ENIEG <strong class=\"text-cream\">de l'Excellence "
+"Professionnelle</strong> have been training teachers for general and "
+"technical education in Cameroon since 2015."
 
 #: .\templates\core\home.html:50
 msgid "Découvrir nos formations"
@@ -1364,39 +1338,48 @@ msgstr "Discover our programs"
 msgid "Procédure d'admission"
 msgstr "Admission process"
 
-#: .\templates\core\home.html:74
+#: .\templates\core\home.html:65
+msgid "Arrêté n°26/15/MINESEC/SEESEN/SG/DEN/SDENG/SSGENPRI du 27 janvier 2015"
+msgstr ""
+"Decree No. 26/15/MINESEC/SEESEN/SG/DEN/SDENG/SSGENPRI of 27 January 2015"
+
+#: .\templates\core\home.html:69
+msgid "Arrêté n°69/15/MINESEC/SEESEN/SG/DPN/SDENT/SGENPRI du 21 avril 2015"
+msgstr "Decree No. 69/15/MINESEC/SEESEN/SG/DPN/SDENT/SGENPRI of 21 April 2015"
+
+#: .\templates\core\home.html:86
 msgid "Année de création"
 msgstr "Year founded"
 
-#: .\templates\core\home.html:78
+#: .\templates\core\home.html:90
 msgid "Filières techniques"
 msgstr "Technical programs"
 
-#: .\templates\core\home.html:82
+#: .\templates\core\home.html:94
 msgid "Cursus : CAPIEMP & CAPIET"
 msgstr "Programs: CAPIEMP & CAPIET"
 
-#: .\templates\core\home.html:86
+#: .\templates\core\home.html:98
 msgid "Diplômes reconnus par l'État"
 msgstr "State-recognized diplomas"
 
-#: .\templates\core\home.html:105
+#: .\templates\core\home.html:117
 msgid "Notre structure"
 msgstr "Our structure"
 
-#: .\templates\core\home.html:108
+#: .\templates\core\home.html:120
 msgid "Deux écoles,"
 msgstr "Two schools,"
 
-#: .\templates\core\home.html:109
+#: .\templates\core\home.html:121
 msgid "une même"
 msgstr "one shared"
 
-#: .\templates\core\home.html:110
+#: .\templates\core\home.html:122
 msgid "excellence"
 msgstr "excellence"
 
-#: .\templates\core\home.html:113
+#: .\templates\core\home.html:125
 msgid ""
 "Notre complexe abrite deux institutions complémentaires qui forment les "
 "instituteurs de la prochaine génération, dans le respect des standards "
@@ -1405,148 +1388,163 @@ msgstr ""
 "Our complex houses two complementary institutions training the next "
 "generation of teachers, following official Cameroonian standards."
 
-#: .\templates\core\home.html:126 .\templates\core\home.html:178
+#: .\templates\core\home.html:138 .\templates\core\home.html:193
 msgid "École Normale d'Instituteurs"
 msgstr "Teacher Training College"
 
-#: .\templates\core\home.html:139
+#: .\templates\core\home.html:141
+msgid "de l'Excellence Professionnelle — Enseignement Général"
+msgstr "de l'Excellence Professionnelle — General Education"
+
+#: .\templates\core\home.html:147 .\templates\core\home.html:202
+msgid "Diplôme délivré en fin de formation"
+msgstr "Diploma awarded upon completion"
+
+#: .\templates\core\home.html:154
 msgid ""
-"Certificat d'Aptitude Pédagogique d'Instituteurs de l'Enseignement Maternel "
-"et Primaire Général. Formation de 2 ans pour les futurs maîtres de l'école "
+"Certificat d'Aptitude Pédagogique des Instituteurs de l'Enseignement "
+"Maternel et Primaire. Formation de 2 ans pour les futurs maîtres de l'école "
 "primaire."
 msgstr ""
-"Certificate of Teaching Aptitude for Nursery and Primary General Education "
-"Teachers. Two-year program for future primary school teachers."
+"Certificate of Teaching Aptitude for Nursery and Primary School Teachers. "
+"Two-year program for future primary school teachers."
 
-#: .\templates\core\home.html:147
+#: .\templates\core\home.html:162
 msgid "Recrutement sur concours (Bac requis)"
 msgstr "Selection through entrance exam (high school diploma required)"
 
-#: .\templates\core\home.html:153
+#: .\templates\core\home.html:168
 msgid "Durée : 2 ans en formation continue"
 msgstr "Duration: 2 years of continuous training"
 
-#: .\templates\core\home.html:159 .\templates\core\home.html:211
-msgid "Stage pratique en école d'application"
-msgstr "Practical placement in a training school"
+#: .\templates\core\home.html:174
+msgid "Scolarité : 200 000 FCFA / an · Inscription : 25 000 FCFA"
+msgstr "Tuition: 200,000 FCFA / year · Registration: 25,000 FCFA"
 
-#: .\templates\core\home.html:164
+#: .\templates\core\home.html:179
 msgid "En savoir plus sur l'ENIEG"
 msgstr "Learn more about ENIEG"
 
-#: .\templates\core\home.html:191
+#: .\templates\core\home.html:196
+msgid "de l'Excellence Professionnelle — Enseignement Technique"
+msgstr "de l'Excellence Professionnelle — Technical Education"
+
+#: .\templates\core\home.html:209
 msgid ""
-"Certificat d'Aptitude Pédagogique d'Instituteurs de l'Enseignement "
-"Technique. Sept filières spécialisées pour former des instituteurs experts "
+"Certificat d'Aptitude Pédagogique des Instituteurs de l'Enseignement "
+"Technique. Six filières spécialisées pour former des instituteurs experts "
 "dans leur domaine."
 msgstr ""
-"Certificate of Teaching Aptitude for Technical Education Teachers. Seven "
+"Certificate of Teaching Aptitude for Technical Education Teachers. Six "
 "specialized programs training expert teachers in their field."
 
-#: .\templates\core\home.html:199
+#: .\templates\core\home.html:217
 msgid "Accessible aux titulaires de BT, BP ou Bac"
 msgstr "Open to BT, BP or Baccalaureate holders"
 
-#: .\templates\core\home.html:205
-msgid "7 filières professionnelles au choix"
-msgstr "7 professional programs to choose from"
+#: .\templates\core\home.html:223
+msgid "6 filières professionnelles au choix"
+msgstr "6 professional programs to choose from"
 
-#: .\templates\core\home.html:216
+#: .\templates\core\home.html:229
+msgid "Scolarité : 250 000 FCFA / an · Inscription : 50 000 FCFA"
+msgstr "Tuition: 250,000 FCFA / year · Registration: 50,000 FCFA"
+
+#: .\templates\core\home.html:234
 msgid "Explorer les filières ENIET"
 msgstr "Explore ENIET programs"
 
-#: .\templates\core\home.html:237
+#: .\templates\core\home.html:255
 msgid "Filières ENIET"
 msgstr "ENIET Programs"
 
-#: .\templates\core\home.html:240
-msgid "Sept voies vers"
-msgstr "Seven paths to"
+#: .\templates\core\home.html:258
+msgid "Six voies vers"
+msgstr "Six paths to"
 
-#: .\templates\core\home.html:241
+#: .\templates\core\home.html:259
 msgid "l'enseignement technique"
 msgstr "technical teaching"
 
-#: .\templates\core\home.html:245
+#: .\templates\core\home.html:263
 msgid "Toutes les filières"
 msgstr "All programs"
 
-#: .\templates\core\home.html:262
+#: .\templates\core\home.html:280
 msgid "Électricité"
 msgstr "Electrical Engineering"
 
-#: .\templates\core\home.html:264
+#: .\templates\core\home.html:282
 msgid ""
 "Formation aux installations électriques et à la pédagogie de la spécialité."
 msgstr "Training in electrical installations and pedagogy of the specialty."
 
-#: .\templates\core\home.html:275
-msgid "Maçonnerie & Béton Armé"
-msgstr "Masonry & Reinforced Concrete"
+#: .\templates\core\home.html:294
+msgid "Construction en maçonnerie et béton armé"
+msgstr "Masonry & Reinforced Concrete Construction"
 
-#: .\templates\core\home.html:277
+#: .\templates\core\home.html:298
 msgid "Construction, structures et techniques pédagogiques du bâtiment."
 msgstr "Construction, structures and teaching techniques for buildings."
 
-#: .\templates\core\home.html:288
+#: .\templates\core\home.html:309
 msgid "Couture (Flou)"
 msgstr "Garment Making"
 
-#: .\templates\core\home.html:290
+#: .\templates\core\home.html:311
 msgid "Techniques de couture, design textile et enseignement professionnel."
 msgstr "Sewing techniques, textile design and professional teaching."
 
-#: .\templates\core\home.html:301
-msgid "Économie Sociale & Familiale"
+#: .\templates\core\home.html:322
+msgid "Économie sociale et familiale"
 msgstr "Social & Family Economics"
 
-#: .\templates\core\home.html:303
+#: .\templates\core\home.html:324
 msgid "Sciences humaines appliquées à la vie domestique et sociale."
 msgstr "Humanities applied to domestic and social life."
 
-#: .\templates\core\home.html:314
-msgid "Comptabilité & Gestion"
-msgstr "Accounting & Management"
+#: .\templates\core\home.html:335
+msgid "Comptabilité — Gestion"
+msgstr "Accounting — Management"
 
-#: .\templates\core\home.html:316
+#: .\templates\core\home.html:337
 msgid "Méthodes comptables, gestion d'entreprise et pédagogie spécialisée."
 msgstr "Accounting methods, business management and specialized pedagogy."
 
-#: .\templates\core\home.html:327
-msgid "Bureautique"
-msgstr "Office Software"
+#: .\templates\core\home.html:349
+msgid "Bureautique et communication administrative"
+msgstr "Office Software & Administrative Communication"
 
-#: .\templates\core\home.html:329
-msgid "Outils numériques de bureau et formation pédagogique associée."
-msgstr "Office digital tools and associated teaching training."
+#: .\templates\core\home.html:353
+msgid ""
+"Outils numériques de bureau, secrétariat moderne et techniques de "
+"communication formelle."
+msgstr ""
+"Office digital tools, modern secretarial skills and formal communication "
+"techniques."
 
-#: .\templates\core\home.html:340
-msgid "Communication Administrative"
-msgstr "Administrative Communication"
-
-#: .\templates\core\home.html:342
-msgid "Techniques de communication formelle et secrétariat moderne."
-msgstr "Formal communication techniques and modern secretarial skills."
-
-#: .\templates\core\home.html:355
+#: .\templates\core\home.html:369
 msgid "Voir toutes les formations"
 msgstr "View all programs"
 
-#: .\templates\core\home.html:357
-msgid ""
-"Découvrez les programmes détaillés, débouchés et conditions d'admission."
+#: .\templates\core\home.html:371
+msgid "Programmes détaillés, débouchés et conditions d'admission par filière."
 msgstr ""
-"Discover detailed programs, career outcomes and admission requirements."
+"Detailed programs, career outcomes and admission requirements by track."
 
-#: .\templates\core\home.html:381 .\templates\ecoles\admission.html:46
+#: .\templates\core\home.html:376
+msgid "Explorer"
+msgstr "Explore"
+
+#: .\templates\core\home.html:401 .\templates\ecoles\admission.html:46
 msgid "Procédure"
 msgstr "Process"
 
-#: .\templates\core\home.html:382
+#: .\templates\core\home.html:402
 msgid "d'admission"
 msgstr "process"
 
-#: .\templates\core\home.html:385
+#: .\templates\core\home.html:405
 msgid ""
 "Le recrutement se fait sur concours, ouvert aux titulaires des diplômes "
 "requis selon l'école visée — Baccalauréat pour l'ENIEG, BT, BP ou Bac pour "
@@ -1556,51 +1554,59 @@ msgstr ""
 "diplomas required by the chosen school — Baccalaureate for ENIEG; BT, BP or "
 "Baccalaureate for ENIET."
 
-#: .\templates\core\home.html:389
+#: .\templates\core\home.html:414 .\templates\ecoles\admission.html:121
+msgid "Période d'inscription"
+msgstr "Registration period"
+
+#: .\templates\core\home.html:415
+msgid "ouverte de juillet à août chaque année."
+msgstr "open each year from July to August."
+
+#: .\templates\core\home.html:420
 msgid "Composition du dossier"
 msgstr "Application requirements"
 
-#: .\templates\core\home.html:394
-msgid "Photocopie CNI"
-msgstr "ID card photocopy"
+#: .\templates\core\home.html:425
+msgid "Photocopie légalisée de la CNI (moins de 3 mois)"
+msgstr "Certified copy of national ID card (less than 3 months old)"
 
-#: .\templates\core\home.html:397
-msgid "Baccalauréat certifié"
-msgstr "Certified high school diploma"
+#: .\templates\core\home.html:428
+msgid "Photocopie légalisée du Baccalauréat (moins de 3 mois)"
+msgstr "Certified copy of the Baccalaureate diploma (less than 3 months old)"
 
-#: .\templates\core\home.html:400
+#: .\templates\core\home.html:431
 msgid "Acte de naissance"
 msgstr "Birth certificate"
 
-#: .\templates\core\home.html:403
+#: .\templates\core\home.html:434
 msgid "4 photos 4×4"
 msgstr "4 photos 4×4"
 
-#: .\templates\core\home.html:406
+#: .\templates\core\home.html:437
 msgid "Fiche d'inscription"
 msgstr "Registration form"
 
-#: .\templates\core\home.html:409
+#: .\templates\core\home.html:440
 msgid "Demande manuscrite au Directeur"
 msgstr "Handwritten request to the Director"
 
-#: .\templates\core\home.html:414
+#: .\templates\core\home.html:445
 msgid "Voir la procédure complète"
 msgstr "View the full procedure"
 
-#: .\templates\core\home.html:443
+#: .\templates\core\home.html:474
 msgid "La vie de"
 msgstr "Life at"
 
-#: .\templates\core\home.html:443
+#: .\templates\core\home.html:474
 msgid "notre établissement"
 msgstr "our institution"
 
-#: .\templates\core\home.html:448 .\templates\core\home.html:465
+#: .\templates\core\home.html:479 .\templates\core\home.html:496
 msgid "Toutes les actualités"
 msgstr "All news"
 
-#: .\templates\core\home.html:486
+#: .\templates\core\home.html:517
 msgid ""
 "L'éducation est l'arme la plus puissante pour changer une nation. Nos "
 "instituteurs en sont les artisans."
@@ -1608,15 +1614,15 @@ msgstr ""
 "Education is the most powerful weapon to change a nation. Our teachers are "
 "its craftsmen."
 
-#: .\templates\core\home.html:489
+#: .\templates\core\home.html:520
 msgid "Discipline"
 msgstr "Discipline"
 
-#: .\templates\core\home.html:491
+#: .\templates\core\home.html:522
 msgid "Travail"
 msgstr "Work"
 
-#: .\templates\core\home.html:493
+#: .\templates\core\home.html:524
 msgid "Intégrité"
 msgstr "Integrity"
 
@@ -1698,19 +1704,60 @@ msgid ""
 msgstr ""
 "If admitted, finalize your enrollment and pay the first tuition installment."
 
-#: .\templates\ecoles\admission.html:101
+#: .\templates\ecoles\admission.html:103
+msgid "Calendrier et frais"
+msgstr "Calendar and fees"
+
+#: .\templates\ecoles\admission.html:106
+msgid "Période et tarifs"
+msgstr "Period and"
+
+#: .\templates\ecoles\admission.html:106
+msgid "annuels"
+msgstr "annual rates"
+
+#: .\templates\ecoles\admission.html:124
+msgid "Juillet — Août"
+msgstr "July — August"
+
+#: .\templates\ecoles\admission.html:129
+msgid ""
+"Les inscriptions au concours d'entrée sont ouvertes chaque année entre les "
+"mois de juillet et août. Préparez votre dossier en amont pour ne pas manquer"
+" la fenêtre."
+msgstr ""
+"Entrance-exam registrations open each year between July and August. Prepare "
+"your file ahead of time so you do not miss the window."
+
+#: .\templates\ecoles\admission.html:144 .\templates\ecoles\admission.html:172
+msgid "Inscription"
+msgstr "Registration"
+
+#: .\templates\ecoles\admission.html:145 .\templates\ecoles\admission.html:173
+msgid "Non remboursable"
+msgstr "Non-refundable"
+
+#: .\templates\ecoles\admission.html:153 .\templates\ecoles\admission.html:181
+msgid "Scolarité annuelle"
+msgstr "Annual tuition"
+
+#: .\templates\ecoles\admission.html:154 .\templates\ecoles\admission.html:182
+msgid "Hors inscription"
+msgstr "Excluding registration"
+
+#: .\templates\ecoles\admission.html:203
 msgid "Dossier"
 msgstr "Application"
 
-#: .\templates\ecoles\admission.html:104
+#: .\templates\ecoles\admission.html:206
 msgid "Pièces à"
 msgstr "Documents to"
 
-#: .\templates\ecoles\admission.html:104
+#: .\templates\ecoles\admission.html:206
 msgid "fournir"
 msgstr "provide"
 
-#: .\templates\ecoles\admission.html:107
+#: .\templates\ecoles\admission.html:209
 msgid ""
 "Voici la liste complète des documents à fournir pour constituer votre "
 "dossier de candidature. Préparez-les soigneusement pour éviter tout retard."
@@ -1718,11 +1765,11 @@ msgstr ""
 "Here is the complete list of documents to provide for your application. "
 "Prepare them carefully to avoid any delay."
 
-#: .\templates\ecoles\admission.html:111
+#: .\templates\ecoles\admission.html:213
 msgid "Important"
 msgstr "Important"
 
-#: .\templates\ecoles\admission.html:113
+#: .\templates\ecoles\admission.html:215
 msgid ""
 "Préparez chaque pièce avec soin : un dossier incomplet peut retarder votre "
 "inscription au concours."
@@ -1730,27 +1777,27 @@ msgstr ""
 "Prepare each document carefully: an incomplete file may delay your entrance-"
 "exam registration."
 
-#: .\templates\ecoles\admission.html:144
+#: .\templates\ecoles\admission.html:246
 msgid "Document obligatoire"
 msgstr "Required document"
 
-#: .\templates\ecoles\admission.html:165
+#: .\templates\ecoles\admission.html:267
 msgid "Tout ce que vous voulez"
 msgstr "Everything you want to"
 
-#: .\templates\ecoles\admission.html:165
+#: .\templates\ecoles\admission.html:267
 msgid "savoir"
 msgstr "know"
 
-#: .\templates\ecoles\admission.html:204
+#: .\templates\ecoles\admission.html:306
 msgid "Une question sur"
 msgstr "A question about"
 
-#: .\templates\ecoles\admission.html:204
+#: .\templates\ecoles\admission.html:306
 msgid "votre dossier"
 msgstr "your application"
 
-#: .\templates\ecoles\admission.html:207
+#: .\templates\ecoles\admission.html:309
 msgid ""
 "Notre équipe administrative est à votre disposition pour vous accompagner "
 "dans votre démarche de candidature."
@@ -1758,7 +1805,7 @@ msgstr ""
 "Our administrative team is available to support you throughout your "
 "application process."
 
-#: .\templates\ecoles\admission.html:211 .\templates\pages\ecole.html:319
+#: .\templates\ecoles\admission.html:313 .\templates\pages\ecole.html:319
 msgid "Nous contacter"
 msgstr "Contact us"
 
@@ -2050,6 +2097,11 @@ msgstr "Official accreditations"
 #: .\templates\pages\ecole.html:75 .\templates\pages\ecole.html:79
 msgid "Arrêté"
 msgstr "Decree"
+
+#: .\templates\pages\ecole.html:107 .\templates\partials\footer.html:23
+#: .\templates\partials\navbar.html:22 .\templates\partials\navbar.html:123
+msgid "de l'Excellence Professionnelle"
+msgstr "de l'Excellence Professionnelle"
 
 #: .\templates\pages\ecole.html:114
 msgid "années d'excellence dans la formation des éducateurs"
