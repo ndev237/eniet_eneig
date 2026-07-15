@@ -23,14 +23,14 @@
             <span class="text-accent">{% trans "Galerie" %}</span>
         </nav>
 
-        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+        <div class="hero-in hero-in-1 text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
             — {% trans "Souvenirs" %}
         </div>
-        <h1 class="font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-4">
+        <h1 class="hero-in hero-in-2 font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-4">
             {% trans "La vie" %}
             <span class="italic text-accent">{% trans "en images" %}</span>
         </h1>
-        <p class="text-cream/80 text-lg max-w-2xl">
+        <p class="hero-in hero-in-3 text-cream/80 text-lg max-w-2xl">
             {% blocktrans %}Cérémonies, ateliers, sorties pédagogiques et moments de partage — découvrez l'établissement à travers nos albums photos.{% endblocktrans %}
         </p>
     </div>
@@ -43,9 +43,9 @@
     <div class="max-w-7xl mx-auto px-6">
 
         {% if albums %}
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal-stagger>
                 {% for album in albums %}
-                    <a href="{{ album.get_absolute_url }}" class="group block">
+                    <a data-reveal href="{{ album.get_absolute_url }}" class="group block">
 
                         <!-- Image de couverture -->
                         <div class="relative aspect-[4/5] overflow-hidden bg-primary/5 mb-4">

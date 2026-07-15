@@ -23,14 +23,14 @@
             <span class="text-accent">{% trans "Admission" %}</span>
         </nav>
 
-        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+        <div class="hero-in hero-in-1 text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
             — {% trans "Admission" %}
         </div>
-        <h1 class="font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-4">
+        <h1 class="hero-in hero-in-2 font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-4">
             {% trans "Rejoignez" %}
             <span class="italic text-accent">{% trans "notre école" %}</span>
         </h1>
-        <p class="text-cream/80 text-lg max-w-2xl">
+        <p class="hero-in hero-in-3 text-cream/80 text-lg max-w-2xl">
             {% blocktrans %}Découvrez la procédure d'admission et les documents nécessaires pour préparer votre dossier de candidature.{% endblocktrans %}
         </p>
     </div>
@@ -130,10 +130,10 @@
             </p>
         </div>
 
-        <!-- Grille tarifs ENIEG / ENIET -->
-        <div class="grid md:grid-cols-2 gap-6">
+        <!-- Grille tarifs ENIEG / ENIET — cascade au reveal -->
+        <div class="grid md:grid-cols-2 gap-6" data-reveal-stagger>
             <!-- ENIEG -->
-            <article class="bg-white border border-primary/10 shadow-sm p-7">
+            <article data-reveal class="bg-white border border-primary/10 shadow-sm p-7">
                 <div class="flex items-baseline justify-between mb-5 pb-4 border-b border-primary/10">
                     <h3 class="font-serif text-3xl text-primary-darker font-semibold">ENIEG de l'Excellence Professionnelle</h3>
                     <span class="text-xs uppercase tracking-[0.18em] text-accent font-semibold">CAPIEMP</span>
@@ -152,7 +152,7 @@
             </article>
 
             <!-- ENIET -->
-            <article class="bg-white border border-primary/10 shadow-sm p-7">
+            <article data-reveal class="bg-white border border-primary/10 shadow-sm p-7">
                 <div class="flex items-baseline justify-between mb-5 pb-4 border-b border-primary/10">
                     <h3 class="font-serif text-3xl text-primary-darker font-semibold">ENIET de l'Excellence Professionnelle</h3>
                     <span class="text-xs uppercase tracking-[0.18em] text-accent font-semibold">CAPIET</span>

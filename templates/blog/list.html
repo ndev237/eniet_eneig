@@ -31,12 +31,12 @@
             {% endif %}
         </nav>
 
-        <div class="text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
+        <div class="hero-in hero-in-1 text-xs uppercase tracking-[0.2em] text-accent font-semibold italic mb-3">
             — {% trans "Vie de l'établissement" %}
         </div>
 
         <!-- Titre dynamique selon le filtre actif -->
-        <h1 class="font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-4">
+        <h1 class="hero-in hero-in-2 font-serif text-4xl md:text-6xl font-medium leading-[1.05] mb-4">
             {% if categorie_active %}
                 {{ categorie_active.nom }}
             {% elif tag_active %}
@@ -49,7 +49,7 @@
         </h1>
 
         <!-- Description / état des filtres -->
-        <p class="text-cream/80 text-lg max-w-2xl">
+        <p class="hero-in hero-in-3 text-cream/80 text-lg max-w-2xl">
             {% if categorie_active and categorie_active.description %}
                 {{ categorie_active.description }}
             {% elif recherche %}
@@ -157,7 +157,7 @@
                 </div>
 
                 <!-- Grille -->
-                <div class="grid sm:grid-cols-2 gap-6">
+                <div class="grid sm:grid-cols-2 gap-6" data-reveal-stagger>
                     {% for article in page_obj.object_list %}
                         {% include "blog/partials/article_card.html" with article=article %}
                     {% endfor %}
