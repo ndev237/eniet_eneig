@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from . import views
+from . import views_2fa
 
 app_name = 'dashboard'
 
@@ -14,6 +15,18 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='dashboard/auth/login.html',redirect_authenticated_user=True,),name='login',),
 
     path('logout/', auth_views.LogoutView.as_view(template_name='dashboard/auth/logout.html',),name='logout',),
+
+    # ============================================================
+    # DOUBLE AUTHENTIFICATION (2FA TOTP)
+    # ============================================================
+    # setup : première configuration — affiche le QR code + valide le premier code
+    # verify : saisie du code à 6 chiffres à chaque nouvelle session
+    path('2fa/setup/',  views_2fa.setup_2fa,  name='2fa_setup'),
+    path('2fa/verify/', views_2fa.verify_2fa, name='2fa_verify'),
+
+    # Endpoint appelé par le JS d'avertissement d'expiration pour prolonger
+    # la fenêtre glissante de 10 minutes sans recharger la page.
+    path('session/heartbeat/', views_2fa.session_heartbeat, name='session_heartbeat'),
 
     # ============================================================
     # PAGES DU DASHBOARD

@@ -75,6 +75,23 @@ if not DEBUG and SECRET_KEY.startswith('django-insecure-'):
 # CSRF : domaines de confiance (scheme://host obligatoire).
 CSRF_TRUSTED_ORIGINS = env_list('DJANGO_CSRF_TRUSTED_ORIGINS')
 
+# ============================================================
+# SESSIONS — Déconnexion automatique après 10 min d'inactivité
+# ============================================================
+# Fenêtre glissante : chaque requête HTTP réenregistre la session
+# (SAVE_EVERY_REQUEST) et prolonge donc son Max-Age de 10 minutes
+# (COOKIE_AGE = 600s). Si aucune action pendant 10 min, la session
+# expire côté serveur ET le cookie côté client → la prochaine requête
+# renvoie sur le login.
+#
+# Le site public ne connecte aucun visiteur (pas de compte étudiant /
+# partenaire), donc ce timeout global n'affecte que les admins du dashboard.
+# Si un jour un compte public est ajouté, il faudra scoper via un
+# middleware dédié qui redéfinit session.set_expiry() seulement sur les
+# URLs commençant par /dashboard/.
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_AGE = 60 * 10  # 10 minutes en secondes
+
 
 # ============================================================
 # 4. APPLICATIONS INSTALLÉES
@@ -93,6 +110,10 @@ THIRD_PARTY_APPS = [
     'tailwind',
     'theme',
     'tinymce',
+    # === Double authentification (2FA) ===
+    # django_otp fournit le socle (Device, is_verified()), otp_totp le plugin TOTP standard.
+    'django_otp',
+    'django_otp.plugins.otp_totp',
 ]
 
 LOCAL_APPS = [
@@ -128,6 +149,10 @@ MIDDLEWARE += [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # OTPMiddleware DOIT être juste après AuthenticationMiddleware :
+    # il enrichit request.user en ajoutant .is_verified() (True si code OTP validé
+    # dans la session en cours) et .otp_device (le device utilisé pour se vérifier).
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -152,6 +177,7 @@ TEMPLATES = [
                 'apps.core.context_processors.tinymce_key',
                 'apps.core.context_processors.site_settings',
                 'apps.core.context_processors.dashboard_badges',
+                'apps.core.context_processors.security_config',
             ],
         },
     },

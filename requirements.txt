@@ -26,6 +26,12 @@ psycopg[binary]==3.2.3
 # Sans Pillow, tout upload d'image (album, article, photo) renvoie HTTP 500.
 Pillow==11.0.0
 
+# --- Double authentification (2FA) TOTP pour le back-office ---
+# django-otp : modèle TOTPDevice + middleware qui expose request.user.is_verified()
+# qrcode[pil] : génère les PNG de QR code à scanner par Google Authenticator / Authy
+django-otp==1.5.4
+qrcode[pil]==8.0
+
 # --- Variables d'environnement ---
 python-dotenv==1.0.1
 

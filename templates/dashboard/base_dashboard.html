@@ -45,7 +45,9 @@
 
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-cream text-ink antialiased min-h-screen">
+<body class="bg-cream text-ink antialiased min-h-screen"
+      data-session-max="{{ SESSION_MAX_AGE }}"
+      data-session-heartbeat-url="{% url 'dashboard:session_heartbeat' %}">
 
     <!-- ================================================================ -->
     <!-- LAYOUT GLOBAL : Sidebar + Main content                            -->
@@ -88,6 +90,7 @@
 
     <!-- Script dashboard -->
     <script src="{% static 'js/dashboard.js' %}" defer></script>
+    <script src="{% static 'js/dashboard-timeout.js' %}" defer></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

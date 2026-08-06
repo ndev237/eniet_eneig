@@ -26,6 +26,19 @@ def tinymce_key(request):
         'TINYMCE_API_KEY': getattr(settings, 'TINYMCE_API_KEY', '')
     }
 
+
+def security_config(request):
+    """
+    Expose au template la durée maximale d'une session (SESSION_COOKIE_AGE).
+
+    Utilisé par le JS d'avertissement d'expiration côté dashboard pour
+    caler son minuteur sur la même valeur que le serveur — un seul
+    endroit à modifier (settings.py) et le front reste synchro.
+    """
+    return {
+        'SESSION_MAX_AGE': settings.SESSION_COOKIE_AGE,
+    }
+
 def site_settings(request):
     """
     Injecte les paramètres du site dans tous les templates.

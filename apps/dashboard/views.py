@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .decorators import super_admin_required
+from .decorators import super_admin_required, otp_required_dashboard
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -23,7 +23,7 @@ from apps.pages.models import SiteSettings, Album, Photo
 import json
 from django.contrib.auth import update_session_auth_hash
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def home(request):
     """
     Page d'accueil du dashboard : vue d'ensemble avec statistiques.
@@ -101,7 +101,7 @@ def home(request):
 # MODULE ARTICLES - CRUD
 # ============================================================
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def articles_list(request):
     """
     Liste paginée des articles avec filtres et recherche.
@@ -196,7 +196,7 @@ def articles_list(request):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def article_create(request):
     """
     Création d'un nouvel article.
@@ -245,7 +245,7 @@ def article_create(request):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def article_update(request, pk):
     """
     Modification d'un article existant.
@@ -289,7 +289,7 @@ def article_update(request, pk):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def article_delete(request, pk):
     """
     Suppression d'un article avec confirmation.
@@ -322,7 +322,7 @@ def article_delete(request, pk):
 # ACTIONS RAPIDES (AJAX-like, retournent JSON)
 # ============================================================
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST  # Décorateur : accepte uniquement POST (sécurité)
 def article_toggle_publication(request, pk):
     """
@@ -350,7 +350,7 @@ def article_toggle_publication(request, pk):
     return redirect(next_url)
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def article_toggle_une(request, pk):
     """
@@ -374,7 +374,7 @@ def article_toggle_une(request, pk):
 # UPLOAD D'IMAGE DEPUIS TINYMCE
 # ============================================================
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def tinymce_upload_image(request):
     """
@@ -409,7 +409,7 @@ def tinymce_upload_image(request):
 # MODULE MESSAGES - Boîte de réception
 # ============================================================
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def messages_list(request):
     """
     Liste des messages reçus via le formulaire de contact.
@@ -479,7 +479,7 @@ def messages_list(request):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def message_detail(request, pk):
     """
     Détail d'un message + zone de réponse + note interne.
@@ -520,7 +520,7 @@ def message_detail(request, pk):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def message_repondre(request, pk):
     """
@@ -605,7 +605,7 @@ Pour rappel, votre message initial était :
     return redirect('dashboard:message_detail', pk=pk)
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def message_note(request, pk):
     """
@@ -623,7 +623,7 @@ def message_note(request, pk):
     return redirect('dashboard:message_detail', pk=pk)
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def message_changer_statut(request, pk):
     """
@@ -648,7 +648,7 @@ def message_changer_statut(request, pk):
     return redirect(next_url)
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def message_delete(request, pk):
     """
     Suppression d'un message avec confirmation.
@@ -671,7 +671,7 @@ def message_delete(request, pk):
 # MODULE PARAMÈTRES DU SITE
 # ============================================================
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def parametres(request):
     """
     Édition des paramètres globaux du site (singleton SiteSettings).
@@ -719,7 +719,7 @@ def parametres(request):
 # MODULE MÉDIAS / GALERIE
 # ============================================================
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def medias_list(request):
     """
     Liste de tous les albums (grille avec couvertures).
@@ -743,7 +743,7 @@ def medias_list(request):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def album_create(request):
     """
     Création d'un nouvel album.
@@ -771,7 +771,7 @@ def album_create(request):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def album_edit(request, pk):
     """
     Édition d'un album : infos + gestion des photos.
@@ -805,7 +805,7 @@ def album_edit(request, pk):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def album_delete(request, pk):
     """
     Suppression d'un album (et de toutes ses photos en cascade).
@@ -830,7 +830,7 @@ def album_delete(request, pk):
 # ENDPOINTS AJAX pour la gestion des photos
 # ============================================================
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def photos_upload(request, album_pk):
     """
@@ -887,7 +887,7 @@ def photos_upload(request, album_pk):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def photo_delete(request, pk):
     """
@@ -908,7 +908,7 @@ def photo_delete(request, pk):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def photo_update_legende(request, pk):
     """
@@ -932,7 +932,7 @@ def photo_update_legende(request, pk):
     return JsonResponse({'success': True})
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @require_POST
 def photos_reorder(request, album_pk):
     """
@@ -966,7 +966,7 @@ def photos_reorder(request, album_pk):
 # ============================================================
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @super_admin_required
 def utilisateurs_list(request):
     """
@@ -1003,7 +1003,7 @@ def utilisateurs_list(request):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @super_admin_required
 def utilisateur_create(request):
     """
@@ -1031,7 +1031,7 @@ def utilisateur_create(request):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @super_admin_required
 def utilisateur_edit(request, pk):
     """
@@ -1062,7 +1062,7 @@ def utilisateur_edit(request, pk):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @super_admin_required
 def utilisateur_password(request, pk):
     """
@@ -1092,7 +1092,7 @@ def utilisateur_password(request, pk):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @super_admin_required
 @require_POST
 def utilisateur_toggle_actif(request, pk):
@@ -1124,7 +1124,7 @@ def utilisateur_toggle_actif(request, pk):
     return redirect('dashboard:utilisateurs_list')
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 @super_admin_required
 def utilisateur_delete(request, pk):
     """
@@ -1157,7 +1157,7 @@ def utilisateur_delete(request, pk):
 # PROFIL PERSONNEL (accessible par tous)
 # ============================================================
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def mon_profil(request):
     """
     Édition de son propre profil.
@@ -1182,7 +1182,7 @@ def mon_profil(request):
     })
 
 
-@login_required(login_url='dashboard:login')
+@otp_required_dashboard
 def mon_mot_de_passe(request):
     """
     Changement de son propre mot de passe.
