@@ -76,6 +76,17 @@ if not DEBUG and SECRET_KEY.startswith('django-insecure-'):
 CSRF_TRUSTED_ORIGINS = env_list('DJANGO_CSRF_TRUSTED_ORIGINS')
 
 # ============================================================
+# BACKENDS D'AUTHENTIFICATION — connexion par EMAIL uniquement
+# ============================================================
+# EmailBackend fait un lookup sur User.email (case-insensitive), il
+# reçoit ce qui a été saisi côté formulaire dans le champ `username`.
+# Le backend natif ModelBackend (auth par username) est RETIRÉ : plus
+# personne — même les superusers — ne peut se connecter avec un username.
+AUTHENTICATION_BACKENDS = [
+    'apps.dashboard.auth_backends.EmailBackend',
+]
+
+# ============================================================
 # SESSIONS — Déconnexion automatique après 10 min d'inactivité
 # ============================================================
 # Fenêtre glissante : chaque requête HTTP réenregistre la session
