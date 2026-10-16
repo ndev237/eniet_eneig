@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 
 from . import views
 from . import views_2fa
+from . import views_export
 
 app_name = 'dashboard'
 
@@ -55,6 +56,7 @@ urlpatterns = [
     # MODULE MESSAGES
     # ============================================================
     path('messages/', views.messages_list, name='messages_list'),
+    path('messages/export/pdf/', views_export.messages_export_pdf, name='messages_export_pdf'),
     path('messages/<int:pk>/', views.message_detail, name='message_detail'),
     path('messages/<int:pk>/repondre/', views.message_repondre, name='message_repondre'),
     path('messages/<int:pk>/note/', views.message_note, name='message_note'),

@@ -14,6 +14,13 @@
 
 {% block content %}
 
+{# ----------------------------------------------------------------
+   Chaîne de query string à propager sur Export PDF, Onglets, etc.
+   On la pré-calcule pour éviter la gymnastique dans chaque bouton.
+---------------------------------------------------------------- #}
+{% with has_filters=statut_actif|yesno:"1,"|add:sujet_actif|add:recherche %}
+{% endwith %}
+
 <!-- ================================================================ -->
 <!-- BARRE D'OUTILS                                                    -->
 <!-- ================================================================ -->
@@ -22,8 +29,8 @@
     <!-- Recherche -->
     <form method="get" action="{% url 'dashboard:messages_list' %}" class="flex-1 max-w-md">
         <div class="relative">
-            <input type="search" 
-                   name="q" 
+            <input type="search"
+                   name="q"
                    value="{{ recherche }}"
                    placeholder="Rechercher (nom, email, contenu)..."
                    class="w-full pl-10 pr-4 py-2.5 bg-white border border-primary/15 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all text-sm">
@@ -31,120 +38,148 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
             {% if statut_actif %}<input type="hidden" name="statut" value="{{ statut_actif }}">{% endif %}
+            {% if sujet_actif %}<input type="hidden" name="sujet" value="{{ sujet_actif }}">{% endif %}
         </div>
     </form>
 
-    <!-- Filtre par sujet -->
-    <form method="get" action="{% url 'dashboard:messages_list' %}" id="filtre-sujet">
-        {% if statut_actif %}<input type="hidden" name="statut" value="{{ statut_actif }}">{% endif %}
-        {% if recherche %}<input type="hidden" name="q" value="{{ recherche }}">{% endif %}
-        <select name="sujet" onchange="document.getElementById('filtre-sujet').submit()"
-                class="px-4 py-2.5 bg-white border border-primary/15 focus:border-primary focus:outline-none text-sm">
-            <option value="">Tous les sujets</option>
-            {% for valeur, libelle in sujets %}
-                <option value="{{ valeur }}" {% if sujet_actif == valeur %}selected{% endif %}>
-                    {{ libelle }}
-                </option>
-            {% endfor %}
-        </select>
-    </form>
+    <div class="flex items-center gap-3 flex-wrap">
+        <!-- Filtre par sujet -->
+        <form method="get" action="{% url 'dashboard:messages_list' %}" id="filtre-sujet">
+            {% if statut_actif %}<input type="hidden" name="statut" value="{{ statut_actif }}">{% endif %}
+            {% if recherche %}<input type="hidden" name="q" value="{{ recherche }}">{% endif %}
+            <select name="sujet" onchange="document.getElementById('filtre-sujet').submit()"
+                    class="px-4 py-2.5 bg-white border border-primary/15 focus:border-primary focus:outline-none text-sm">
+                <option value="">Tous les sujets</option>
+                {% for valeur, libelle in sujets %}
+                    <option value="{{ valeur }}" {% if sujet_actif == valeur %}selected{% endif %}>
+                        {{ libelle }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+
+        <!-- Export PDF (conserve les filtres actifs) -->
+        <a href="{% url 'dashboard:messages_export_pdf' %}?{% if statut_actif %}statut={{ statut_actif }}&{% endif %}{% if sujet_actif %}sujet={{ sujet_actif }}&{% endif %}{% if recherche %}q={{ recherche }}{% endif %}"
+           class="inline-flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-dark text-cream text-sm font-semibold transition-colors shadow-sm"
+           title="Télécharger un PDF des messages affichés">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h5l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            </svg>
+            Exporter en PDF
+        </a>
+    </div>
 </div>
 
 <!-- ================================================================ -->
 <!-- ONGLETS PAR STATUT                                                -->
 <!-- ================================================================ -->
 <div class="flex flex-wrap gap-2 mb-6 border-b border-primary/10 pb-1">
-    <a href="{% url 'dashboard:messages_list' %}{% if recherche %}?q={{ recherche }}{% endif %}" 
+    <a href="{% url 'dashboard:messages_list' %}{% if recherche %}?q={{ recherche }}{% endif %}"
        class="px-4 py-2 text-sm font-medium transition-colors {% if not statut_actif %}bg-primary text-cream{% else %}text-ink/70 hover:bg-cream{% endif %}">
         Tous <span class="ml-1 text-xs opacity-70">({{ stats.total }})</span>
     </a>
-    <a href="?statut=non_lu{% if recherche %}&q={{ recherche }}{% endif %}" 
+    <a href="?statut=non_lu{% if recherche %}&q={{ recherche }}{% endif %}"
        class="px-4 py-2 text-sm font-medium transition-colors flex items-center gap-2 {% if statut_actif == 'non_lu' %}bg-blue-600 text-white{% else %}text-ink/70 hover:bg-cream{% endif %}">
-        Non lus 
+        Non lus
         <span class="text-xs {% if statut_actif == 'non_lu' %}bg-white/20{% else %}bg-blue-100 text-blue-700{% endif %} px-1.5 py-0.5 rounded">{{ stats.non_lus }}</span>
     </a>
-    <a href="?statut=lu{% if recherche %}&q={{ recherche }}{% endif %}" 
+    <a href="?statut=lu{% if recherche %}&q={{ recherche }}{% endif %}"
        class="px-4 py-2 text-sm font-medium transition-colors {% if statut_actif == 'lu' %}bg-primary text-cream{% else %}text-ink/70 hover:bg-cream{% endif %}">
         Lus <span class="ml-1 text-xs opacity-70">({{ stats.lus }})</span>
     </a>
-    <a href="?statut=traite{% if recherche %}&q={{ recherche }}{% endif %}" 
+    <a href="?statut=traite{% if recherche %}&q={{ recherche }}{% endif %}"
        class="px-4 py-2 text-sm font-medium transition-colors {% if statut_actif == 'traite' %}bg-green-600 text-white{% else %}text-ink/70 hover:bg-cream{% endif %}">
         Traités <span class="ml-1 text-xs opacity-70">({{ stats.traites }})</span>
     </a>
 </div>
 
 <!-- ================================================================ -->
-<!-- LISTE DES MESSAGES (style inbox)                                  -->
+<!-- TABLEAU DES MESSAGES                                              -->
 <!-- ================================================================ -->
 {% if page_obj.object_list %}
-    <div class="bg-white border border-primary/10 shadow-sm divide-y divide-primary/5">
-        {% for msg in page_obj.object_list %}
-            <a href="{% url 'dashboard:message_detail' pk=msg.pk %}" 
-               class="block p-4 hover:bg-cream/40 transition-colors group
-                      {% if msg.statut == 'non_lu' %}bg-blue-50/40{% endif %}">
-                <div class="flex items-start gap-4">
+    <div class="bg-white border border-primary/10 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="bg-cream/60 border-b border-primary/10">
+                        <th class="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-ink/60">Reçu le</th>
+                        <th class="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-ink/60">Expéditeur</th>
+                        <th class="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-ink/60">Téléphone</th>
+                        <th class="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-ink/60">Sujet</th>
+                        <th class="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-ink/60">Traité</th>
+                        <th class="px-4 py-3 text-right text-[11px] font-semibold uppercase tracking-wider text-ink/60">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-primary/5">
+                    {% for msg in page_obj.object_list %}
+                        <tr class="hover:bg-cream/30 transition-colors
+                                   {% if msg.statut == 'non_lu' %}bg-blue-50/30{% endif %}">
+                            <!-- Reçu le -->
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                <div class="font-semibold text-primary-darker">{{ msg.created_at|date:"d/m/Y" }}</div>
+                                <div class="text-xs text-ink/50">{{ msg.created_at|date:"H:i" }}</div>
+                            </td>
 
-                    <!-- Indicateur non lu + Avatar initiales -->
-                    <div class="flex items-center gap-3 flex-shrink-0">
-                        <!-- Pastille non lu -->
-                        {% if msg.statut == 'non_lu' %}
-                            <span class="w-2 h-2 bg-blue-500 rounded-full" title="Non lu"></span>
-                        {% else %}
-                            <span class="w-2 h-2"></span>
-                        {% endif %}
-
-                        <!-- Avatar avec initiale -->
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm
-                            {% if msg.statut == 'non_lu' %}bg-blue-500 text-white
-                            {% elif msg.statut == 'traite' %}bg-green-100 text-green-700
-                            {% else %}bg-primary/10 text-primary
-                            {% endif %}">
-                            {{ msg.nom|first|upper }}
-                        </div>
-                    </div>
-
-                    <!-- Contenu du message -->
-                    <div class="flex-1 min-w-0">
-                        <div class="flex items-center justify-between gap-3 mb-1">
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="font-semibold text-primary-darker text-sm truncate
-                                    {% if msg.statut == 'non_lu' %}font-bold{% endif %}">
+                            <!-- Expéditeur -->
+                            <td class="px-4 py-3">
+                                <div class="font-medium text-primary-darker {% if msg.statut == 'non_lu' %}font-bold{% endif %}">
                                     {{ msg.nom }}
-                                </span>
-                                <!-- Badge sujet -->
-                                <span class="text-[10px] uppercase tracking-wider bg-cream px-2 py-0.5 text-ink/60 flex-shrink-0 hidden sm:inline">
+                                </div>
+                                <div class="text-xs text-ink/50 truncate max-w-[220px]">{{ msg.email }}</div>
+                            </td>
+
+                            <!-- Téléphone (NOUVEAU) -->
+                            <td class="px-4 py-3 whitespace-nowrap text-ink/80">
+                                {% if msg.telephone %}
+                                    <a href="tel:{{ msg.telephone }}"
+                                       class="hover:text-primary transition-colors">{{ msg.telephone }}</a>
+                                {% else %}
+                                    <span class="text-ink/30">—</span>
+                                {% endif %}
+                            </td>
+
+                            <!-- Sujet -->
+                            <td class="px-4 py-3">
+                                <div class="text-ink/80 truncate max-w-[320px]" title="{{ msg.message|striptags }}">
+                                    {{ msg.message|truncatechars:60 }}
+                                </div>
+                                <div class="text-[10px] uppercase tracking-wider text-ink/40 mt-0.5">
                                     {{ msg.get_sujet_display }}
-                                </span>
-                            </div>
-                            <!-- Date relative -->
-                            <span class="text-xs text-ink/40 whitespace-nowrap flex-shrink-0">
-                                {{ msg.created_at|timesince }}
-                            </span>
-                        </div>
+                                </div>
+                            </td>
 
-                        <!-- Email -->
-                        <div class="text-xs text-ink/50 mb-1 truncate">
-                            {{ msg.email }}
-                            {% if msg.telephone %} · {{ msg.telephone }}{% endif %}
-                        </div>
+                            <!-- Traité (badge Oui/Non) -->
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                {% if msg.statut == 'traite' %}
+                                    <span class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-green-700 bg-green-100 border border-green-200">
+                                        Oui
+                                    </span>
+                                {% else %}
+                                    <span class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-ink/60 bg-cream border border-primary/10">
+                                        Non
+                                    </span>
+                                {% endif %}
+                            </td>
 
-                        <!-- Aperçu du message -->
-                        <p class="text-sm text-ink/70 line-clamp-1">
-                            {{ msg.message|truncatechars:120 }}
-                        </p>
-                    </div>
-
-                    <!-- Badge statut traité -->
-                    {% if msg.statut == 'traite' %}
-                        <div class="flex-shrink-0">
-                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" title="Traité">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                    {% endif %}
-                </div>
-            </a>
-        {% endfor %}
+                            <!-- Actions -->
+                            <td class="px-4 py-3 whitespace-nowrap text-right">
+                                <div class="flex items-center justify-end gap-4">
+                                    <a href="{% url 'dashboard:message_detail' pk=msg.pk %}"
+                                       class="text-primary hover:text-primary-dark font-semibold transition-colors">
+                                        Modifier
+                                    </a>
+                                    <a href="{% url 'dashboard:message_delete' pk=msg.pk %}"
+                                       class="text-red-600 hover:text-red-800 font-semibold transition-colors">
+                                        Supprimer
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- PAGINATION -->
@@ -155,14 +190,14 @@
             </div>
             <div class="flex items-center gap-2">
                 {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}{% if statut_actif %}&statut={{ statut_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}"
+                    <a href="?page={{ page_obj.previous_page_number }}{% if statut_actif %}&statut={{ statut_actif }}{% endif %}{% if sujet_actif %}&sujet={{ sujet_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}"
                        class="px-3 py-2 bg-white border border-primary/15 hover:border-primary text-sm transition-colors">
                         ← Précédent
                     </a>
                 {% endif %}
                 <span class="px-3 py-2 bg-primary text-cream text-sm font-semibold">{{ page_obj.number }}</span>
                 {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}{% if statut_actif %}&statut={{ statut_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}"
+                    <a href="?page={{ page_obj.next_page_number }}{% if statut_actif %}&statut={{ statut_actif }}{% endif %}{% if sujet_actif %}&sujet={{ sujet_actif }}{% endif %}{% if recherche %}&q={{ recherche }}{% endif %}"
                        class="px-3 py-2 bg-white border border-primary/15 hover:border-primary text-sm transition-colors">
                         Suivant →
                     </a>

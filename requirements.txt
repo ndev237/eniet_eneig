@@ -32,6 +32,10 @@ Pillow==11.0.0
 django-otp==1.5.4
 qrcode[pil]==8.0
 
+# --- Génération PDF (export des messages du dashboard) ---
+# reportlab : pure Python, aucune dépendance système côté Windows/Linux
+reportlab==4.2.5
+
 # --- Variables d'environnement ---
 python-dotenv==1.0.1
 
