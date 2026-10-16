@@ -161,6 +161,14 @@ def messages_export_pdf(request):
         'CellMuted', parent=style_cell,
         textColor=BRAND_INK_MUTED,
     )
+    # En-tête de tableau : couleur cream pour trancher sur le fond vert
+    # sombre. On ne peut pas se reposer sur TableStyle.TEXTCOLOR car
+    # celui-ci est ignoré quand la cellule contient un Paragraph.
+    style_cell_header = ParagraphStyle(
+        'CellHeader', parent=style_cell,
+        fontName='Helvetica-Bold', fontSize=9, leading=11,
+        textColor=BRAND_CREAM,
+    )
 
     story = []
 
@@ -191,13 +199,13 @@ def messages_export_pdf(request):
         ))
     else:
         header = [
-            Paragraph('<b>Reçu le</b>', style_cell),
-            Paragraph('<b>Expéditeur</b>', style_cell),
-            Paragraph('<b>Email</b>', style_cell),
-            Paragraph('<b>Téléphone</b>', style_cell),
-            Paragraph('<b>Sujet</b>', style_cell),
-            Paragraph('<b>Statut</b>', style_cell),
-            Paragraph('<b>Message</b>', style_cell),
+            Paragraph('Reçu le',    style_cell_header),
+            Paragraph('Expéditeur', style_cell_header),
+            Paragraph('Email',      style_cell_header),
+            Paragraph('Téléphone',  style_cell_header),
+            Paragraph('Sujet',      style_cell_header),
+            Paragraph('Statut',     style_cell_header),
+            Paragraph('Message',    style_cell_header),
         ]
         data = [header]
 
