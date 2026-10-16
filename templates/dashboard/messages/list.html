@@ -14,13 +14,6 @@
 
 {% block content %}
 
-{# ----------------------------------------------------------------
-   Chaîne de query string à propager sur Export PDF, Onglets, etc.
-   On la pré-calcule pour éviter la gymnastique dans chaque bouton.
----------------------------------------------------------------- #}
-{% with has_filters=statut_actif|yesno:"1,"|add:sujet_actif|add:recherche %}
-{% endwith %}
-
 <!-- ================================================================ -->
 <!-- BARRE D'OUTILS                                                    -->
 <!-- ================================================================ -->
